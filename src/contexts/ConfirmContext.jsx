@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, X } from 'lucide-react';
 
@@ -20,15 +20,16 @@ export const ConfirmProvider = ({ children }) => {
     });
   }, []);
 
-  const handleClose = (result) => {
+  const handleClose = useCallback((result) => {
     if (config?.resolve) {
       config.resolve(result);
     }
     setConfig(null);
-  };
+  }, [config]);
+  const value = useMemo(() => ({ confirm }), [confirm]);
 
   return (
-    <ConfirmContext.Provider value={{ confirm }}>
+    <ConfirmContext.Provider value={value}>
       {children}
 
       <AnimatePresence>
@@ -46,7 +47,7 @@ export const ConfirmProvider = ({ children }) => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-md p-6 rounded-2xl glass-panel text-slate-100 shadow-2xl z-10 border border-white/20"
+              className="relative w-full max-w-md max-h-[calc(100dvh-2rem)] overflow-y-auto p-5 sm:p-6 rounded-2xl glass-panel text-slate-100 shadow-2xl z-10 border border-white/20"
             >
               <button
                 onClick={() => handleClose(false)}

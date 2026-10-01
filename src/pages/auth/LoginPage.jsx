@@ -7,6 +7,7 @@ import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../hooks/useToast';
+import { authService } from '../../services/authService';
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -18,6 +19,7 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [setupAvailable] = useState(() => !authService.hasSystemAdmin());
 
   const validate = () => {
     const errs = {};
@@ -72,16 +74,6 @@ export const LoginPage = () => {
             <p className="text-xs text-[var(--color-text-muted)] font-medium">ادخل لحسابك للوصول للأماكن المحفوظة، الحجوزات، الطلبات ولوحة التحكم</p>
           </div>
 
-          {/* Quick Demo Credentials Help */}
-          <div className="p-4 rounded-2xl glass-l1 border border-white/15 text-xs flex flex-col gap-1.5">
-            <span className="font-bold text-[#A85F48]">بيانات الدخول التجريبية (password123):</span>
-            <div className="grid grid-cols-3 gap-1.5 text-[11px] text-[var(--color-text-primary)] font-bold mt-1">
-              <button type="button" onClick={() => { setEmail('user@sinai.com'); setPassword('password123'); }} className="p-2 rounded-xl bg-white/20 dark:bg-black/30 hover:bg-[#A85F48]/20 transition">مستكشف</button>
-              <button type="button" onClick={() => { setEmail('business@sinai.com'); setPassword('password123'); }} className="p-2 rounded-xl bg-white/20 dark:bg-black/30 hover:bg-[#A85F48]/20 transition">صاحب نشاط</button>
-              <button type="button" onClick={() => { setEmail('admin@sinai.com'); setPassword('password123'); }} className="p-2 rounded-xl bg-white/20 dark:bg-black/30 hover:bg-[#A85F48]/20 transition">مدير</button>
-            </div>
-          </div>
-
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <Input
               label="البريد الإلكتروني"
@@ -114,9 +106,9 @@ export const LoginPage = () => {
               إنشاء حساب جديد
             </Link>
           </div>
+          {setupAvailable && <Link to="/admin/setup" className="text-center text-xs font-bold text-[var(--color-text-muted)] hover:text-[#A85F48]">إعداد حساب مدير النظام</Link>}
         </motion.div>
       </Container>
     </div>
   );
 };
-

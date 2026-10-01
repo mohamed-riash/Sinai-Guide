@@ -26,10 +26,10 @@ export const MapSection = ({ locationName, address, coordinates }) => {
 
   return (
     <div className="w-full glass-panel overflow-hidden relative flex flex-col gap-4 p-4 border border-white/20">
-      <div className="flex items-center justify-between gap-3 px-2">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-2">
+        <div className="flex min-w-0 items-center gap-2">
           <MapPin className="w-5 h-5 text-[#A85F48]" />
-          <h4 className="text-base font-bold font-display text-slate-900 dark:text-white">{locationName || 'موقع المكان'}</h4>
+          <h4 className="min-w-0 break-words text-base font-bold font-display text-slate-900 dark:text-white">{locationName || 'موقع المكان'}</h4>
         </div>
 
         <a href={mapUrl} target="_blank" rel="noopener noreferrer">
@@ -58,7 +58,7 @@ export const MapSection = ({ locationName, address, coordinates }) => {
 
       <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 px-2">
         <Navigation className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-        <span>{address}</span>
+        <span className="min-w-0 break-words">{address}</span>
       </p>
     </div>
   );

@@ -6,6 +6,7 @@ import { GlassCard } from '../../components/common/GlassCard';
 import { Button } from '../../components/common/Button';
 import { Input } from '../../components/common/Input';
 import { ImageUploader } from '../../components/common/ImageUploader';
+import { UserAvatar } from '../../components/common/UserAvatar';
 import { orderService } from '../../services/orderService';
 import { bookingService } from '../../services/bookingService';
 import { User, Phone, Mail, ShoppingBag, Calendar, Save } from 'lucide-react';
@@ -43,11 +44,7 @@ export const ProfilePage = () => {
       <Container className="max-w-4xl">
         {/* Profile Card Header */}
         <div className="glass-card p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 border border-white/20 dark:border-white/10 mb-6 shadow-xl">
-          <img
-            src={avatar || user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80'}
-            alt={user?.name}
-            className="w-24 h-24 rounded-3xl object-cover border-2 border-[var(--color-terracotta)] shadow-xl shrink-0"
-          />
+          <UserAvatar src={avatar || user?.avatar} name={user?.name} className="w-24 h-24 rounded-3xl object-cover border-2 border-[var(--color-terracotta)] shadow-xl shrink-0" />
           <div className="flex flex-col text-center sm:text-right gap-1">
             <h1 className="text-2xl font-bold font-display text-[var(--color-text-primary)]">{user?.name}</h1>
             <p className="text-xs text-[var(--color-text-secondary)]">{user?.email} • {user?.phone}</p>

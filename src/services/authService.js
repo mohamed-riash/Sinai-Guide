@@ -1,6 +1,63 @@
 import { storageService, KEYS } from './storageService';
 
+export const SYSTEM_ADMIN_ID = 'sinai-system-admin';
+
+const getUsers = () => {
+  const users = storageService.getItem(KEYS.USERS, []);
+  return Array.isArray(users) ? users : [];
+};
+
+const hasSystemAdmin = () => getUsers().some((user) => user.id === SYSTEM_ADMIN_ID);
+
+const setupSystemAdmin = ({ name, email, password, confirmPassword }) => {
+  const users = getUsers();
+  if (users.some((user) => user.id === SYSTEM_ADMIN_ID)) {
+    throw new Error('System Admin is already configured.');
+  }
+
+  const cleanName = name?.trim();
+  const cleanEmail = email?.trim().toLowerCase();
+  if (!cleanName) throw new Error('Full name is required.');
+  if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) throw new Error('Enter a valid email address.');
+  if (!password || password.length < 8) throw new Error('Password must be at least 8 characters long.');
+  if (password !== confirmPassword) throw new Error('Passwords do not match.');
+  if (users.some((user) => user.email?.toLowerCase() === cleanEmail)) {
+    throw new Error('An account with this email address already exists.');
+  }
+
+  const newAdmin = {
+    id: SYSTEM_ADMIN_ID,
+    name: cleanName,
+    email: cleanEmail,
+    password,
+    role: 'admin',
+    avatar: '',
+    createdAt: new Date().toISOString(),
+    protected: true,
+  };
+  users.push(newAdmin);
+  storageService.setItem(KEYS.USERS, users);
+  const { password: _password, ...currentUser } = newAdmin;
+  storageService.setItem(KEYS.CURRENT_USER, currentUser);
+  return currentUser;
+};
+
+export const userService = {
+  delete: (userId) => {
+    const users = getUsers();
+    const target = users.find((user) => user.id === userId);
+    if (userId === SYSTEM_ADMIN_ID || target?.protected) {
+      throw new Error('لا يمكن حذف مدير النظام.');
+    }
+    const updated = users.filter((user) => user.id !== userId);
+    storageService.setItem(KEYS.USERS, updated);
+    return updated;
+  }
+};
+
 export const authService = {
+  hasSystemAdmin,
+  setupSystemAdmin,
   getCurrentUser: () => {
     return storageService.getItem(KEYS.CURRENT_USER, null);
   },
@@ -20,7 +77,8 @@ export const authService = {
   },
 
   register: (userData) => {
-    const { name, email, phone, password, confirmPassword, role = 'customer', businessName, businessCategory, businessCity } = userData;
+    const { name, email, phone, password, confirmPassword, role = 'customer' } = userData;
+    if (!['customer', 'business_owner'].includes(role)) throw new Error('This account role cannot be created through public registration.');
 
     // JavaScript Validation (Section 22)
     if (!name || !name.trim()) throw new Error('Full name is required.');
@@ -38,52 +96,15 @@ export const authService = {
     }
 
     const newUser = {
-      id: `user-${Date.now()}`,
+      id: `user-${crypto.randomUUID()}`,
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
       password: password,
       role: role,
-      avatar: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80`,
+      avatar: '',
       createdAt: new Date().toISOString()
     };
-
-    let createdPlaceId = null;
-
-    // If business owner registration, create a basic place record for them
-    if (role === 'business_owner') {
-      if (!businessName || !businessName.trim()) throw new Error('Business name is required.');
-      const places = storageService.getItem(KEYS.PLACES, []);
-      createdPlaceId = `place-${Date.now()}`;
-      const newPlace = {
-        id: createdPlaceId,
-        name: businessName.trim(),
-        nameAr: businessName.trim(),
-        cityId: businessCity || 'arish',
-        categoryId: businessCategory || 'restaurant',
-        rating: 5.0,
-        reviewCount: 0,
-        priceRange: '$$',
-        featured: false,
-        isOpenNow: true,
-        whatsapp: phone.replace(/[^0-9]/g, ''),
-        phone: phone,
-        address: `${businessCity || 'Al-Arish'}, North Sinai`,
-        description: `${businessName} welcomes you to enjoy fine dining and warm Sinai hospitality.`,
-        image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
-        gallery: ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80'],
-        openingHours: '10:00 AM - 11:00 PM',
-        amenities: ['Wi-Fi', 'Outdoor Seating'],
-        coordinates: { lat: 31.1316, lng: 33.7984 },
-        hasOrdering: businessCategory === 'restaurant' || businessCategory === 'cafe',
-        hasBooking: true,
-        ownerId: newUser.id,
-        menu: []
-      };
-      places.push(newPlace);
-      storageService.setItem(KEYS.PLACES, places);
-      newUser.businessId = createdPlaceId;
-    }
 
     users.push(newUser);
     storageService.setItem(KEYS.USERS, users);
@@ -102,10 +123,12 @@ export const authService = {
 
     if (index === -1) throw new Error('User record not found.');
 
-    const updatedUser = {
-      ...users[index],
-      ...updatedData
-    };
+    const currentRecord = users[index];
+    const allowedFields = ['name', 'email', 'phone', 'avatar', 'businessId', 'ownerId'];
+    const safeUpdates = Object.fromEntries(
+      Object.entries(updatedData).filter(([key]) => allowedFields.includes(key)),
+    );
+    const updatedUser = { ...currentRecord, ...safeUpdates };
 
     users[index] = updatedUser;
     storageService.setItem(KEYS.USERS, users);

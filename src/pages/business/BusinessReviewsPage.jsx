@@ -9,7 +9,7 @@ import { reviewService } from '../../services/reviewService';
 
 export const BusinessReviewsPage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
   const reviews = place ? reviewService.getReviewsByPlaceId(place.id) : [];
 
   return (

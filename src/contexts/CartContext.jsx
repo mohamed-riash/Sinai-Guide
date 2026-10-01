@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { storageService, KEYS } from '../services/storageService';
 
 export const CartContext = createContext();
@@ -11,7 +11,7 @@ export const CartProvider = ({ children }) => {
     storageService.setItem(KEYS.CART, cart);
   }, [cart]);
 
-  const addItem = (place, item) => {
+  const addItem = useCallback((place, item) => {
     setCart(prev => {
       // If adding from a different place, reset cart for new restaurant
       if (prev.place && prev.place.id !== place.id) {
@@ -39,9 +39,9 @@ export const CartProvider = ({ children }) => {
       };
     });
     setIsOpen(true);
-  };
+  }, []);
 
-  const updateQuantity = (itemId, quantity) => {
+  const updateQuantity = useCallback((itemId, quantity) => {
     setCart(prev => {
       if (quantity <= 0) {
         const filtered = prev.items.filter(i => i.id !== itemId);
@@ -55,35 +55,24 @@ export const CartProvider = ({ children }) => {
         items: prev.items.map(i => i.id === itemId ? { ...i, quantity } : i)
       };
     });
-  };
+  }, []);
 
-  const removeItem = (itemId) => {
+  const removeItem = useCallback((itemId) => {
     updateQuantity(itemId, 0);
-  };
+  }, [updateQuantity]);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCart({ place: null, items: [] });
-  };
+  }, []);
 
-  const subtotal = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = useMemo(() => cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cart.items]);
   const deliveryFee = cart.items.length > 0 ? 30 : 0;
   const total = subtotal + deliveryFee;
-  const totalItemCount = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItemCount = useMemo(() => cart.items.reduce((sum, item) => sum + item.quantity, 0), [cart.items]);
+  const value = useMemo(() => ({ cart, isOpen, setIsOpen, addItem, updateQuantity, removeItem, clearCart, subtotal, deliveryFee, total, totalItemCount }), [cart, isOpen, addItem, updateQuantity, removeItem, clearCart, subtotal, deliveryFee, total, totalItemCount]);
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      isOpen,
-      setIsOpen,
-      addItem,
-      updateQuantity,
-      removeItem,
-      clearCart,
-      subtotal,
-      deliveryFee,
-      total,
-      totalItemCount
-    }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

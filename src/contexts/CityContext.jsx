@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import { storageService, KEYS } from '../services/storageService';
 import { CITIES } from '../data/cities';
 
@@ -12,9 +12,10 @@ export const CityProvider = ({ children }) => {
   }, [selectedCityId]);
 
   const selectedCity = CITIES.find(c => c.id === selectedCityId) || null;
+  const value = useMemo(() => ({ selectedCityId, setSelectedCityId, selectedCity, cities: CITIES }), [selectedCityId, selectedCity]);
 
   return (
-    <CityContext.Provider value={{ selectedCityId, setSelectedCityId, selectedCity, cities: CITIES }}>
+    <CityContext.Provider value={value}>
       {children}
     </CityContext.Provider>
   );

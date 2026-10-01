@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Mail, Lock, User, Phone, Store, UserPlus, Compass } from 'lucide-react';
+import { Mail, Lock, User, Phone, UserPlus, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
 import { Input } from '../../components/common/Input';
-import { Select } from '../../components/common/Select';
 import { Button } from '../../components/common/Button';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../hooks/useToast';
-import { CITIES } from '../../data/cities';
-import { CATEGORIES } from '../../data/categories';
 
 export const RegisterPage = () => {
   const { register } = useAuth();
@@ -26,11 +23,6 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Business Onboarding Fields
-  const [businessName, setBusinessName] = useState('');
-  const [businessCategory, setBusinessCategory] = useState('restaurant');
-  const [businessCity, setBusinessCity] = useState('arish');
-
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -44,9 +36,6 @@ export const RegisterPage = () => {
     else if (password.length < 6) errs.password = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.';
     if (password !== confirmPassword) errs.confirmPassword = 'كلمتا المرور غير متطابقتين.';
 
-    if (role === 'business_owner') {
-      if (!businessName.trim()) errs.businessName = 'اسم النشاط التجاري مطلوب.';
-    }
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -64,15 +53,12 @@ export const RegisterPage = () => {
         phone,
         password,
         confirmPassword,
-        role,
-        businessName,
-        businessCategory,
-        businessCity
+        role
       });
 
       toastSuccess(`أهلاً بك في دليل سيناء، ${newUser.name}!`);
       if (role === 'business_owner') {
-        navigate('/business/dashboard');
+        navigate('/business/onboarding');
       } else {
         navigate('/profile');
       }
@@ -127,7 +113,7 @@ export const RegisterPage = () => {
             <Input
               label="الاسم الكامل"
               icon={User}
-              placeholder="مثال: أحمد حسن"
+              placeholder="مثال: الاسم"
               value={name}
               error={errors.name}
               onChange={(e) => setName(e.target.value)}
@@ -153,38 +139,6 @@ export const RegisterPage = () => {
               />
             </div>
 
-            {/* Business Owner Extra Onboarding Fields */}
-            {role === 'business_owner' && (
-              <div className="p-4 rounded-2xl glass-l1 border border-[#174A4D]/30 flex flex-col gap-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-teal-400 flex items-center gap-2">
-                  <Store className="w-4 h-4 text-[#A85F48]" /> بيانات النشاط التجاري
-                </h4>
-
-                <Input
-                  label="اسم النشاط التجاري"
-                  icon={Store}
-                  placeholder="مثال: منتجع ومطعم نخيل العريش"
-                  value={businessName}
-                  error={errors.businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                />
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Select
-                    label="تصنيف النشاط"
-                    value={businessCategory}
-                    onChange={(e) => setBusinessCategory(e.target.value)}
-                    options={CATEGORIES.map(c => ({ value: c.id, label: c.name }))}
-                  />
-                  <Select
-                    label="المدينة"
-                    value={businessCity}
-                    onChange={(e) => setBusinessCity(e.target.value)}
-                    options={CITIES.map(c => ({ value: c.id, label: c.nameAr || c.name }))}
-                  />
-                </div>
-              </div>
-            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input

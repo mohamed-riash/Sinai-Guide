@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { RatingStars } from '../common/RatingStars';
 import { MessageSquare } from 'lucide-react';
+import { UserAvatar } from '../common/UserAvatar';
 
 export const ReviewList = ({ reviews = [] }) => {
   if (reviews.length === 0) {
@@ -25,11 +26,7 @@ export const ReviewList = ({ reviews = [] }) => {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img
-                src={rev.userAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80'}
-                alt={rev.userName}
-                className="w-10 h-10 rounded-full object-cover border-2 border-[#A85F48]"
-              />
+              <UserAvatar src={rev.userAvatar} name={rev.userName} className="w-10 h-10 rounded-full object-cover border-2 border-[#A85F48]" />
               <div>
                 <h5 className="text-sm font-bold font-display text-[var(--color-text-primary)]">{rev.userName}</h5>
                 <span className="text-[10px] text-[var(--color-text-muted)] font-medium">
@@ -49,4 +46,3 @@ export const ReviewList = ({ reviews = [] }) => {
     </div>
   );
 };
-

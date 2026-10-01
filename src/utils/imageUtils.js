@@ -1,3 +1,21 @@
+export const responsiveImageSrcSet = (src, widths = [480, 960], quality = 75) => {
+  if (!src || src.startsWith('data:')) return undefined;
+
+  try {
+    const url = new URL(src);
+    if (url.hostname !== 'images.unsplash.com') return undefined;
+    return widths.map((width) => {
+      const candidate = new URL(url);
+      candidate.searchParams.set('fit', 'crop');
+      candidate.searchParams.set('w', String(width));
+      candidate.searchParams.set('q', String(quality));
+      return `${candidate.toString()} ${width}w`;
+    }).join(', ');
+  } catch {
+    return undefined;
+  }
+};
+
 export const validateImage = (file) => {
   if (!file) return { valid: false, message: 'لم يتم اختيار أي ملف' };
   

@@ -9,7 +9,7 @@ import { Calendar, Users, Phone, Clock, FileText } from 'lucide-react';
 
 export const BusinessBookingsPage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
   const { toastSuccess } = useToast();
 
   const [bookings, setBookings] = useState(() => place ? bookingService.getBookingsByPlaceId(place.id) : []);

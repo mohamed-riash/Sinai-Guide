@@ -4,10 +4,23 @@ import { MetricCard } from '../../components/common/MetricCard';
 import { GlassCard } from '../../components/common/GlassCard';
 import { Button } from '../../components/common/Button';
 import { storageService, KEYS } from '../../services/storageService';
+import { SYSTEM_ADMIN_ID, userService } from '../../services/authService';
+import { EmptyState } from '../../components/common/EmptyState';
 import { placeService } from '../../services/placeService';
-import { Users, Store, MapPin, ShoppingBag, Calendar, Star, Shield, Trash2, CheckCircle, XCircle, Eye, Clock, DollarSign, X } from 'lucide-react';
+import { Users, Store, MapPin, ShoppingBag, Trash2, CheckCircle, XCircle, Eye, Clock, X, ShieldCheck } from 'lucide-react';
 import { useToast } from '../../hooks/useToast';
 import { useConfirm } from '../../hooks/useConfirm';
+
+const userRoleLabels = {
+  customer: '\u0645\u0633\u062a\u062e\u062f\u0645',
+  business_owner: '\u0635\u0627\u062d\u0628 \u0645\u0643\u0627\u0646',
+  admin: '\u0645\u0634\u0631\u0641',
+};
+const userRoleEmptyStates = {
+  customer: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646.',
+  business_owner: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0623\u0635\u062d\u0627\u0628 \u0623\u0645\u0627\u0643\u0646 \u0645\u0633\u062c\u0644\u0648\u0646 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646.',
+  admin: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0645\u0634\u0631\u0641\u0648\u0646 \u0625\u0636\u0627\u0641\u064a\u0648\u0646.',
+};
 
 export const AdminDashboardPage = () => {
   const { toastSuccess, toastError } = useToast();
@@ -15,10 +28,12 @@ export const AdminDashboardPage = () => {
 
   const [users, setUsers] = useState(() => storageService.getItem(KEYS.USERS, []));
   const [places, setPlaces] = useState(() => placeService.getAll());
-  const [orders, setOrders] = useState(() => storageService.getItem(KEYS.ORDERS, []));
-  const [bookings, setBookings] = useState(() => storageService.getItem(KEYS.BOOKINGS, []));
+  const [orders] = useState(() => storageService.getItem(KEYS.ORDERS, []));
+  const [bookings] = useState(() => storageService.getItem(KEYS.BOOKINGS, []));
 
   const [activeTab, setActiveTab] = useState('requests'); // 'requests' | 'places' | 'users'
+  const [userRoleTab, setUserRoleTab] = useState('customer');
+  const [userSearch, setUserSearch] = useState('');
   const [reviewingPlace, setReviewingPlace] = useState(null);
 
   const pendingPlaces = places.filter(p => p.status === 'pending');
@@ -73,10 +88,12 @@ export const AdminDashboardPage = () => {
 
     if (!isConfirmed) return;
 
-    const updated = users.filter(u => u.id !== userId);
-    setUsers(updated);
-    storageService.setItem(KEYS.USERS, updated);
-    toastSuccess('تم حذف حساب المستخدم.');
+    try {
+      setUsers(userService.delete(userId));
+      toastSuccess('تم حذف حساب المستخدم.');
+    } catch (err) {
+      toastError(err.message);
+    }
   };
 
   const handleDeletePlace = async (placeId) => {
@@ -103,6 +120,12 @@ export const AdminDashboardPage = () => {
           <MetricCard title="الأماكن المعتمدة" value={approvedCount} change="نشطة ومنشورة" icon={Store} />
           <MetricCard title="المستخدمون المسجلون" value={users.length} change="حسابات مسجلة" icon={Users} />
           <MetricCard title="إجمالي الطلبات وحجوزات" value={orders.length + bookings.length} change="عمليات مكتملة" icon={ShoppingBag} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricCard title="\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646" value={users.filter((user) => user.role === 'customer').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u064a\u0646" icon={Users} />
+          <MetricCard title="\u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646" value={users.filter((user) => user.role === 'business_owner').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646" icon={Store} />
+          <MetricCard title="\u0627\u0644\u0645\u0634\u0631\u0641\u0648\u0646" value={users.filter((user) => user.role === 'admin').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0627\u0644\u0645\u0634\u0631\u0641\u064a\u0646" icon={ShieldCheck} />
         </div>
 
         {/* Navigation Tabs */}
@@ -166,7 +189,7 @@ export const AdminDashboardPage = () => {
                     <div className="flex flex-col gap-4">
                       {/* Image Preview & Category Badge */}
                       <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border border-white/20">
-                        <img src={place.image} alt={place.name} className="w-full h-full object-cover" />
+                        <img src={place.image} alt={place.name} loading="lazy" className="w-full h-full object-cover" />
                         <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md">
                           قيد المراجعة
                         </span>
@@ -198,7 +221,7 @@ export const AdminDashboardPage = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="pt-4 border-t border-[var(--color-border-subtle)] flex items-center justify-between gap-3">
+                    <div className="pt-4 border-t border-[var(--color-border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <Button
                         variant="ghost"
                         size="sm"
@@ -209,7 +232,7 @@ export const AdminDashboardPage = () => {
                         مراجعة التفاصيل
                       </Button>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-end gap-2">
                         <Button
                           variant="danger"
                           size="sm"
@@ -242,12 +265,12 @@ export const AdminDashboardPage = () => {
           <GlassCard hover={false} className="p-6 flex flex-col gap-4 border border-white/20 dark:border-white/10 shadow-xl">
             <h3 className="text-base font-bold font-display text-[var(--color-text-primary)]">قائمة جميع أماكن المنصة ({places.length})</h3>
             <div className="flex flex-col gap-3">
-              {places.map(p => {
+              {places.length ? places.map(p => {
                 const status = p.status || 'approved';
                 return (
                   <div key={p.id} className="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--color-border-subtle)] flex items-center justify-between gap-4 text-xs">
                     <div className="flex items-center gap-3 min-w-0">
-                      <img src={p.image} alt={p.name} className="w-14 h-14 rounded-2xl object-cover shrink-0" />
+                      <img src={p.image} alt={p.name} width="56" height="56" loading="lazy" className="w-14 h-14 rounded-2xl object-cover shrink-0" />
                       <div className="truncate">
                         <div className="flex items-center gap-2">
                           <h4 className="font-bold text-[var(--color-text-primary)] text-sm truncate">{p.nameAr || p.name}</h4>
@@ -276,7 +299,7 @@ export const AdminDashboardPage = () => {
                     </div>
                   </div>
                 );
-              })}
+              }) : <EmptyState title="\u0644\u0627 \u062a\u0648\u062c\u062f \u0623\u0645\u0627\u0643\u0646 \u0645\u0636\u0627\u0641\u0629 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646." description="\u0633\u062a\u0638\u0647\u0631 \u0627\u0644\u0623\u0645\u0627\u0643\u0646 \u0647\u0646\u0627 \u0628\u0639\u062f \u0625\u0646\u0634\u0627\u0626\u0647\u0627." />}
             </div>
           </GlassCard>
         )}
@@ -284,32 +307,28 @@ export const AdminDashboardPage = () => {
         {/* Registered Users Tab */}
         {activeTab === 'users' && (
           <GlassCard hover={false} className="p-6 flex flex-col gap-4 border border-white/20 dark:border-white/10 shadow-xl">
-            <h3 className="text-base font-bold font-display text-[var(--color-text-primary)]">مستخدمو المنصة ({users.length})</h3>
-            <div className="flex flex-col gap-3">
-              {users.map(u => (
+            <div className="flex flex-wrap gap-2">
+              {[
+                ['customer', '\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646'],
+                ['business_owner', '\u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646'],
+                ['admin', '\u0627\u0644\u0645\u0634\u0631\u0641\u0648\u0646']
+              ].map(([role, label]) => <button key={role} onClick={() => setUserRoleTab(role)} className={`px-4 py-2 rounded-xl text-sm font-bold ${userRoleTab === role ? 'bg-[#A85F48] text-white' : 'bg-black/5 dark:bg-white/5 text-[var(--color-text-secondary)]'}`}>{label} ({users.filter((user) => user.role === role).length})</button>)}
+            </div>
+            <input value={userSearch} onChange={(event) => setUserSearch(event.target.value)} placeholder="البحث بالاسم أو البريد الإلكتروني" className="w-full rounded-xl border border-[var(--color-border-subtle)] bg-transparent px-4 py-3 text-sm" />
+            {(() => {
+              const visibleUsers = users.filter((user) => user.role === userRoleTab && `${user.name} ${user.email}`.toLowerCase().includes(userSearch.trim().toLowerCase()));
+              return visibleUsers.length ? visibleUsers.map((u) => (
                 <div key={u.id} className="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--color-border-subtle)] flex items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-3">
-                    <img src={u.avatar} alt={u.name} className="w-9 h-9 rounded-xl object-cover border border-[var(--color-terracotta)]" />
-                    <div>
-                      <h4 className="font-bold text-[var(--color-text-primary)]">{u.name}</h4>
-                      <p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} • {u.phone}</p>
-                    </div>
+                    {u.avatar ? <img src={u.avatar} alt={u.name} width="36" height="36" loading="lazy" className="w-9 h-9 rounded-xl object-cover border border-[var(--color-terracotta)]" /> : <div className="w-9 h-9 rounded-xl bg-black/10 dark:bg-white/10 flex items-center justify-center"><Users className="w-4 h-4" /></div>}
+                    <div className="min-w-0"><h4 className="font-bold text-[var(--color-text-primary)]">{u.name} {u.id === SYSTEM_ADMIN_ID && <span className="text-teal-600"> · {'\u0645\u062f\u064a\u0631 \u0627\u0644\u0646\u0638\u0627\u0645'}</span>}</h4><p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} · {u.phone || '—'} · {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</p>{u.role === 'business_owner' && <p className="mt-1 truncate text-[11px] text-[var(--color-text-secondary)]">{placeService.getByOwnerId(u.id, u.businessId)?.nameAr || placeService.getByOwnerId(u.id, u.businessId)?.name || '\u0644\u0645 \u064a\u0636\u0641 \u0645\u0643\u0627\u0646\u064b\u0627 \u0628\u0639\u062f'}</p>}</div>
                   </div>
-
-                  <div className="flex items-center gap-3">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/20 text-teal-700 dark:text-teal-300">
-                      {u.role}
-                    </span>
-                    <button onClick={() => handleDeleteUser(u.id)} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <div className="flex shrink-0 items-center gap-3"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-500/20 text-teal-700 dark:text-teal-300">{userRoleLabels[u.role]}{u.role === 'business_owner' && placeService.getByOwnerId(u.id, u.businessId)?.status === 'pending' ? ` · ${'\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629'}` : ''}</span>{u.id !== SYSTEM_ADMIN_ID && !u.protected && <button onClick={() => handleDeleteUser(u.id)} aria-label={`حذف ${u.name}`} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors"><Trash2 className="w-4 h-4" /></button>}</div>
                 </div>
-              ))}
-            </div>
+              )) : <EmptyState title={userRoleEmptyStates[userRoleTab]} description={userSearch ? '\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c \u062a\u0637\u0627\u0628\u0642 \u0627\u0644\u0628\u062d\u062b.' : ''} />;
+            })()}
           </GlassCard>
-        )}
-      </div>
+        )}      </div>
 
       {/* Review Place Details Modal */}
       {reviewingPlace && (

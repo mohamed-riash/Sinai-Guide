@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Clock, ArrowLeft } from 'lucide-react';
 import { GlassCard } from '../common/GlassCard';
@@ -7,6 +7,7 @@ import { RatingStars } from '../common/RatingStars';
 import { FavoriteButton } from '../common/FavoriteButton';
 import { Button } from '../common/Button';
 import { CITIES } from '../../data/cities';
+import { responsiveImageSrcSet } from '../../utils/imageUtils';
 
 const CATEGORY_NAMES_AR = {
   restaurant: 'مطعم',
@@ -19,7 +20,7 @@ const CATEGORY_NAMES_AR = {
   event: 'فعالية',
 };
 
-export const PlaceCard = ({ place }) => {
+export const PlaceCard = memo(({ place }) => {
   const city = CITIES.find(c => c.id === place.cityId);
 
   return (
@@ -28,6 +29,8 @@ export const PlaceCard = ({ place }) => {
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         <img
           src={place.image}
+          srcSet={responsiveImageSrcSet(place.image)}
+          sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
           alt={place.name}
           className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
           loading="lazy"
@@ -95,5 +98,4 @@ export const PlaceCard = ({ place }) => {
       </div>
     </GlassCard>
   );
-};
-
+});

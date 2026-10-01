@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Store, Utensils, ShoppingBag, Calendar, Star, BarChart3, Settings, LogOut, Compass, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
+import { UserAvatar } from '../common/UserAvatar';
 
 export const Sidebar = ({ onCloseMobile }) => {
   const location = useLocation();
@@ -49,11 +50,7 @@ export const Sidebar = ({ onCloseMobile }) => {
 
         {/* Business Badge */}
         <div className="px-3 py-2.5 rounded-xl glass-l1 border border-white/20 dark:border-white/10 flex items-center gap-3">
-          <img
-            src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80'}
-            alt="Business"
-            className="w-9 h-9 rounded-xl object-cover border-2 border-[#A85F48]"
-          />
+          <UserAvatar src={user?.avatar} name={user?.name} className="w-9 h-9 rounded-xl object-cover border-2 border-[#A85F48]" />
           <div className="flex flex-col truncate">
             <span className="text-xs font-bold text-[var(--color-text-primary)] truncate">{user?.name}</span>
             <span className="text-[10px] text-teal-500 font-bold capitalize">{user?.role === 'business_owner' ? 'صاحب نشاط' : 'مدير المنصة'}</span>
@@ -116,4 +113,3 @@ export const Sidebar = ({ onCloseMobile }) => {
     </aside>
   );
 };
-

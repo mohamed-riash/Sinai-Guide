@@ -10,7 +10,7 @@ import { ShoppingBag, Clock, Phone, MapPin, CheckCircle, XCircle } from 'lucide-
 
 export const BusinessOrdersPage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
   const { toastSuccess } = useToast();
 
   const [orders, setOrders] = useState(() => place ? orderService.getOrdersByPlaceId(place.id) : []);

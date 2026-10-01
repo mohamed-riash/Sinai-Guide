@@ -109,7 +109,7 @@ export const LocationPicker = ({
   };
 
   return (
-    <div className={`glass-panel p-5 flex flex-col gap-4 border border-white/20 dark:border-white/10 rounded-3xl ${className}`}>
+    <div className={`glass-panel p-3 sm:p-5 flex flex-col gap-4 border border-white/20 dark:border-white/10 rounded-3xl ${className}`}>
       <div className="flex flex-col gap-1">
         <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-secondary)]">
           تحديد موقع النشاط التجاري (اختر طريقة التحديد)

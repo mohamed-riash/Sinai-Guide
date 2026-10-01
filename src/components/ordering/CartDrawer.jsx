@@ -104,9 +104,9 @@ export const CartDrawer = () => {
           />
 
           <motion.div
-            initial={{ x: '-100%' }}
+            initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
+            exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 280 }}
             className="relative z-10 w-full max-w-md glass-l3 h-full p-6 flex flex-col justify-between border-r border-white/20 dark:border-white/10 text-slate-100 shadow-2xl overflow-y-auto"
           >
@@ -142,7 +142,7 @@ export const CartDrawer = () => {
                   <div key={item.id} className="p-3.5 rounded-2xl glass-l1 border border-white/15 flex items-center justify-between gap-3 shadow-sm">
                     <div className="flex items-center gap-3 min-w-0">
                       {item.image && (
-                        <img src={item.image} alt={item.name} className="w-12 h-12 rounded-xl object-cover shrink-0" />
+                        <img src={item.image} alt={item.name} width="48" height="48" loading="lazy" className="w-12 h-12 rounded-xl object-cover shrink-0" />
                       )}
                       <div className="truncate">
                         <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
@@ -241,4 +241,3 @@ export const CartDrawer = () => {
     </AnimatePresence>
   );
 };
-

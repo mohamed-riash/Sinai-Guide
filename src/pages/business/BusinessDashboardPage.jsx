@@ -13,7 +13,7 @@ import { ShoppingBag, Calendar, Star, Utensils, TrendingUp, Users, ArrowRight, C
 
 export const BusinessDashboardPage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
 
   const orders = place ? orderService.getOrdersByPlaceId(place.id) : [];
   const bookings = place ? bookingService.getBookingsByPlaceId(place.id) : [];

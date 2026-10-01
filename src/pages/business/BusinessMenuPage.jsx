@@ -13,7 +13,7 @@ import { Plus, Trash2, Edit, Check, X, Utensils } from 'lucide-react';
 
 export const BusinessMenuPage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
   const { toastSuccess, toastError } = useToast();
   const { confirm } = useConfirm();
 
@@ -21,11 +21,11 @@ export const BusinessMenuPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
-  const [categoryName, setCategoryName] = useState('أسماك طازجة');
+  const [categoryName, setCategoryName] = useState('');
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemDesc, setItemDesc] = useState('');
-  const [itemImage, setItemImage] = useState('https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80');
+  const [itemImage, setItemImage] = useState('');
 
   const saveMenuToStorage = (newMenu) => {
     setMenu(newMenu);
@@ -34,13 +34,13 @@ export const BusinessMenuPage = () => {
     }
   };
 
-  const handleOpenAddModal = (catName = 'أسماك طازجة') => {
+  const handleOpenAddModal = (catName = '') => {
     setCategoryName(catName);
     setEditingItem(null);
     setItemName('');
     setItemPrice('');
     setItemDesc('');
-    setItemImage('https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80');
+    setItemImage('');
     setModalOpen(true);
   };
 
@@ -133,12 +133,12 @@ export const BusinessMenuPage = () => {
   return (
     <DashboardLayout title="إدارة قائمة الطعام">
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 className="text-xl font-bold font-display text-slate-900 dark:text-white">أطباق قائمة الطعام</h2>
             <p className="text-xs text-slate-500">إدارة التصنيفات، الأطباق، الأسعار، الصور والتوفر اليومي</p>
           </div>
-          <Button variant="primary" icon={Plus} onClick={() => handleOpenAddModal('أسماك طازجة')}>
+          <Button variant="primary" icon={Plus} onClick={() => handleOpenAddModal()}>
             إضافة طبق جديد
           </Button>
         </div>
@@ -166,7 +166,7 @@ export const BusinessMenuPage = () => {
                   <div key={item.id} className="p-4 rounded-2xl glass-card border border-white/10 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
                       {item.image && (
-                        <img src={item.image} alt={item.name} className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                        <img src={item.image} alt={item.name} width="56" height="56" loading="lazy" className="w-14 h-14 rounded-xl object-cover shrink-0" />
                       )}
                       <div className="truncate">
                         <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">{item.name}</h4>

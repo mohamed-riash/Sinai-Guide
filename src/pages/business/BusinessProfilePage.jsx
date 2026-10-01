@@ -14,7 +14,7 @@ import { Save, Store, Phone, MessageSquare, Clock, DollarSign, AlertCircle } fro
 
 export const BusinessProfilePage = () => {
   const { user } = useAuth();
-  const place = placeService.getByOwnerId(user?.id, user?.businessId) || placeService.getById('place-1');
+  const place = placeService.getByOwnerId(user?.id, user?.businessId);
   const { toastSuccess, toastError, toastInfo } = useToast();
 
   const [name, setName] = useState(place?.name || '');

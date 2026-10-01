@@ -26,9 +26,9 @@ export const PlaceFilterDrawer = ({
           />
 
           <motion.div
-            initial={{ x: '-100%' }}
+            initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
+            exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 280 }}
             className="relative z-10 w-full max-w-sm glass-l3 h-full p-6 overflow-y-auto flex flex-col justify-between border-r border-white/20 dark:border-white/10 text-right shadow-2xl"
           >
@@ -121,4 +121,3 @@ export const PlaceFilterDrawer = ({
     </AnimatePresence>
   );
 };
-

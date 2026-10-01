@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useCallback, useMemo } from 'react';
 import { authService } from '../services/authService';
 
 export const AuthContext = createContext();
@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => authService.getCurrentUser());
   const [loading, setLoading] = useState(false);
 
-  const login = async (email, password) => {
+  const login = useCallback(async (email, password) => {
     setLoading(true);
     try {
       const loggedUser = authService.login(email, password);
@@ -16,9 +16,9 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const register = async (userData) => {
+  const register = useCallback(async (userData) => {
     setLoading(true);
     try {
       const registeredUser = authService.register(userData);
@@ -27,21 +27,29 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const updateProfile = async (updatedData) => {
+  const setupSystemAdmin = useCallback(async (adminData) => {
+    const systemAdmin = authService.setupSystemAdmin(adminData);
+    setUser(systemAdmin);
+    return systemAdmin;
+  }, []);
+
+  const updateProfile = useCallback(async (updatedData) => {
     const updated = authService.updateProfile(updatedData);
     setUser(updated);
     return updated;
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     authService.logout();
     setUser(null);
-  };
+  }, []);
+
+  const value = useMemo(() => ({ user, loading, login, register, setupSystemAdmin, logout, updateProfile, isAuthenticated: !!user }), [user, loading, login, register, setupSystemAdmin, logout, updateProfile]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateProfile, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

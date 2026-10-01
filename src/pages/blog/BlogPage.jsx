@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Calendar, User, ChevronLeft } from 'lucide-react';
+import { Calendar, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
-import { GlassCard } from '../../components/common/GlassCard';
+import { responsiveImageSrcSet } from '../../utils/imageUtils';
 import { blogService } from '../../services/blogService';
+import { EmptyState } from '../../components/common/EmptyState';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 25 },
@@ -36,11 +37,11 @@ export const BlogPage = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map((post, index) => (
+          {posts.length ? posts.map((post, index) => (
             <motion.div key={post.id} variants={fadeInUp} custom={index} initial="hidden" whileInView="visible" viewport={{ once: true }}>
               <Link to={`/blog/${post.slug}`} className="glass-card p-0 overflow-hidden flex flex-col group h-full transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl">
                 <div className="aspect-[16/10] overflow-hidden relative">
-                  <img src={post.image} alt={post.titleAr || post.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                  <img src={post.image} srcSet={responsiveImageSrcSet(post.image)} sizes="(max-width: 767px) 100vw, 33vw" alt={post.titleAr || post.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
                   <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-bold bg-[var(--color-terracotta)] text-white shadow-md">
                     {post.category}
                   </span>
@@ -70,10 +71,9 @@ export const BlogPage = () => {
                 </div>
               </Link>
             </motion.div>
-          ))}
+          )) : <EmptyState className="md:col-span-3" title="لا توجد مقالات منشورة حاليًا." description="ستظهر المقالات هنا بعد نشر محتوى حقيقي." />}
         </div>
       </Container>
     </div>
   );
 };
-

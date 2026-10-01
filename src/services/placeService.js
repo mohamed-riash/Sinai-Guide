@@ -40,7 +40,7 @@ export const placeService = {
       const found = places.find(p => p && (p.ownerId === ownerId || p.id === ownerId));
       if (found) return found;
     }
-    return places.find(p => p && p.id === 'place-1') || places[0] || null;
+    return null;
   },
 
   getByCity: (cityId) => {
@@ -105,7 +105,7 @@ export const placeService = {
     const newPlace = {
       ...placeData,
       id: `place-${Date.now()}`,
-      rating: 5.0,
+      rating: 0,
       reviewCount: 0,
       status: 'pending', // Default status: pending admin approval
       createdAt: new Date().toISOString(),

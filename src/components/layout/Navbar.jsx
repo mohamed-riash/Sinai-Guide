@@ -8,6 +8,7 @@ import { useCity } from '../../hooks/useCity';
 import { useCart } from '../../hooks/useCart';
 import { Container } from '../common/Container';
 import { Button } from '../common/Button';
+import { UserAvatar } from '../common/UserAvatar';
 
 export const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -35,22 +36,22 @@ export const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full glass-l3 backdrop-blur-xl transition-all duration-300 border-b border-white/20 dark:border-white/10 shadow-md">
-      <Container className="h-20 flex items-center justify-between gap-4">
+      <Container className="h-20 flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-10.5 h-10.5 rounded-2xl bg-gradient-to-tr from-[#A85F48] via-[#874737] to-[#C99545] flex items-center justify-center text-white shadow-lg shadow-[#A85F48]/20 group-hover:scale-105 transition-transform duration-300">
-            <Compass className="w-6 h-6 animate-spin-slow text-amber-100" />
+        <Link to="/" className="flex min-w-0 items-center gap-2 group">
+          <div className="size-10 shrink-0 rounded-2xl bg-gradient-to-tr from-[#A85F48] via-[#874737] to-[#C99545] flex items-center justify-center text-white shadow-lg shadow-[#A85F48]/20 group-hover:scale-105 transition-transform duration-300">
+            <Compass className="w-6 h-6 text-amber-100" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-black text-xl tracking-tight text-[#174A4D] dark:text-teal-300">
+            <span className="whitespace-nowrap font-display font-black text-base sm:text-xl tracking-tight text-[#174A4D] dark:text-teal-300">
               دليل<span className="text-[#A85F48]"> سيناء </span>
             </span>
-            <span className="text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 font-extrabold">سياحة شمال سيناء</span>
+            <span className="hidden sm:block text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 font-extrabold">سياحة شمال سيناء</span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1.5 glass-l1 px-2 py-1.5 rounded-2xl border border-white/20 dark:border-white/10 shadow-inner">
+        <nav className="hidden xl:flex items-center gap-1.5 glass-l1 px-2 py-1.5 rounded-2xl border border-white/20 dark:border-white/10 shadow-inner">
           {navLinks.map((link) => {
             const active = isActive(link.path);
             return (
@@ -77,7 +78,7 @@ export const Navbar = () => {
         </nav>
 
         {/* Action Controls */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden xl:flex items-center gap-3">
           {/* City Selector */}
           <div className="relative flex items-center">
             <MapPin className="w-4 h-4 text-[#A85F48] absolute right-3 pointer-events-none" />
@@ -134,11 +135,7 @@ export const Navbar = () => {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 className="flex items-center gap-2.5 p-1.5 pl-3 rounded-2xl glass-input hover:bg-white/30 dark:hover:bg-white/15 transition shadow-sm"
               >
-                <img
-                  src={user.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80'}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-xl object-cover border-2 border-[#A85F48]"
-                />
+                <UserAvatar src={user.avatar} name={user.name} className="w-8 h-8 rounded-xl object-cover border-2 border-[#A85F48]" />
                 <span className="text-xs font-bold max-w-[100px] truncate text-[var(--color-text-primary)]">{user.name.split(' ')[0]}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
               </button>
@@ -220,16 +217,16 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Menu & Action Buttons */}
-        <div className="flex lg:hidden items-center gap-2">
+        <div className="flex xl:hidden items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl glass-input text-slate-700 dark:text-slate-200"
+            className="!p-2 rounded-xl glass-input text-slate-700 dark:text-slate-200"
           >
             {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
           </button>
           <button
             onClick={() => setIsCartOpen(true)}
-            className="p-2 rounded-xl glass-input text-slate-700 dark:text-slate-200 relative"
+            className="!p-2 rounded-xl glass-input text-slate-700 dark:text-slate-200 relative"
           >
             <ShoppingBag className="w-4 h-4 text-[#A85F48]" />
             {totalItemCount > 0 && (
@@ -240,7 +237,7 @@ export const Navbar = () => {
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2.5 rounded-xl glass-input text-slate-700 dark:text-slate-200"
+            className="!p-2.5 rounded-xl glass-input text-slate-700 dark:text-slate-200"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -254,7 +251,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden glass-l3 border-t border-white/20 p-6 flex flex-col gap-4 overflow-hidden"
+            className="xl:hidden glass-l3 border-t border-white/20 p-6 flex flex-col gap-4 overflow-hidden"
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">اختر المدينة</span>
@@ -349,4 +346,3 @@ export const Navbar = () => {
     </header>
   );
 };
-

@@ -78,7 +78,7 @@ export const BookingModal = ({ place, isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative z-10 w-full max-w-lg glass-l3 p-6 sm:p-8 text-right text-slate-100 shadow-2xl border border-white/20 dark:border-white/10 rounded-3xl overflow-y-auto max-h-[90vh]"
+            className="relative z-10 w-full max-w-lg glass-l3 p-5 sm:p-8 text-right text-slate-100 shadow-2xl border border-white/20 dark:border-white/10 rounded-3xl overflow-y-auto max-h-[calc(100dvh-2rem)]"
           >
             <button
               onClick={onClose}
@@ -206,4 +206,3 @@ export const BookingModal = ({ place, isOpen, onClose }) => {
     </AnimatePresence>
   );
 };
-

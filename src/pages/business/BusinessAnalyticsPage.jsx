@@ -36,10 +36,11 @@ export const BusinessAnalyticsPage = () => {
             {[40, 65, 50, 80, 70, 95, 85, 100].map((h, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
                 <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
                   transition={{ duration: 0.6, delay: i * 0.05 }}
-                  className="w-full rounded-t-xl bg-gradient-to-t from-[var(--color-teal-soft)] to-[var(--color-terracotta)] transition-all duration-300 hover:brightness-110 shadow-md"
+                  style={{ height: `${h}%`, transformOrigin: 'bottom' }}
+                  className="w-full rounded-t-xl bg-gradient-to-t from-[var(--color-teal-soft)] to-[var(--color-terracotta)] shadow-md"
                 />
                 <span className="text-[10px] text-[var(--color-text-muted)] font-bold">أسبوع {i + 1}</span>
               </div>
@@ -50,4 +51,3 @@ export const BusinessAnalyticsPage = () => {
     </DashboardLayout>
   );
 };
-

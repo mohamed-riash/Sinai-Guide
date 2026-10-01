@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Store, Phone, MessageSquare, Clock, CheckCircle2, DollarSign, Image as ImageIcon } from 'lucide-react';
+import { Store, Phone, MessageSquare, Clock, CheckCircle2, DollarSign } from 'lucide-react';
 import { Container } from '../../components/common/Container';
 import { Input } from '../../components/common/Input';
 import { Select } from '../../components/common/Select';
@@ -16,7 +16,7 @@ import { CATEGORIES } from '../../data/categories';
 
 export const BusinessOnboardingPage = () => {
   const { user, updateProfile } = useAuth();
-  const { toastSuccess, toastError, toastInfo } = useToast();
+  const { toastSuccess, toastError } = useToast();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -24,12 +24,12 @@ export const BusinessOnboardingPage = () => {
   const [city, setCity] = useState('arish');
   
   // Real Price Range
-  const [minPrice, setMinPrice] = useState(100);
-  const [maxPrice, setMaxPrice] = useState(300);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
 
   // Location Picker Options
   const [locationData, setLocationData] = useState({
-    address: 'كورنيش العريش، شمال سيناء',
+    address: '',
     latitude: 31.1350,
     longitude: 33.7990,
   });
@@ -38,12 +38,12 @@ export const BusinessOnboardingPage = () => {
   const [openingTime, setOpeningTime] = useState('10:00');
   const [closingTime, setClosingTime] = useState('23:00');
 
-  const [phone, setPhone] = useState(user?.phone || '+20 10 1234 5678');
-  const [whatsapp, setWhatsapp] = useState(user?.phone?.replace(/[^0-9]/g, '') || '201012345678');
+  const [phone, setPhone] = useState(user?.phone || '');
+  const [whatsapp, setWhatsapp] = useState(user?.phone?.replace(/[^0-9]/g, '') || '');
   const [description, setDescription] = useState('');
   
   // Device Image Uploads
-  const [image, setImage] = useState('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80');
+  const [image, setImage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -51,6 +51,11 @@ export const BusinessOnboardingPage = () => {
 
     if (!name.trim()) {
       toastError('يرجى إدخال اسم النشاط التجاري.');
+      return;
+    }
+
+    if (!locationData.address.trim() || minPrice === '' || maxPrice === '') {
+      toastError('Please provide the actual address and price range.');
       return;
     }
 
@@ -90,7 +95,7 @@ export const BusinessOnboardingPage = () => {
         openingHours: `${openingTime} — ${closingTime}`,
         phone: phone.trim(),
         whatsapp: whatsapp.trim(),
-        description: description.trim() || `${name} يرحب بالضيوف لتجربة ضيافة شمال سيناء الأصيلة.`,
+        description: description.trim(),
         image,
         gallery: [image],
         hasOrdering: category === 'restaurant' || category === 'cafe',
@@ -124,7 +129,7 @@ export const BusinessOnboardingPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="glass-panel p-6 sm:p-10 flex flex-col gap-8 border border-white/20 dark:border-white/10 shadow-2xl rounded-3xl w-full"
+          className="glass-panel p-4 sm:p-10 flex flex-col gap-8 border border-white/20 dark:border-white/10 shadow-2xl rounded-3xl w-full"
         >
           <div className="flex flex-col gap-2 text-right">
             <span className="text-xs font-black uppercase tracking-widest text-[#A85F48]">معالج التسجيل والتقديم</span>

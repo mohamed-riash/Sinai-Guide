@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, MapPin, Compass, Utensils, Coffee, Hotel, Landmark, Calendar, ShieldCheck, Waves, ChevronLeft, Sparkles } from 'lucide-react';
+import { Search, Compass, Utensils, Coffee, Hotel, Landmark, Calendar, ShieldCheck, Waves, ChevronLeft, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
 import { Button } from '../../components/common/Button';
@@ -65,28 +65,31 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-0 overflow-hidden">
-      {/* Ambient background glows */}
-      <div className="ambient-glow-1 top-20 right-10" />
-      <div className="ambient-glow-2 top-96 left-10" />
+    <div className="relative flex flex-col gap-0">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-clip">
+        <div className="ambient-glow-1 top-20 right-10" />
+        <div className="ambient-glow-2 top-96 left-10" />
+      </div>
 
       {/* ═══════════════════ HERO SECTION ═══════════════════ */}
       <section className="relative min-h-[88vh] flex items-center justify-center pt-8 pb-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center filter brightness-[0.55] contrast-[1.15]"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80')` }}
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/assets/cities/arish.jpg"
+          sizes="100vw"
+          alt=""
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-slate-950/65 to-slate-950/80" />
 
         {/* Ambient Floating Particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(5)].map((_, i) => (
-            <motion.div
+            <div
               key={i}
               className="absolute w-2.5 h-2.5 rounded-full bg-[#C99545]/25"
               style={{ top: `${20 + i * 14}%`, right: `${12 + i * 15}%` }}
-              animate={{ y: [-15, 15, -15], opacity: [0.3, 0.7, 0.3] }}
-              transition={{ duration: 4 + i, repeat: Infinity, ease: 'easeInOut' }}
             />
           ))}
         </div>
@@ -397,7 +400,7 @@ export const HomePage = () => {
       </section>
 
       {/* ═══════════════════ BLOG & TRAVEL INSPIRATION ═══════════════════ */}
-      <section className="py-16">
+      {blogPosts.length > 0 && <section className="py-16">
         <Container>
           <motion.div
             variants={staggerContainer}
@@ -439,7 +442,7 @@ export const HomePage = () => {
             </motion.div>
           </motion.div>
         </Container>
-      </section>
+      </section>}
 
       {/* ═══════════════════ BUSINESS OWNER CTA BANNER ═══════════════════ */}
       <section className="py-16">
@@ -480,4 +483,3 @@ export const HomePage = () => {
     </div>
   );
 };
-

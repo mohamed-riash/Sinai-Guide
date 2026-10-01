@@ -19,7 +19,7 @@ export const reviewService = {
       id: `rev-${Date.now()}`,
       placeId,
       userName: userName || 'Anonymous Explorer',
-      userAvatar: userAvatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80',
+      userAvatar: userAvatar || '',
       rating: Number(rating),
       comment: comment.trim(),
       createdAt: new Date().toISOString()
