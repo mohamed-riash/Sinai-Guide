@@ -8,7 +8,7 @@ export const ReviewList = ({ reviews = [] }) => {
   if (reviews.length === 0) {
     return (
       <div className="text-center py-10 text-[var(--color-text-muted)] text-sm glass-card p-6 flex flex-col items-center gap-2 border border-white/10">
-        <MessageSquare className="w-8 h-8 opacity-40 text-[#A85F48]" />
+        <MessageSquare className="w-8 h-8 opacity-40 text-[var(--color-digital-blue-500)]" />
         <p className="font-semibold">لا توجد تقييمات مسجلة بعد. كن أول من يشارك رأيه حول هذا المكان!</p>
       </div>
     );
@@ -26,7 +26,7 @@ export const ReviewList = ({ reviews = [] }) => {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <UserAvatar src={rev.userAvatar} name={rev.userName} className="w-10 h-10 rounded-full object-cover border-2 border-[#A85F48]" />
+              <UserAvatar src={rev.userAvatar} name={rev.userName} className="w-10 h-10 rounded-full object-cover border-2 border-[var(--color-digital-blue-500)]" />
               <div>
                 <h5 className="text-sm font-bold font-display text-[var(--color-text-primary)]">{rev.userName}</h5>
                 <span className="text-[10px] text-[var(--color-text-muted)] font-medium">

@@ -43,7 +43,7 @@ export const ReviewForm = ({ placeId, onReviewAdded }) => {
     try {
       const newReview = reviewService.addReview({
         placeId,
-        userName: user?.name || 'زائر مستكشف',
+        userName: user?.name || 'زائر ',
         userAvatar: user?.avatar,
         rating,
         comment: comment.trim(),
@@ -69,12 +69,12 @@ export const ReviewForm = ({ placeId, onReviewAdded }) => {
       className="glass-panel p-6 sm:p-8 flex flex-col gap-6 rounded-3xl border border-white/20 dark:border-white/10 shadow-2xl relative overflow-hidden"
     >
       {/* Decorative ambient background accent */}
-      <div className="absolute top-0 left-0 w-32 h-32 bg-[#A85F48]/10 rounded-full filter blur-2xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-32 h-32 bg-[var(--color-digital-blue-500)]/10 rounded-full filter blur-2xl pointer-events-none" />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-[var(--color-border-subtle)]">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-2xl bg-[#A85F48]/15 text-[#A85F48]">
+          <div className="p-2.5 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)]">
             <MessageSquareHeart className="w-5 h-5" />
           </div>
           <div>
@@ -87,7 +87,7 @@ export const ReviewForm = ({ placeId, onReviewAdded }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C99545]/15 text-[#C99545] text-xs font-bold self-end sm:self-center">
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)] text-xs font-bold self-end sm:self-center">
           <Sparkles className="w-3.5 h-3.5" />
           <span>{activeSentiment.label} ({hoveredRating || rating}/5)</span>
         </div>
@@ -115,8 +115,8 @@ export const ReviewForm = ({ placeId, onReviewAdded }) => {
                 aria-label={`تقييم ${s.label}`}
                 className={`py-3 px-2 rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer border ${
                   isSelected
-                    ? 'bg-[#A85F48]/20 border-[#A85F48] text-[var(--color-text-primary)] shadow-md'
-                    : 'glass-input border-transparent hover:border-[#A85F48]/40'
+                    ? 'bg-[var(--color-digital-blue-500)]/20 border-[var(--color-digital-blue-500)] text-[var(--color-text-primary)] shadow-md'
+                    : 'glass-input border-transparent hover:border-[var(--color-digital-blue-500)]/40'
                 }`}
               >
                 <span className="text-2xl sm:text-3xl select-none">{s.emoji}</span>
@@ -146,10 +146,10 @@ export const ReviewForm = ({ placeId, onReviewAdded }) => {
         </label>
         <textarea
           rows="3"
-          placeholder="اكتب تجربتك ورأيك في المكان (مثل جودة الخدمة، الأطباق المميزة، النظافة، والأجواء...)"
+          placeholder="اكتب تجربتك ورأيك في المكان (مثل جودة الخدمة، النظافة، والأجواء...)"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[#A85F48] transition-all resize-none"
+          className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-digital-blue-500)] transition-all resize-none"
           required
         />
         <div className="flex justify-between items-center text-[10px] text-[var(--color-text-muted)] font-medium px-1">

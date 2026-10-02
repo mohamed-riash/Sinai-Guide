@@ -18,7 +18,7 @@ export const MetricCard = ({ title, value, change, icon: Icon, trend = 'up' }) =
         )}
       </div>
       {Icon && (
-        <div className="p-3.5 rounded-2xl bg-[var(--color-terracotta)]/15 text-[var(--color-terracotta)] flex items-center justify-center shadow-inner">
+        <div className="p-3.5 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)] flex items-center justify-center shadow-inner">
           <Icon className="w-6 h-6" />
         </div>
       )}

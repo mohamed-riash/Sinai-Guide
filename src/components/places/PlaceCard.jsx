@@ -48,13 +48,13 @@ export const PlaceCard = memo(({ place }) => {
         {/* Bottom Image Overlay Location & Price */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs z-10">
           <div className="flex items-center gap-1 font-bold text-slate-100 drop-shadow-sm">
-            <MapPin className="w-3.5 h-3.5 text-[#A85F48]" />
+            <MapPin className="w-3.5 h-3.5 text-[var(--color-digital-blue-500)]" />
             <span>{city?.nameAr || city?.name || place.cityId}</span>
           </div>
-          <span className="font-extrabold text-[#C99545] tracking-wider drop-shadow-sm">
+          <span className="font-extrabold text-[var(--color-digital-blue-500)] tracking-wider drop-shadow-sm">
             {place.minPrice !== undefined && place.maxPrice !== undefined
               ? `${place.minPrice} – ${place.maxPrice} ج.م`
-              : place.priceRange || 'سعر مناسب'}
+              : place.priceRange || 'لم يحدد السعر'}
           </span>
         </div>
       </div>
@@ -63,14 +63,18 @@ export const PlaceCard = memo(({ place }) => {
       <div className="p-5 flex-1 flex flex-col justify-between gap-4">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-2">
-            <RatingStars rating={place.rating} size="xs" />
+            {Number(place.reviewCount) > 0 ? (
+              <RatingStars rating={place.rating} size="xs" />
+            ) : (
+              <span className="text-[11px] text-[var(--color-text-muted)]">لا توجد تقييمات بعد</span>
+            )}
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
               ({place.reviewCount} تقييم)
             </span>
           </div>
 
           <Link to={`/places/${place.id}`}>
-            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white group-hover:text-[#A85F48] transition-colors line-clamp-1">
+            <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white group-hover:text-[var(--color-digital-blue-500)] transition-colors line-clamp-1">
               {place.name}
             </h3>
           </Link>
@@ -83,7 +87,7 @@ export const PlaceCard = memo(({ place }) => {
         {/* Card Footer Actions */}
         <div className="pt-3.5 border-t border-slate-200/50 dark:border-white/10 flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5 text-[11px] font-bold">
-            <Clock className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+            <Clock className="w-3.5 h-3.5 text-digital-blue-600 dark:text-digital-blue-400" />
             <span className={place.isOpenNow ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-400 dark:text-slate-500'}>
               {place.isOpenNow ? 'مفتوح الآن' : 'مغلق'}
             </span>

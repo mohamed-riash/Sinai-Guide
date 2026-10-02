@@ -16,11 +16,11 @@ export const Button = ({
   const baseStyles = 'inline-flex items-center justify-center font-bold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none hover:-translate-y-0.5 active:scale-[0.97]';
 
   const variants = {
-    primary: 'bg-[#A85F48] hover:bg-[#874737] text-white shadow-lg shadow-[#A85F48]/25 focus:ring-[#A85F48]',
-    secondary: 'bg-[#174A4D] hover:bg-[#103638] text-white shadow-lg shadow-[#174A4D]/25 focus:ring-[#174A4D]',
-    accent: 'bg-[#C99545] hover:bg-[#b08035] text-white shadow-lg shadow-[#C99545]/25 focus:ring-[#C99545]',
-    glass: 'bg-white/15 dark:bg-white/10 hover:bg-white/25 dark:hover:bg-white/20 text-current backdrop-blur-md border border-white/20 dark:border-white/10 shadow-md focus:ring-[#A85F48]',
-    ghost: 'bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-current focus:ring-[#174A4D]',
+    primary: 'bg-[var(--color-digital-blue-500)] hover:bg-[var(--color-digital-blue-600)] text-white shadow-lg shadow-[var(--color-digital-blue-500)]/25 focus:ring-[var(--color-digital-blue-500)]',
+    secondary: 'bg-[var(--color-digital-blue-700)] hover:bg-[var(--color-digital-blue-800)] text-white shadow-lg shadow-[var(--color-digital-blue-700)]/25 focus:ring-[var(--color-digital-blue-700)]',
+    accent: 'bg-[var(--color-digital-blue-500)] hover:bg-[var(--color-digital-blue-600)] text-white shadow-lg shadow-[var(--color-digital-blue-500)]/25 focus:ring-[var(--color-digital-blue-500)]',
+    glass: 'bg-white/15 dark:bg-white/10 hover:bg-white/25 dark:hover:bg-white/20 text-current backdrop-blur-md border border-white/20 dark:border-white/10 shadow-md focus:ring-[var(--color-digital-blue-500)]',
+    ghost: 'bg-transparent hover:bg-black/5 dark:hover:bg-white/10 text-current focus:ring-[var(--color-digital-blue-700)]',
     danger: 'bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/25 focus:ring-rose-600',
     success: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 focus:ring-emerald-600'
   };
@@ -52,4 +52,3 @@ export const Button = ({
     </button>
   );
 };
-

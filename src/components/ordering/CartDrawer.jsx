@@ -15,7 +15,7 @@ export const CartDrawer = () => {
 
   const [customerName, setCustomerName] = useState(user?.name || '');
   const [customerPhone, setCustomerPhone] = useState(user?.phone || '');
-  const [address, setAddress] = useState('كورنيش العريش، شمال سيناء');
+  const [address, setAddress] = useState('');
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -50,7 +50,7 @@ export const CartDrawer = () => {
       const placeWhatsapp = cart.place?.whatsapp;
 
       if (!placeId) {
-        toastError('لم يتم تحديد المطعم. يرجى إضافة أطباق من قائمة المطعم أولاً.');
+        toastError('لم يتم تحديد المطعم. يرجى إضافة اصناف من قائمة المكان أولاً.');
         setIsSubmitting(false);
         return;
       }
@@ -113,7 +113,7 @@ export const CartDrawer = () => {
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10 shrink-0">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-[#A85F48]/20 text-[#A85F48]">
+                <div className="p-2.5 rounded-xl bg-[var(--color-digital-blue-500)]/20 text-[var(--color-digital-blue-500)]">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
@@ -133,9 +133,9 @@ export const CartDrawer = () => {
             <div className="flex-1 py-4 flex flex-col gap-3">
               {cart.items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-center py-16 text-slate-300">
-                  <ShoppingBag className="w-14 h-14 stroke-1 mb-3 opacity-40 text-[#A85F48]" />
+                  <ShoppingBag className="w-14 h-14 stroke-1 mb-3 opacity-40 text-[var(--color-digital-blue-500)]" />
                   <p className="text-sm font-bold">سلة الطلبات فارغة حالياً</p>
-                  <p className="text-xs text-slate-400 mt-1">أضف أطباق بحرية أو بدوية طازجة من قائمة المطعم.</p>
+                  <p className="text-xs text-slate-400 mt-1">أضف اصناف أو منتجات من قائمة المكان.</p>
                 </div>
               ) : (
                 cart.items.map((item) => (
@@ -146,21 +146,21 @@ export const CartDrawer = () => {
                       )}
                       <div className="truncate">
                         <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
-                        <p className="text-xs text-[#C99545] font-extrabold mt-0.5">{item.price * item.quantity} ج.م</p>
+                        <p className="text-xs text-[var(--color-digital-blue-500)] font-extrabold mt-0.5">{item.price * item.quantity} ج.م</p>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 bg-slate-900/60 p-1.5 rounded-xl shrink-0 border border-white/10">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="p-1 hover:text-[#A85F48] transition text-slate-300"
+                        className="p-1 hover:text-[var(--color-digital-blue-500)] transition text-slate-300"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
                       <span className="text-xs font-bold w-4 text-center">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="p-1 hover:text-[#A85F48] transition text-slate-300"
+                        className="p-1 hover:text-[var(--color-digital-blue-500)] transition text-slate-300"
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
@@ -171,7 +171,7 @@ export const CartDrawer = () => {
 
               {cart.items.length > 0 && (
                 <form onSubmit={handleCheckout} className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#C98268]">معلومات التوصيل</h4>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--color-digital-blue-400)]">معلومات التوصيل</h4>
                   <Input
                     label="الاسم الكامل"
                     icon={User}
@@ -200,7 +200,7 @@ export const CartDrawer = () => {
                     label="ملاحظات على الطلب (اختياري)"
                     icon={MessageSquare}
                     size="sm"
-                    placeholder="أدوات إضافية، حار، صلصة..."
+                    placeholder="اضافات اخرى..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                   />
@@ -213,11 +213,11 @@ export const CartDrawer = () => {
                     </div>
                     <div className="flex justify-between text-slate-300 font-semibold">
                       <span>رسوم التوصيل:</span>
-                      <span>{deliveryFee} ج.م</span>
+                      <span>{deliveryFee == null ? 'غير محددة' : `${deliveryFee} ج.م`}</span>
                     </div>
                     <div className="flex justify-between text-sm font-extrabold text-white pt-2 border-t border-white/10">
                       <span>إجمالي الطلب:</span>
-                      <span className="text-[#E0B66D]">{total} ج.م</span>
+                      <span className="text-[var(--color-digital-blue-300)]">{total} ج.م</span>
                     </div>
                   </div>
 

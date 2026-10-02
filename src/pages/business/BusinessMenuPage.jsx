@@ -155,7 +155,7 @@ export const BusinessMenuPage = () => {
           menu.map((cat, catIdx) => (
             <div key={catIdx} className="glass-panel p-6 flex flex-col gap-4 border border-white/20">
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                <h3 className="text-base font-bold uppercase tracking-wider text-[#D49A45]">{cat.category}</h3>
+                <h3 className="text-base font-bold uppercase tracking-wider text-[var(--color-digital-blue-500)]">{cat.category}</h3>
                 <Button variant="ghost" size="sm" icon={Plus} onClick={() => handleOpenAddModal(cat.category)}>
                   إضافة صنف
                 </Button>
@@ -171,7 +171,7 @@ export const BusinessMenuPage = () => {
                       <div className="truncate">
                         <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">{item.name}</h4>
                         <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">{item.description}</p>
-                        <span className="text-xs font-bold text-[#A66F5B] block mt-1">{item.price} ج.م</span>
+                        <span className="text-xs font-bold text-[var(--color-digital-blue-500)] block mt-1">{item.price} ج.م</span>
                       </div>
                     </div>
 
@@ -239,7 +239,7 @@ export const BusinessMenuPage = () => {
                   placeholder="مكونات الطبق وطريقة التحضير..."
                   value={itemDesc}
                   onChange={(e) => setItemDesc(e.target.value)}
-                  className="w-full p-3 rounded-xl text-xs glass-input text-white focus:outline-none focus:border-[#A85F48]"
+                  className="w-full p-3 rounded-xl text-xs glass-input text-white focus:outline-none focus:border-[var(--color-digital-blue-500)]"
                 />
               </div>
 

@@ -38,7 +38,7 @@ export const MobileNavigation = () => {
               key={item.label}
               to={item.path}
               className={`min-w-0 flex-1 flex flex-col items-center gap-1 py-1.5 px-0.5 rounded-2xl transition duration-200 relative ${
-                active ? 'text-[#A85F48] dark:text-[#C98268]' : 'text-slate-500 dark:text-slate-400'
+                active ? 'text-[var(--color-digital-blue-500)] dark:text-[var(--color-digital-blue-400)]' : 'text-slate-500 dark:text-slate-400'
               }`}
             >
               <Icon className={`w-5 h-5 ${active ? 'scale-110' : ''} transition-transform duration-200`} />
@@ -46,7 +46,7 @@ export const MobileNavigation = () => {
               {active && (
                 <motion.span
                   layoutId="mobileNavActive"
-                  className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-[#A85F48]"
+                  className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-[var(--color-digital-blue-500)]"
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}

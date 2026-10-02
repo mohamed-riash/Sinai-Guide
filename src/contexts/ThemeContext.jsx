@@ -8,7 +8,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#174A4D' : '#A85F48');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#003d99' : '#0066ff');
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {

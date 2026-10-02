@@ -62,7 +62,7 @@ export const DashboardLayout = ({ children, title = 'لوحة تحكم النش�
             </button>
 
             <div className="flex items-center gap-2.5 pr-3 border-r border-white/10">
-              <UserAvatar src={user?.avatar} name={user?.name} className="w-8 h-8 rounded-xl object-cover border border-[#A85F48]" />
+              <UserAvatar src={user?.avatar} name={user?.name} className="w-8 h-8 rounded-xl object-cover border border-[var(--color-digital-blue-500)]" />
               <span className="hidden sm:inline text-xs font-bold text-slate-700 dark:text-slate-200">
                 {user?.name}
               </span>

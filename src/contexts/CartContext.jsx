@@ -66,8 +66,8 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   const subtotal = useMemo(() => cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cart.items]);
-  const deliveryFee = cart.items.length > 0 ? 30 : 0;
-  const total = subtotal + deliveryFee;
+  const deliveryFee = cart.items.length > 0 ? null : 0;
+  const total = subtotal + (deliveryFee ?? 0);
   const totalItemCount = useMemo(() => cart.items.reduce((sum, item) => sum + item.quantity, 0), [cart.items]);
   const value = useMemo(() => ({ cart, isOpen, setIsOpen, addItem, updateQuantity, removeItem, clearCart, subtotal, deliveryFee, total, totalItemCount }), [cart, isOpen, addItem, updateQuantity, removeItem, clearCart, subtotal, deliveryFee, total, totalItemCount]);
 

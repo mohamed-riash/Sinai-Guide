@@ -35,12 +35,12 @@ export const Sidebar = ({ onCloseMobile }) => {
       <div className="flex flex-col gap-6">
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2.5 px-2">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#A85F48] to-[#C99545] flex items-center justify-center text-white shadow-md">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-md">
             <Compass className="w-5 h-5" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display font-black text-base tracking-tight text-[#174A4D] dark:text-teal-300">
-              دليل<span className="text-[#A85F48]"> سيناء</span>
+            <span className="font-display font-black text-base tracking-tight text-[var(--color-digital-blue-700)] dark:text-digital-blue-300">
+              دليل<span className="text-[var(--color-digital-blue-500)]"> سيناء</span>
             </span>
             <span className="text-[9px] uppercase tracking-widest text-[var(--color-text-muted)] font-bold">
               {user?.role === 'admin' ? 'بوابة الإدارة' : 'إدارة الأنشطة'}
@@ -50,10 +50,10 @@ export const Sidebar = ({ onCloseMobile }) => {
 
         {/* Business Badge */}
         <div className="px-3 py-2.5 rounded-xl glass-l1 border border-white/20 dark:border-white/10 flex items-center gap-3">
-          <UserAvatar src={user?.avatar} name={user?.name} className="w-9 h-9 rounded-xl object-cover border-2 border-[#A85F48]" />
+          <UserAvatar src={user?.avatar} name={user?.name} className="w-9 h-9 rounded-xl object-cover border-2 border-[var(--color-digital-blue-500)]" />
           <div className="flex flex-col truncate">
             <span className="text-xs font-bold text-[var(--color-text-primary)] truncate">{user?.name}</span>
-            <span className="text-[10px] text-teal-500 font-bold capitalize">{user?.role === 'business_owner' ? 'صاحب نشاط' : 'مدير المنصة'}</span>
+            <span className="text-[10px] text-digital-blue-500 font-bold capitalize">{user?.role === 'business_owner' ? 'صاحب نشاط' : 'مدير المنصة'}</span>
           </div>
         </div>
 
@@ -68,20 +68,19 @@ export const Sidebar = ({ onCloseMobile }) => {
                 key={item.path}
                 to={item.path}
                 onClick={onCloseMobile}
-                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition duration-200 ${
-                  active
+                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition duration-200 ${active
                     ? 'text-white'
                     : 'text-[var(--color-text-primary)] hover:bg-white/20 dark:hover:bg-white/10'
-                }`}
+                  }`}
               >
                 {active && (
                   <motion.div
                     layoutId="sidebarActive"
-                    className="absolute inset-0 bg-[#A85F48] rounded-xl shadow-md shadow-[#A85F48]/30"
+                    className="absolute inset-0 bg-[var(--color-digital-blue-500)] rounded-xl shadow-md shadow-[var(--color-digital-blue-500)]/30"
                     transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                   />
                 )}
-                <Icon className={`w-4 h-4 relative z-10 ${active ? 'text-white' : 'text-[#A85F48]'}`} />
+                <Icon className={`w-4 h-4 relative z-10 ${active ? 'text-white' : 'text-[var(--color-digital-blue-500)]'}`} />
                 <span className="relative z-10">{item.label}</span>
               </Link>
             );
@@ -93,10 +92,10 @@ export const Sidebar = ({ onCloseMobile }) => {
       <div className="pt-4 border-t border-slate-200/40 dark:border-white/10 flex flex-col gap-2">
         <Link
           to="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:text-[#A85F48] transition"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-digital-blue-500)] transition"
         >
           <ArrowRight className="w-4 h-4" />
-          <span>العودة للموقع الرئيسي</span>
+          <span>العودة للصفحة الرئيسية </span>
         </Link>
 
         <button

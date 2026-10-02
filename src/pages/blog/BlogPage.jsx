@@ -27,7 +27,7 @@ export const BlogPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mb-10"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-terracotta)]">مدونة سفر سيناء</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">مدونة سفر سيناء</span>
           <h1 className="text-3xl sm:text-4xl font-extrabold font-display text-[var(--color-text-primary)] mt-1.5">
             قصص، ثقافة ودليل سفر
           </h1>
@@ -42,7 +42,7 @@ export const BlogPage = () => {
               <Link to={`/blog/${post.slug}`} className="glass-card p-0 overflow-hidden flex flex-col group h-full transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl">
                 <div className="aspect-[16/10] overflow-hidden relative">
                   <img src={post.image} srcSet={responsiveImageSrcSet(post.image)} sizes="(max-width: 767px) 100vw, 33vw" alt={post.titleAr || post.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
-                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-bold bg-[var(--color-terracotta)] text-white shadow-md">
+                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-bold bg-[var(--color-digital-blue-500)] text-white shadow-md">
                     {post.category}
                   </span>
                 </div>
@@ -50,12 +50,12 @@ export const BlogPage = () => {
                 <div className="p-6 flex flex-col justify-between flex-1 gap-4">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-3 text-xs text-[var(--color-text-muted)]">
-                      <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-[var(--color-gold)]" /> {post.date}</span>
+                      <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-[var(--color-digital-blue-500)]" /> {post.date}</span>
                       <span>•</span>
                       <span>{post.readTime}</span>
                     </div>
 
-                    <h2 className="font-display font-bold text-xl text-[var(--color-text-primary)] group-hover:text-[var(--color-terracotta)] transition-colors line-clamp-2">
+                    <h2 className="font-display font-bold text-xl text-[var(--color-text-primary)] group-hover:text-[var(--color-digital-blue-500)] transition-colors line-clamp-2">
                       {post.titleAr || post.title}
                     </h2>
 
@@ -64,7 +64,7 @@ export const BlogPage = () => {
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-[var(--color-border-subtle)] flex items-center justify-between text-xs font-bold text-[var(--color-terracotta)]">
+                  <div className="pt-3 border-t border-[var(--color-border-subtle)] flex items-center justify-between text-xs font-bold text-[var(--color-digital-blue-500)]">
                     <span>بقلم {post.author}</span>
                     <span className="flex items-center gap-1 group-hover:-translate-x-1 transition-transform">اقرأ المزيد <ChevronLeft className="w-3.5 h-3.5" /></span>
                   </div>

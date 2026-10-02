@@ -6,6 +6,7 @@ import { Container } from '../../components/common/Container';
 import { GlassCard } from '../../components/common/GlassCard';
 import { Button } from '../../components/common/Button';
 import { CITIES } from '../../data/cities';
+import { placeService } from '../../services/placeService';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 25 },
@@ -25,7 +26,7 @@ export const CitiesPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mb-8"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">مدن شمال سيناء</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">مدن شمال سيناء</span>
           <h1 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
             اكتشف مدن شمال سيناء
           </h1>
@@ -47,13 +48,13 @@ export const CitiesPage = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
                   <div className="absolute top-4 right-4">
-                    <span className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#A85F48] text-white shadow-lg">
-                      {city.attractionCount}+ مكان
+                    <span className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-[var(--color-digital-blue-500)] text-white shadow-lg">
+                      {placeService.getByCity(city.id).length} مكان مسجل
                     </span>
                   </div>
                   <div className="absolute bottom-4 right-4 left-4 text-white">
-                    <span className="text-xs uppercase font-extrabold tracking-widest text-teal-300">
-                      عدد السكان {city.population}
+                    <span className="text-xs uppercase font-extrabold tracking-widest text-digital-blue-300">
+                      دليل {city.nameAr}
                     </span>
                     <h2 className="text-2xl font-black font-display">{city.nameAr} ({city.name})</h2>
                   </div>
@@ -89,4 +90,3 @@ export const CitiesPage = () => {
     </div>
   );
 };
-

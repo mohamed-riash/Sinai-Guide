@@ -38,14 +38,14 @@ export const BusinessBookingsPage = () => {
             {bookings.map(bk => (
               <GlassCard key={bk.id} hover={false} className="flex flex-col gap-3 p-5">
                 <div className="flex items-center justify-between pb-2 border-b border-white/10 text-xs">
-                  <span className="font-bold text-[#A66F5B]">{bk.id}</span>
+                  <span className="font-bold text-[var(--color-digital-blue-500)]">{bk.id}</span>
                   <select
                     value={bk.status}
                     onChange={(e) => handleStatusChange(bk.id, e.target.value)}
                     className="py-1 px-2.5 rounded-lg text-xs font-semibold glass-input cursor-pointer"
                   >
                     <option value="pending" className="bg-slate-900 text-amber-400">قيد الانتظار</option>
-                    <option value="confirmed" className="bg-slate-900 text-teal-400">تم التأكيد</option>
+                    <option value="confirmed" className="bg-slate-900 text-digital-blue-400">تم التأكيد</option>
                     <option value="completed" className="bg-slate-900 text-emerald-400">مكتمل</option>
                     <option value="cancelled" className="bg-slate-900 text-rose-400">ملغي</option>
                   </select>
@@ -54,8 +54,8 @@ export const BusinessBookingsPage = () => {
                 <div className="flex flex-col gap-1.5 text-xs text-slate-300">
                   <p className="font-bold text-slate-900 dark:text-white text-sm">{bk.customerName}</p>
                   <p className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-amber-400" /> {bk.customerPhone}</p>
-                  <p className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-teal-400" /> {bk.date} الساعة {bk.time}</p>
-                  <p className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[#A66F5B]" /> {bk.guests} ضيوف</p>
+                  <p className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-digital-blue-400" /> {bk.date} الساعة {bk.time}</p>
+                  <p className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[var(--color-digital-blue-500)]" /> {bk.guests} ضيوف</p>
                   {bk.notes && <p className="italic text-slate-400 mt-1">"{bk.notes}"</p>}
                 </div>
               </GlassCard>

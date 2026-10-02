@@ -8,7 +8,7 @@ export const NotFoundPage = () => {
   return (
     <div className="py-20 flex items-center justify-center min-h-[70vh]">
       <Container className="max-w-md text-center flex flex-col items-center gap-6">
-        <div className="w-20 h-20 rounded-3xl bg-[var(--color-terracotta)]/20 text-[var(--color-terracotta)] flex items-center justify-center mb-2 animate-bounce shadow-lg">
+        <div className="w-20 h-20 rounded-3xl bg-[var(--color-digital-blue-500)]/20 text-[var(--color-digital-blue-500)] flex items-center justify-center mb-2 animate-bounce shadow-lg">
           <Compass className="w-10 h-10" />
         </div>
         <h1 className="text-5xl font-extrabold font-display text-[var(--color-text-primary)]">404</h1>

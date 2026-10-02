@@ -31,7 +31,7 @@ export const BusinessSettingsPage = () => {
               <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">فتح محادثة الواتساب تلقائياً مع العميل عند إتمام عملية الشراء</p>
             </div>
           </div>
-          <input type="checkbox" defaultChecked className="w-5 h-5 text-emerald-600 rounded accent-[#174A4D] cursor-pointer" />
+          <input type="checkbox" defaultChecked className="w-5 h-5 text-emerald-600 rounded accent-[var(--color-digital-blue-700)] cursor-pointer" />
         </div>
 
         <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-subtle)]">
@@ -44,7 +44,7 @@ export const BusinessSettingsPage = () => {
               <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">تلقي تنبيه فور ورود طلب حجز طاولة جديدة من أحد الضيوف</p>
             </div>
           </div>
-          <input type="checkbox" defaultChecked className="w-5 h-5 text-[#A85F48] rounded accent-[#A85F48] cursor-pointer" />
+          <input type="checkbox" defaultChecked className="w-5 h-5 text-[var(--color-digital-blue-500)] rounded accent-[var(--color-digital-blue-500)] cursor-pointer" />
         </div>
 
         <div className="pt-2 flex justify-end">

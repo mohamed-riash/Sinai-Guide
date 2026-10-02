@@ -35,7 +35,7 @@ export const PlaceFilterDrawer = ({
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-[#A85F48]" />
+                  <Filter className="w-5 h-5 text-[var(--color-digital-blue-500)]" />
                   <h3 className="text-lg font-bold font-display text-[var(--color-text-primary)]">تصفية الأماكن</h3>
                 </div>
                 <button
@@ -101,7 +101,7 @@ export const PlaceFilterDrawer = ({
                   type="checkbox"
                   checked={filters.isOpenNow}
                   onChange={(e) => setFilters(prev => ({ ...prev, isOpenNow: e.target.checked }))}
-                  className="w-4 h-4 rounded text-[#A85F48] focus:ring-[#A85F48]"
+                  className="w-4 h-4 rounded text-[var(--color-digital-blue-500)] focus:ring-[var(--color-digital-blue-500)]"
                 />
                 <span className="text-sm font-semibold text-[var(--color-text-primary)]">مفتوح الآن فقط</span>
               </label>

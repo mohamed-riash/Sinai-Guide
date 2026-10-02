@@ -38,10 +38,10 @@ export const AnimatedActionButton = ({
         fullWidth ? 'w-full' : 'w-auto'
       } ${
         success
-          ? 'bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-600 shadow-emerald-900/40 border border-emerald-400/30'
+          ? 'bg-gradient-to-r from-emerald-600 via-emerald-700 to-emerald-600 shadow-emerald-900/40 border border-emerald-400/30'
           : loading
           ? 'bg-slate-700/80 cursor-wait border border-white/10'
-          : 'bg-gradient-to-r from-[#A85F48] via-[#944F3A] to-[#874737] hover:from-[#B86F58] hover:to-[#975747] shadow-[#A85F48]/35 border border-white/20'
+          : 'bg-gradient-to-r from-[var(--color-digital-blue-500)] via-[var(--color-digital-blue-400)] to-[var(--color-digital-blue-600)] hover:from-[var(--color-digital-blue-600)] hover:to-[var(--color-digital-blue-700)] shadow-[var(--color-digital-blue-500)]/35 border border-white/20'
       } ${className}`}
     >
       {/* Background Animated Shimmer Glow */}

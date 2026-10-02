@@ -76,7 +76,7 @@ export const PlaceDetailsPage = () => {
       <Container>
         {/* Breadcrumb */}
         <motion.div initial="hidden" animate="visible" variants={fadeIn}>
-          <Link to="/explore" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#A85F48] hover:underline mb-4">
+          <Link to="/explore" className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--color-digital-blue-500)] hover:underline mb-4">
             <ArrowRight className="w-4 h-4" /> العودة للاستكشاف
           </Link>
         </motion.div>
@@ -97,7 +97,7 @@ export const PlaceDetailsPage = () => {
                 {city?.nameAr || city?.name || place.cityId} • {
                   place.minPrice !== undefined && place.maxPrice !== undefined
                     ? `${place.minPrice} – ${place.maxPrice} ج.م`
-                    : place.priceRange || 'سعر مناسب'
+                    : place.priceRange || 'لم يحدد السعر'
                 }
               </span>
             </div>
@@ -107,7 +107,7 @@ export const PlaceDetailsPage = () => {
             </h1>
 
             <div className="flex items-center gap-4 text-xs flex-wrap">
-              <RatingStars rating={place.rating} size="sm" />
+              {reviews.length > 0 ? <RatingStars rating={place.rating} size="sm" /> : <span className="text-[var(--color-text-muted)]">لا توجد تقييمات بعد</span>}
               <span className="text-[var(--color-text-muted)] font-semibold">({place.reviewCount} تقييم)</span>
               <span className="text-slate-400">•</span>
               <span className={place.isOpenNow ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-slate-400'}>
@@ -168,7 +168,7 @@ export const PlaceDetailsPage = () => {
               {/* Amenities */}
               {place.amenities && place.amenities.length > 0 && (
                 <div className="pt-4 border-t border-slate-200/40 dark:border-white/10 mt-2">
-                  <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#A85F48] mb-3">المرافق والمميزات</h4>
+                  <h4 className="text-xs font-extrabold uppercase tracking-wider text-[var(--color-digital-blue-500)] mb-3">المرافق والمميزات</h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {place.amenities.map((item, i) => (
                       <motion.div
@@ -208,7 +208,7 @@ export const PlaceDetailsPage = () => {
                         onClick={() => setActiveMenuTab(idx)}
                         className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
                           activeMenuTab === idx
-                            ? 'bg-[#A85F48] text-white shadow-md'
+                            ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md'
                             : 'glass-input hover:bg-white/30'
                         }`}
                       >
@@ -241,7 +241,7 @@ export const PlaceDetailsPage = () => {
                           <div className="truncate">
                             <h5 className="text-xs font-extrabold text-[var(--color-text-primary)] truncate">{item.name}</h5>
                             <p className="text-[11px] text-[var(--color-text-secondary)] line-clamp-1 mt-0.5 font-normal">{item.description}</p>
-                            <span className="text-xs font-black text-[#A85F48] block mt-1">{item.price} ج.م</span>
+                            <span className="text-xs font-black text-[var(--color-digital-blue-500)] block mt-1">{item.price} ج.م</span>
                           </div>
                         </div>
 
@@ -270,7 +270,7 @@ export const PlaceDetailsPage = () => {
                 <h3 className="text-xl font-black font-display text-[var(--color-text-primary)]">
                   تقييمات العملاء ({reviews.length})
                 </h3>
-                <RatingStars rating={place.rating} size="sm" />
+                {reviews.length > 0 ? <RatingStars rating={place.rating} size="sm" /> : <span className="text-xs text-[var(--color-text-muted)]">لا توجد تقييمات بعد</span>}
               </div>
 
               <ReviewForm placeId={place.id} onReviewAdded={handleReviewAdded} />
@@ -285,12 +285,12 @@ export const PlaceDetailsPage = () => {
               <h3 className="text-lg font-black font-display text-[var(--color-text-primary)]">الموقع والتواصل</h3>
 
               <div className="flex items-start gap-3 text-xs font-bold text-[var(--color-text-secondary)]">
-                <MapPin className="w-4 h-4 text-[#A85F48] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[var(--color-digital-blue-500)] shrink-0 mt-0.5" />
                 <span>{place.location?.address || place.address}</span>
               </div>
 
               <div className="flex items-center gap-3 text-xs font-bold text-[var(--color-text-secondary)]">
-                <Clock className="w-4 h-4 text-teal-500 shrink-0" />
+                <Clock className="w-4 h-4 text-digital-blue-500 shrink-0" />
                 <span>
                   {place.openingTime && place.closingTime
                     ? `${place.openingTime} — ${place.closingTime}`
@@ -299,7 +299,7 @@ export const PlaceDetailsPage = () => {
               </div>
 
               <div className="flex items-center gap-3 text-xs font-bold text-[var(--color-text-secondary)]">
-                <Phone className="w-4 h-4 text-[#C99545] shrink-0" />
+                <Phone className="w-4 h-4 text-[var(--color-digital-blue-500)] shrink-0" />
                 <span dir="ltr">{place.phone}</span>
               </div>
 

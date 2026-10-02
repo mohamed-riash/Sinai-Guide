@@ -24,7 +24,7 @@ export const SettingsPage = () => {
           {/* Theme Preference */}
           <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-subtle)]">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-[var(--color-terracotta)]/15 text-[var(--color-terracotta)]">
+              <div className="p-3 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)]">
                 {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
               </div>
               <div>
@@ -40,7 +40,7 @@ export const SettingsPage = () => {
           {/* Notifications */}
           <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-subtle)]">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-[var(--color-teal)]/15 text-[var(--color-teal)] dark:text-teal-300">
+              <div className="p-3 rounded-2xl bg-[var(--color-digital-blue-700)]/15 text-[var(--color-digital-blue-700)] dark:text-digital-blue-300">
                 <Bell className="w-5 h-5" />
               </div>
               <div>
@@ -48,13 +48,13 @@ export const SettingsPage = () => {
                 <p className="text-xs text-[var(--color-text-secondary)]">استلام تنبيهات حالة الطلبات وتأكيد الحجوزات</p>
               </div>
             </div>
-            <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-[var(--color-terracotta)] accent-[var(--color-terracotta)]" />
+            <input type="checkbox" defaultChecked className="w-5 h-5 rounded text-[var(--color-digital-blue-500)] accent-[var(--color-digital-blue-500)]" />
           </div>
 
           {/* Privacy & Storage */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-2xl bg-[var(--color-gold)]/15 text-[var(--color-gold)]">
+              <div className="p-3 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)]">
                 <Shield className="w-5 h-5" />
               </div>
               <div>

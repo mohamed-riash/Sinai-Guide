@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle, AlertCircle, Info, X, AlertTriangle } from 'lucide-react';
 
 export const ToastContext = createContext();
+let nextToastId = 0;
 
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
@@ -12,7 +13,7 @@ export const ToastProvider = ({ children }) => {
   }, []);
 
   const addToast = useCallback((message, type = 'info', duration = 4000) => {
-    const id = Date.now() + Math.random();
+    const id = ++nextToastId;
     setToasts(prev => [...prev, { id, message, type }]);
 
     setTimeout(() => {
@@ -43,13 +44,13 @@ export const ToastProvider = ({ children }) => {
                 t.type === 'success' ? 'bg-emerald-950/85 text-emerald-100 border-emerald-500/40 shadow-emerald-950/30' :
                 t.type === 'error' ? 'bg-rose-950/85 text-rose-100 border-rose-500/40 shadow-rose-950/30' :
                 t.type === 'warning' ? 'bg-amber-950/85 text-amber-100 border-amber-500/40 shadow-amber-950/30' :
-                'bg-slate-900/85 text-slate-100 border-teal-500/40 shadow-slate-950/30'
+                'bg-slate-900/85 text-slate-100 border-digital-blue-500/40 shadow-slate-950/30'
               }`}
             >
               {t.type === 'success' && <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />}
               {t.type === 'error' && <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />}
               {t.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />}
-              {t.type === 'info' && <Info className="w-5 h-5 text-teal-400 shrink-0" />}
+              {t.type === 'info' && <Info className="w-5 h-5 text-digital-blue-400 shrink-0" />}
               
               <span className="flex-1 leading-snug">{t.message}</span>
               

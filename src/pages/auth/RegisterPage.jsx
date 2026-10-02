@@ -80,7 +80,7 @@ export const RegisterPage = () => {
         >
           {/* Header */}
           <div className="flex flex-col items-center text-center gap-2">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#A85F48] to-[#C99545] flex items-center justify-center text-white shadow-lg mb-2">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-lg mb-2">
               <Compass className="w-7 h-7 animate-spin-slow" />
             </div>
             <h1 className="text-2xl font-black font-display text-[var(--color-text-primary)]">إنشاء حساب جديد</h1>
@@ -93,7 +93,7 @@ export const RegisterPage = () => {
               type="button"
               onClick={() => setRole('customer')}
               className={`py-2.5 rounded-xl text-xs font-bold transition ${
-                role === 'customer' ? 'bg-[#A85F48] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[#A85F48]'
+                role === 'customer' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-digital-blue-500)]'
               }`}
             >
               سائح / مقيم
@@ -102,7 +102,7 @@ export const RegisterPage = () => {
               type="button"
               onClick={() => setRole('business_owner')}
               className={`py-2.5 rounded-xl text-xs font-bold transition ${
-                role === 'business_owner' ? 'bg-[#174A4D] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[#174A4D]'
+                role === 'business_owner' ? 'bg-[var(--color-digital-blue-700)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-digital-blue-700)]'
               }`}
             >
               صاحب نشاط تجاري
@@ -168,7 +168,7 @@ export const RegisterPage = () => {
 
           <div className="pt-4 border-t border-slate-200/40 dark:border-white/10 text-center text-xs text-[var(--color-text-muted)] font-semibold">
             لديك حساب بالفعل؟{' '}
-            <Link to="/login" className="font-bold text-[#A85F48] hover:underline">
+            <Link to="/login" className="font-bold text-[var(--color-digital-blue-500)] hover:underline">
               تسجيل الدخول
             </Link>
           </div>

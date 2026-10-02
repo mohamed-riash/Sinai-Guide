@@ -25,7 +25,7 @@ export const BlogPostPage = () => {
   return (
     <div className="py-8 flex flex-col gap-8">
       <Container className="max-w-4xl">
-        <Link to="/blog" className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--color-terracotta)] hover:underline mb-4">
+        <Link to="/blog" className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--color-digital-blue-500)] hover:underline mb-4">
           <ArrowLeft className="w-4 h-4" /> العودة للمدونة
         </Link>
 
@@ -45,10 +45,10 @@ export const BlogPostPage = () => {
           <div className="flex items-center justify-between text-xs text-[var(--color-text-secondary)] pt-2 border-b border-[var(--color-border-subtle)] pb-4">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1 font-semibold text-[var(--color-text-primary)]">
-                <User className="w-3.5 h-3.5 text-[var(--color-terracotta)]" /> {post.author}
+                <User className="w-3.5 h-3.5 text-[var(--color-digital-blue-500)]" /> {post.author}
               </span>
               <span className="flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-[var(--color-teal-soft)]" /> {post.date}
+                <Calendar className="w-3.5 h-3.5 text-[var(--color-digital-blue-600)]" /> {post.date}
               </span>
             </div>
 
@@ -83,7 +83,7 @@ export const BlogPostPage = () => {
           {/* Tags */}
           {post.tags && (
             <div className="pt-6 border-t border-[var(--color-border-subtle)] flex items-center gap-2">
-              <Tag className="w-4 h-4 text-[var(--color-terracotta)]" />
+              <Tag className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag, i) => (
                   <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-black/5 dark:bg-white/10 border border-[var(--color-border-subtle)] text-[var(--color-text-secondary)]">

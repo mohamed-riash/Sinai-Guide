@@ -30,8 +30,8 @@ export const BusinessOnboardingPage = () => {
   // Location Picker Options
   const [locationData, setLocationData] = useState({
     address: '',
-    latitude: 31.1350,
-    longitude: 33.7990,
+    latitude: null,
+    longitude: null,
   });
 
   // Working Hours Time Range
@@ -76,7 +76,8 @@ export const BusinessOnboardingPage = () => {
 
     setLoading(true);
     try {
-      const currentOwnerId = user?.id || `user-${Date.now()}`;
+      if (!user?.id) throw new Error('يجب تسجيل الدخول قبل إضافة نشاط تجاري.');
+      const currentOwnerId = user.id;
       
       // Create place record with status: pending
       const newPlace = placeService.create({
@@ -89,7 +90,9 @@ export const BusinessOnboardingPage = () => {
         priceRange: `${minPrice} – ${maxPrice} ج.م`,
         location: locationData,
         address: locationData.address,
-        coordinates: { lat: locationData.latitude, lng: locationData.longitude },
+        coordinates: locationData.latitude != null && locationData.longitude != null
+          ? { lat: locationData.latitude, lng: locationData.longitude }
+          : null,
         openingTime,
         closingTime,
         openingHours: `${openingTime} — ${closingTime}`,
@@ -132,7 +135,7 @@ export const BusinessOnboardingPage = () => {
           className="glass-panel p-4 sm:p-10 flex flex-col gap-8 border border-white/20 dark:border-white/10 shadow-2xl rounded-3xl w-full"
         >
           <div className="flex flex-col gap-2 text-right">
-            <span className="text-xs font-black uppercase tracking-widest text-[#A85F48]">معالج التسجيل والتقديم</span>
+            <span className="text-xs font-black uppercase tracking-widest text-[var(--color-digital-blue-500)]">معالج التسجيل والتقديم</span>
             <h1 className="text-2xl sm:text-3xl font-black font-display text-[var(--color-text-primary)]">
               سجّل نشاطك التجاري في دليل سيناء
             </h1>
@@ -177,7 +180,7 @@ export const BusinessOnboardingPage = () => {
             <div className="flex flex-col gap-4">
               <h3 className="text-base font-bold font-display text-[var(--color-text-primary)] pb-2 border-b border-[var(--color-border-subtle)] flex items-center justify-between">
                 <span>نطاق الأسعار الحقيقي (بالجنيه المصري)</span>
-                <span className="text-xs font-semibold text-[var(--color-gold)]">{minPrice} – {maxPrice} ج.م</span>
+                <span className="text-xs font-semibold text-[var(--color-digital-blue-500)]">{minPrice} – {maxPrice} ج.م</span>
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -213,7 +216,7 @@ export const BusinessOnboardingPage = () => {
             {/* Working Hours Time Inputs */}
             <div className="flex flex-col gap-4">
               <h3 className="text-base font-bold font-display text-[var(--color-text-primary)] pb-2 border-b border-[var(--color-border-subtle)] flex items-center gap-2">
-                <Clock className="w-5 h-5 text-teal-500" />
+                <Clock className="w-5 h-5 text-digital-blue-500" />
                 <span>مواعيد العمل اليومية</span>
               </h3>
 
@@ -259,7 +262,7 @@ export const BusinessOnboardingPage = () => {
                 placeholder="صِف أطباقك المميزة، الأجواء، الإطلالة، والتخصصات..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[#A85F48]"
+                className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-digital-blue-500)]"
               />
             </div>
 

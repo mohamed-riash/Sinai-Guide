@@ -1,67 +1,62 @@
 @import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 
+@theme {
+  --color-digital-blue-50: #e5f0ff;
+  --color-digital-blue-100: #cce0ff;
+  --color-digital-blue-200: #99c2ff;
+  --color-digital-blue-300: #66a3ff;
+  --color-digital-blue-400: #3385ff;
+  --color-digital-blue-500: #0066ff;
+  --color-digital-blue-600: #0052cc;
+  --color-digital-blue-700: #003d99;
+  --color-digital-blue-800: #002966;
+  --color-digital-blue-900: #001433;
+  --color-digital-blue-950: #000e24;
+}
+
 :root {
   --font-display: 'Cairo', system-ui, -apple-system, sans-serif;
   --font-body: 'Cairo', system-ui, -apple-system, sans-serif;
 
-  /* Premium Sinai Color Palette (Light Mode) */
-  --color-terracotta: #A85F48;
-  --color-terracotta-dark: #874737;
-  --color-terracotta-soft: #C98268;
-
-  --color-teal: #174A4D;
-  --color-teal-dark: #103638;
-  --color-teal-soft: #2E6869;
-
-  --color-gold: #C99545;
-  --color-gold-soft: #E0B66D;
-
-  --color-cream: #F7F2EA;
-  --color-sand: #EEE4D6;
-  --color-white: #FFFCF8;
-
-  --color-text-primary: #1C292A;
-  --color-text-secondary: #526060;
-  --color-text-muted: #7A8584;
-
-  --color-border-light: rgba(23, 74, 77, 0.12);
-  --color-border-hover: rgba(168, 95, 72, 0.35);
-
-  --color-bg: var(--color-cream);
-  --color-surface: var(--color-white);
-  --color-surface-secondary: var(--color-sand);
+  --color-bg: #f7f9fc;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #eef4fc;
+  --color-text-primary: #172435;
+  --color-text-secondary: #52657d;
+  --color-text-muted: #748398;
+  --color-border-light: rgba(0, 61, 153, 0.12);
+  --color-border-hover: rgba(0, 102, 255, 0.32);
 
   /* Glassmorphism 2.0 Levels - Light */
-  --glass-l1: rgba(255, 252, 248, 0.75);
-  --glass-l2: rgba(255, 252, 248, 0.88);
-  --glass-l3: rgba(255, 252, 248, 0.96);
-  --glass-border: rgba(23, 74, 77, 0.12);
-  --glass-shadow: 0 10px 30px -5px rgba(23, 74, 77, 0.08), 0 4px 12px -2px rgba(168, 95, 72, 0.05);
-  --glass-shadow-lg: 0 20px 45px -10px rgba(23, 74, 77, 0.16);
-  --glass-blur-sm: blur(8px) saturate(160%);
-  --glass-blur-md: blur(16px) saturate(180%);
-  --glass-blur-lg: blur(24px) saturate(200%);
+  --glass-l1: rgba(255, 255, 255, 0.72);
+  --glass-l2: rgba(255, 255, 255, 0.86);
+  --glass-l3: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(0, 61, 153, 0.12);
+  --glass-shadow: 0 10px 28px -8px rgba(0, 41, 102, 0.10);
+  --glass-shadow-lg: 0 18px 38px -12px rgba(0, 41, 102, 0.16);
+  --glass-blur-sm: blur(5px) saturate(125%);
+  --glass-blur-md: blur(9px) saturate(135%);
+  --glass-blur-lg: blur(12px) saturate(140%);
 }
 
 [data-theme="dark"] {
-  /* Premium Sinai Color Palette (Dark Mode) */
-  --color-bg: #0B191A;
-  --color-surface: #122627;
-  --color-surface-secondary: #193132;
+  --color-bg: #000e24;
+  --color-surface: #001433;
+  --color-surface-secondary: #002966;
 
-  --color-text-primary: #F7F2EA;
-  --color-text-secondary: #C2CCCA;
-  --color-text-muted: #8F9D9A;
+  --color-text-primary: #f5f8ff;
+  --color-text-secondary: #c1cde0;
+  --color-text-muted: #91a3bf;
 
   --color-border-light: rgba(255, 255, 255, 0.10);
-  --color-border-hover: rgba(201, 149, 69, 0.35);
+  --color-border-hover: rgba(102, 163, 255, 0.4);
 
   /* Glassmorphism 2.0 Levels - Dark */
-  --glass-l1: rgba(18, 38, 39, 0.65);
-  --glass-l2: rgba(18, 38, 39, 0.82);
-  --glass-l3: rgba(25, 49, 50, 0.94);
-  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-l1: rgba(0, 20, 51, 0.70);
+  --glass-l2: rgba(0, 20, 51, 0.84);
+  --glass-l3: rgba(0, 41, 102, 0.94);
+  --glass-border: rgba(102, 163, 255, 0.16);
   --glass-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.45);
   --glass-shadow-lg: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
 }
@@ -181,9 +176,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .glass-input:focus {
   outline: none;
-  border-color: var(--color-terracotta);
+  border-color: var(--color-digital-blue-500);
   background: var(--color-surface);
-  box-shadow: 0 0 0 3px rgba(168, 95, 72, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.22);
 }
 
 /* Ambient Background Blobs */
@@ -192,7 +187,7 @@ h1, h2, h3, h4, h5, h6 {
   width: min(500px, 60vw);
   height: min(500px, 60vw);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 95, 72, 0.16) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.10) 0%, rgba(0, 0, 0, 0) 70%);
   pointer-events: none;
 }
 
@@ -201,7 +196,7 @@ h1, h2, h3, h4, h5, h6 {
   width: min(550px, 60vw);
   height: min(550px, 60vw);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(23, 74, 77, 0.20) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(0, 61, 153, 0.10) 0%, rgba(0, 0, 0, 0) 70%);
   pointer-events: none;
 }
 
@@ -210,7 +205,7 @@ h1, h2, h3, h4, h5, h6 {
   width: min(400px, 60vw);
   height: min(400px, 60vw);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(201, 149, 69, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(51, 133, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
   pointer-events: none;
 }
 
@@ -227,9 +222,9 @@ h1, h2, h3, h4, h5, h6 {
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(23, 74, 77, 0.06) 25%,
-    rgba(168, 95, 72, 0.12) 37%,
-    rgba(23, 74, 77, 0.06) 63%
+    rgba(0, 61, 153, 0.05) 25%,
+    rgba(0, 102, 255, 0.10) 37%,
+    rgba(0, 61, 153, 0.05) 63%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
@@ -255,11 +250,11 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #C98268;
+  background: #66a3ff;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-terracotta);
+  background: var(--color-digital-blue-500);
 }
 
 /* Leaflet Overrides */
@@ -272,11 +267,11 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 767px) {
   :root {
-    --glass-blur-sm: blur(4px) saturate(130%);
-    --glass-blur-md: blur(8px) saturate(140%);
-    --glass-blur-lg: blur(12px) saturate(150%);
-    --glass-shadow: 0 6px 18px -5px rgba(23, 74, 77, 0.08);
-    --glass-shadow-lg: 0 10px 24px -8px rgba(23, 74, 77, 0.12);
+    --glass-blur-sm: blur(4px) saturate(120%);
+    --glass-blur-md: blur(7px) saturate(130%);
+    --glass-blur-lg: blur(9px) saturate(135%);
+    --glass-shadow: 0 6px 18px -5px rgba(0, 41, 102, 0.08);
+    --glass-shadow-lg: 0 10px 24px -8px rgba(0, 41, 102, 0.12);
   }
 
   [data-theme="dark"] {

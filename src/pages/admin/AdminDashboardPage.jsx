@@ -133,7 +133,7 @@ export const AdminDashboardPage = () => {
           <button
             onClick={() => setActiveTab('requests')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-              activeTab === 'requests' ? 'bg-[#A85F48] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'requests' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -148,7 +148,7 @@ export const AdminDashboardPage = () => {
           <button
             onClick={() => setActiveTab('places')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-              activeTab === 'places' ? 'bg-[#A85F48] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'places' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             <Store className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const AdminDashboardPage = () => {
           <button
             onClick={() => setActiveTab('users')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-              activeTab === 'users' ? 'bg-[#A85F48] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'users' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             <Users className="w-4 h-4" />
@@ -199,8 +199,8 @@ export const AdminDashboardPage = () => {
                       <div>
                         <div className="flex items-center justify-between text-xs font-bold text-[var(--color-text-secondary)] mb-1">
                           <span>{place.cityId} • {place.categoryId}</span>
-                          <span className="text-[var(--color-gold)] font-extrabold">
-                            {place.minPrice !== undefined && place.maxPrice !== undefined ? `${place.minPrice} – ${place.maxPrice} ج.م` : place.priceRange || 'سعر مناسب'}
+                          <span className="text-[var(--color-digital-blue-500)] font-extrabold">
+                            {place.minPrice !== undefined && place.maxPrice !== undefined ? `${place.minPrice} – ${place.maxPrice} ج.م` : place.priceRange || 'لم يحدد السعر'}
                           </span>
                         </div>
                         <h4 className="text-xl font-bold font-display text-[var(--color-text-primary)]">{place.nameAr || place.name}</h4>
@@ -210,11 +210,11 @@ export const AdminDashboardPage = () => {
                       {/* Detail Snippets */}
                       <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-black/5 dark:bg-white/5 text-xs text-[var(--color-text-secondary)]">
                         <div className="flex items-center gap-1.5 truncate">
-                          <MapPin className="w-3.5 h-3.5 text-[#A85F48] shrink-0" />
+                          <MapPin className="w-3.5 h-3.5 text-[var(--color-digital-blue-500)] shrink-0" />
                           <span className="truncate">{place.address}</span>
                         </div>
                         <div className="flex items-center gap-1.5 truncate">
-                          <Clock className="w-3.5 h-3.5 text-teal-500 shrink-0" />
+                          <Clock className="w-3.5 h-3.5 text-digital-blue-500 shrink-0" />
                           <span className="truncate">{place.openingHours || `${place.openingTime || ''} - ${place.closingTime || ''}`}</span>
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export const AdminDashboardPage = () => {
                 ['customer', '\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646'],
                 ['business_owner', '\u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646'],
                 ['admin', '\u0627\u0644\u0645\u0634\u0631\u0641\u0648\u0646']
-              ].map(([role, label]) => <button key={role} onClick={() => setUserRoleTab(role)} className={`px-4 py-2 rounded-xl text-sm font-bold ${userRoleTab === role ? 'bg-[#A85F48] text-white' : 'bg-black/5 dark:bg-white/5 text-[var(--color-text-secondary)]'}`}>{label} ({users.filter((user) => user.role === role).length})</button>)}
+              ].map(([role, label]) => <button key={role} onClick={() => setUserRoleTab(role)} className={`px-4 py-2 rounded-xl text-sm font-bold ${userRoleTab === role ? 'bg-[var(--color-digital-blue-500)] text-white' : 'bg-black/5 dark:bg-white/5 text-[var(--color-text-secondary)]'}`}>{label} ({users.filter((user) => user.role === role).length})</button>)}
             </div>
             <input value={userSearch} onChange={(event) => setUserSearch(event.target.value)} placeholder="البحث بالاسم أو البريد الإلكتروني" className="w-full rounded-xl border border-[var(--color-border-subtle)] bg-transparent px-4 py-3 text-sm" />
             {(() => {
@@ -320,10 +320,10 @@ export const AdminDashboardPage = () => {
               return visibleUsers.length ? visibleUsers.map((u) => (
                 <div key={u.id} className="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--color-border-subtle)] flex items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-3">
-                    {u.avatar ? <img src={u.avatar} alt={u.name} width="36" height="36" loading="lazy" className="w-9 h-9 rounded-xl object-cover border border-[var(--color-terracotta)]" /> : <div className="w-9 h-9 rounded-xl bg-black/10 dark:bg-white/10 flex items-center justify-center"><Users className="w-4 h-4" /></div>}
-                    <div className="min-w-0"><h4 className="font-bold text-[var(--color-text-primary)]">{u.name} {u.id === SYSTEM_ADMIN_ID && <span className="text-teal-600"> · {'\u0645\u062f\u064a\u0631 \u0627\u0644\u0646\u0638\u0627\u0645'}</span>}</h4><p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} · {u.phone || '—'} · {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</p>{u.role === 'business_owner' && <p className="mt-1 truncate text-[11px] text-[var(--color-text-secondary)]">{placeService.getByOwnerId(u.id, u.businessId)?.nameAr || placeService.getByOwnerId(u.id, u.businessId)?.name || '\u0644\u0645 \u064a\u0636\u0641 \u0645\u0643\u0627\u0646\u064b\u0627 \u0628\u0639\u062f'}</p>}</div>
+                    {u.avatar ? <img src={u.avatar} alt={u.name} width="36" height="36" loading="lazy" className="w-9 h-9 rounded-xl object-cover border border-[var(--color-digital-blue-500)]" /> : <div className="w-9 h-9 rounded-xl bg-black/10 dark:bg-white/10 flex items-center justify-center"><Users className="w-4 h-4" /></div>}
+                    <div className="min-w-0"><h4 className="font-bold text-[var(--color-text-primary)]">{u.name} {u.id === SYSTEM_ADMIN_ID && <span className="text-digital-blue-600"> · {'\u0645\u062f\u064a\u0631 \u0627\u0644\u0646\u0638\u0627\u0645'}</span>}</h4><p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} · {u.phone || '—'} · {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</p>{u.role === 'business_owner' && <p className="mt-1 truncate text-[11px] text-[var(--color-text-secondary)]">{placeService.getByOwnerId(u.id, u.businessId)?.nameAr || placeService.getByOwnerId(u.id, u.businessId)?.name || '\u0644\u0645 \u064a\u0636\u0641 \u0645\u0643\u0627\u0646\u064b\u0627 \u0628\u0639\u062f'}</p>}</div>
                   </div>
-                  <div className="flex shrink-0 items-center gap-3"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-500/20 text-teal-700 dark:text-teal-300">{userRoleLabels[u.role]}{u.role === 'business_owner' && placeService.getByOwnerId(u.id, u.businessId)?.status === 'pending' ? ` · ${'\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629'}` : ''}</span>{u.id !== SYSTEM_ADMIN_ID && !u.protected && <button onClick={() => handleDeleteUser(u.id)} aria-label={`حذف ${u.name}`} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors"><Trash2 className="w-4 h-4" /></button>}</div>
+                  <div className="flex shrink-0 items-center gap-3"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-digital-blue-500/20 text-digital-blue-700 dark:text-digital-blue-300">{userRoleLabels[u.role]}{u.role === 'business_owner' && placeService.getByOwnerId(u.id, u.businessId)?.status === 'pending' ? ` · ${'\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629'}` : ''}</span>{u.id !== SYSTEM_ADMIN_ID && !u.protected && <button onClick={() => handleDeleteUser(u.id)} aria-label={`حذف ${u.name}`} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors"><Trash2 className="w-4 h-4" /></button>}</div>
                 </div>
               )) : <EmptyState title={userRoleEmptyStates[userRoleTab]} description={userSearch ? '\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c \u062a\u0637\u0627\u0628\u0642 \u0627\u0644\u0628\u062d\u062b.' : ''} />;
             })()}
@@ -362,7 +362,7 @@ export const AdminDashboardPage = () => {
                 </div>
                 <div className="p-3 rounded-xl glass-l1 border border-white/10">
                   <span className="text-[var(--color-text-muted)] block">نطاق الأسعار:</span>
-                  <span className="font-bold text-[var(--color-gold)]">{reviewingPlace.minPrice !== undefined ? `${reviewingPlace.minPrice} – ${reviewingPlace.maxPrice} ج.م` : reviewingPlace.priceRange}</span>
+                  <span className="font-bold text-[var(--color-digital-blue-500)]">{reviewingPlace.minPrice !== undefined ? `${reviewingPlace.minPrice} – ${reviewingPlace.maxPrice} ج.م` : reviewingPlace.priceRange}</span>
                 </div>
                 <div className="p-3 rounded-xl glass-l1 border border-white/10">
                   <span className="text-[var(--color-text-muted)] block">مواعيد العمل:</span>

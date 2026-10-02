@@ -25,7 +25,7 @@ export const SavedPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mb-8"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-terracotta)]">مجموعتك الشخصية</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">مجموعتك الشخصية</span>
           <h1 className="text-3xl font-extrabold font-display text-[var(--color-text-primary)] mt-1">
             الأماكن المحفوظة ({savedPlaces.length})
           </h1>

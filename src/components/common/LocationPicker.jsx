@@ -10,7 +10,7 @@ import { useToast } from '../../hooks/useToast';
 const createPickerPin = () => {
   return L.divIcon({
     className: 'custom-leaflet-picker-pin',
-    html: `<div style="background-color: #A85F48; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.4); border: 3px solid white; transform: translate(-50%, -50%);">
+    html: `<div style="background-color: var(--color-digital-blue-500); color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(0,0,0,0.4); border: 3px solid white; transform: translate(-50%, -50%);">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
     </div>`,
     iconSize: [40, 40],
@@ -30,31 +30,33 @@ const MapClickHandler = ({ onLocationSelect }) => {
 
 export const LocationPicker = ({
   address = '',
-  latitude = 31.1350,
-  longitude = 33.7990,
+  latitude = null,
+  longitude = null,
   onChange,
   className = '',
 }) => {
   const { toastSuccess, toastError, toastInfo } = useToast();
 
   const [currentAddress, setCurrentAddress] = useState(address);
-  const [currentLat, setCurrentLat] = useState(latitude || 31.1350);
-  const [currentLng, setCurrentLng] = useState(longitude || 33.7990);
+  const [currentLat, setCurrentLat] = useState(latitude ?? 31.1350);
+  const [currentLng, setCurrentLng] = useState(longitude ?? 33.7990);
+  const [hasSelectedCoordinates, setHasSelectedCoordinates] = useState(latitude != null && longitude != null);
   const [activeTab, setActiveTab] = useState('current'); // 'current' | 'map' | 'manual'
   const [isLocating, setIsLocating] = useState(false);
 
   // Update parent when any value changes
-  const updateParentLocation = (newAddr, newLat, newLng) => {
+  const updateParentLocation = (newAddr, newLat, newLng, coordinatesSelected = true) => {
     setCurrentAddress(newAddr);
     setCurrentLat(newLat);
     setCurrentLng(newLng);
+    setHasSelectedCoordinates(coordinatesSelected);
 
     if (onChange) {
       onChange({
         address: newAddr,
-        latitude: newLat,
-        longitude: newLng,
-        coordinates: { lat: newLat, lng: newLng }
+        latitude: coordinatesSelected ? newLat : null,
+        longitude: coordinatesSelected ? newLng : null,
+        coordinates: coordinatesSelected ? { lat: newLat, lng: newLng } : null
       });
     }
   };
@@ -74,7 +76,7 @@ export const LocationPicker = ({
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         const detectedAddress = currentAddress || `موقع مبدئي (${lat.toFixed(4)}, ${lng.toFixed(4)}) - العريش، شمال سيناء`;
-        
+
         updateParentLocation(detectedAddress, lat, lng);
         setIsLocating(false);
         toastSuccess('تم تحديد موقعك الحالي بنجاح!');
@@ -105,7 +107,7 @@ export const LocationPicker = ({
   // Option 3: Manual address text change
   const handleAddressChange = (e) => {
     const newAddr = e.target.value;
-    updateParentLocation(newAddr, currentLat, currentLng);
+    updateParentLocation(newAddr, currentLat, currentLng, hasSelectedCoordinates);
   };
 
   return (
@@ -115,7 +117,7 @@ export const LocationPicker = ({
           تحديد موقع النشاط التجاري (اختر طريقة التحديد)
         </label>
         <p className="text-xs text-[var(--color-text-muted)] font-medium">
-          يمكنك استخدام موقعك الحالي، أو النقر على الخريطة التفاعلية، أو إدخال النص يدوياً
+          يمكنك استخدام موقعك الحالي، أو النقر على الخريطة التفاعلية، أو إدخال الموقع يدوياً
         </p>
       </div>
 
@@ -124,11 +126,10 @@ export const LocationPicker = ({
         <button
           type="button"
           onClick={() => setActiveTab('current')}
-          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-            activeTab === 'current'
-              ? 'bg-[#A85F48] text-white shadow-md'
-              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-          }`}
+          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${activeTab === 'current'
+            ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md'
+            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+            }`}
         >
           <Compass className="w-3.5 h-3.5" />
           <span>الموقع الحالي</span>
@@ -137,11 +138,10 @@ export const LocationPicker = ({
         <button
           type="button"
           onClick={() => setActiveTab('map')}
-          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-            activeTab === 'map'
-              ? 'bg-[#A85F48] text-white shadow-md'
-              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-          }`}
+          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${activeTab === 'map'
+            ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md'
+            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+            }`}
         >
           <MapIcon className="w-3.5 h-3.5" />
           <span>من الخريطة</span>
@@ -150,11 +150,10 @@ export const LocationPicker = ({
         <button
           type="button"
           onClick={() => setActiveTab('manual')}
-          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-            activeTab === 'manual'
-              ? 'bg-[#A85F48] text-white shadow-md'
-              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-          }`}
+          className={`py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${activeTab === 'manual'
+            ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md'
+            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+            }`}
         >
           <MapPin className="w-3.5 h-3.5" />
           <span>عنوان يدوي</span>
@@ -173,7 +172,7 @@ export const LocationPicker = ({
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs font-bold text-[var(--color-text-primary)]">
-                <Navigation className="w-4 h-4 text-[#A85F48]" />
+                <Navigation className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
                 <span>تحديد الموقع عبر GPS الجوال / الجهاز</span>
               </div>
               <Button
@@ -221,7 +220,7 @@ export const LocationPicker = ({
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <MapClickHandler onLocationSelect={handleMapSelect} />
-                <Marker position={[currentLat, currentLng]} icon={createPickerPin()} />
+                {hasSelectedCoordinates && <Marker position={[currentLat, currentLng]} icon={createPickerPin()} />}
               </MapContainer>
             </div>
           </motion.div>
@@ -238,7 +237,7 @@ export const LocationPicker = ({
             <Input
               label="العنوان التفصيلي"
               icon={MapPin}
-              placeholder="مثال: شارع 23 يوليو، بجوار الكورنيش، العريش، شمال سيناء"
+              placeholder="مثال: شارع *****، بجوار ***** ، **** ، *****"
               value={currentAddress}
               onChange={handleAddressChange}
               required
@@ -252,7 +251,7 @@ export const LocationPicker = ({
         <Input
           label="العنوان النصي القابل للقراءة"
           icon={MapPin}
-          placeholder="مثال: كورنيش العريش، شمال سيناء"
+          placeholder="مثال: ******** ، ****** "
           value={currentAddress}
           onChange={handleAddressChange}
           required

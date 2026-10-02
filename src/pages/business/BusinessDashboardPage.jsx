@@ -9,7 +9,7 @@ import { placeService } from '../../services/placeService';
 import { orderService } from '../../services/orderService';
 import { bookingService } from '../../services/bookingService';
 import { reviewService } from '../../services/reviewService';
-import { ShoppingBag, Calendar, Star, Utensils, TrendingUp, Users, ArrowRight, CheckCircle2, Clock, AlertCircle, XCircle } from 'lucide-react';
+import { ShoppingBag, Calendar, Star, TrendingUp, ArrowRight, CheckCircle2, Clock, XCircle } from 'lucide-react';
 
 export const BusinessDashboardPage = () => {
   const { user } = useAuth();
@@ -19,7 +19,10 @@ export const BusinessDashboardPage = () => {
   const bookings = place ? bookingService.getBookingsByPlaceId(place.id) : [];
   const reviews = place ? reviewService.getReviewsByPlaceId(place.id) : [];
 
-  const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+  const totalOrderValue = orders.reduce((sum, order) => sum + (Number.isFinite(Number(order.total)) ? Number(order.total) : 0), 0);
+  const averageRating = reviews.length
+    ? (reviews.reduce((sum, review) => sum + (Number(review.rating) || 0), 0) / reviews.length).toFixed(1)
+    : '—';
 
   const status = place?.status || 'approved';
 
@@ -75,27 +78,23 @@ export const BusinessDashboardPage = () => {
         {/* Metric Cards Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
-            title="إجمالي الإيرادات"
-            value={`${totalRevenue.toLocaleString('ar-EG')} ج.م`}
-            change="+18.4% هذا الشهر"
+            title="قيمة الطلبات المسجلة"
+            value={`${totalOrderValue.toLocaleString('ar-EG')} ج.م`}
             icon={TrendingUp}
           />
           <MetricCard
             title="إجمالي الطلبات"
             value={orders.length}
-            change="+12 طلب جديد اليوم"
             icon={ShoppingBag}
           />
           <MetricCard
             title="حجوزات الطاولات"
             value={bookings.length}
-            change="+5 تم تأكيدها"
             icon={Calendar}
           />
           <MetricCard
             title="تقييم العملاء"
-            value={`★ ${place?.rating || '5.0'}`}
-            change={`${reviews.length} تقييم إجمالي`}
+            value={averageRating === '—' ? averageRating : `★ ${averageRating}`}
             icon={Star}
           />
         </div>
@@ -106,7 +105,7 @@ export const BusinessDashboardPage = () => {
           <GlassCard hover={false} className="flex flex-col gap-4 border border-white/20 dark:border-white/10 p-6">
             <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border-subtle)]">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="w-5 h-5 text-[var(--color-terracotta)]" />
+                <ShoppingBag className="w-5 h-5 text-[var(--color-digital-blue-500)]" />
                 <h3 className="text-base font-bold font-display text-[var(--color-text-primary)]">آخر الطلبات</h3>
               </div>
               <Link to="/business/orders">
@@ -139,7 +138,7 @@ export const BusinessDashboardPage = () => {
           <GlassCard hover={false} className="flex flex-col gap-4 border border-white/20 dark:border-white/10 p-6">
             <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border-subtle)]">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-[var(--color-teal-soft)]" />
+                <Calendar className="w-5 h-5 text-[var(--color-digital-blue-600)]" />
                 <h3 className="text-base font-bold font-display text-[var(--color-text-primary)]">الحجوزات القادمة</h3>
               </div>
               <Link to="/business/bookings">
@@ -159,7 +158,7 @@ export const BusinessDashboardPage = () => {
                       <p className="font-bold text-[var(--color-text-primary)]">{bk.customerName}</p>
                       <p className="text-[11px] text-[var(--color-text-secondary)] mt-0.5">{bk.date} الساعة {bk.time} ({bk.guests} ضيوف)</p>
                     </div>
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-teal-500/20 text-teal-700 dark:text-teal-300">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-digital-blue-500/20 text-digital-blue-700 dark:text-digital-blue-300">
                       {bk.status}
                     </span>
                   </div>

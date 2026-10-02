@@ -44,11 +44,11 @@ export const ProfilePage = () => {
       <Container className="max-w-4xl">
         {/* Profile Card Header */}
         <div className="glass-card p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 border border-white/20 dark:border-white/10 mb-6 shadow-xl">
-          <UserAvatar src={avatar || user?.avatar} name={user?.name} className="w-24 h-24 rounded-3xl object-cover border-2 border-[var(--color-terracotta)] shadow-xl shrink-0" />
+          <UserAvatar src={avatar || user?.avatar} name={user?.name} className="w-24 h-24 rounded-3xl object-cover border-2 border-[var(--color-digital-blue-500)] shadow-xl shrink-0" />
           <div className="flex flex-col text-center sm:text-right gap-1">
             <h1 className="text-2xl font-bold font-display text-[var(--color-text-primary)]">{user?.name}</h1>
             <p className="text-xs text-[var(--color-text-secondary)]">{user?.email} • {user?.phone}</p>
-            <span className="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[var(--color-terracotta)]/15 text-[var(--color-terracotta)] self-center sm:self-start">
+            <span className="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)] self-center sm:self-start">
               {user?.role?.replace('_', ' ')}
             </span>
           </div>
@@ -59,7 +59,7 @@ export const ProfilePage = () => {
           <button
             onClick={() => setActiveTab('profile')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'profile' ? 'bg-[var(--color-terracotta)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'profile' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             تعديل الملف الشخصي
@@ -67,7 +67,7 @@ export const ProfilePage = () => {
           <button
             onClick={() => setActiveTab('orders')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeTab === 'orders' ? 'bg-[var(--color-terracotta)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'orders' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5" />
@@ -76,7 +76,7 @@ export const ProfilePage = () => {
           <button
             onClick={() => setActiveTab('bookings')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeTab === 'bookings' ? 'bg-[var(--color-terracotta)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              activeTab === 'bookings' ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
@@ -121,7 +121,7 @@ export const ProfilePage = () => {
               orders.map(ord => (
                 <GlassCard key={ord.id} className="p-4 flex flex-col gap-2 border border-white/10">
                   <div className="flex justify-between items-center text-xs font-bold">
-                    <span className="text-[var(--color-terracotta)]">{ord.id} • {ord.placeName}</span>
+                    <span className="text-[var(--color-digital-blue-500)]">{ord.id} • {ord.placeName}</span>
                     <span className="capitalize px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">{ord.status}</span>
                   </div>
                   <div className="text-xs text-[var(--color-text-secondary)]">
@@ -131,7 +131,7 @@ export const ProfilePage = () => {
                   </div>
                   <div className="flex justify-between items-center pt-2 border-t border-[var(--color-border-subtle)] text-xs font-bold">
                     <span className="text-[var(--color-text-muted)]">{new Date(ord.createdAt).toLocaleDateString('ar-EG')}</span>
-                    <span className="text-[var(--color-gold)]">الإجمالي: {ord.total} ج.م</span>
+                    <span className="text-[var(--color-digital-blue-500)]">الإجمالي: {ord.total} ج.م</span>
                   </div>
                 </GlassCard>
               ))
@@ -147,8 +147,8 @@ export const ProfilePage = () => {
               bookings.map(bk => (
                 <GlassCard key={bk.id} className="p-4 flex flex-col gap-2 border border-white/10">
                   <div className="flex justify-between items-center text-xs font-bold">
-                    <span className="text-[var(--color-terracotta)]">{bk.placeName}</span>
-                    <span className="capitalize px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-700 dark:text-teal-300">{bk.status}</span>
+                    <span className="text-[var(--color-digital-blue-500)]">{bk.placeName}</span>
+                    <span className="capitalize px-2 py-0.5 rounded-full bg-digital-blue-500/20 text-digital-blue-700 dark:text-digital-blue-300">{bk.status}</span>
                   </div>
                   <div className="text-xs text-[var(--color-text-secondary)]">
                     التاريخ: {bk.date} الساعة {bk.time} ({bk.guests} ضيوف)

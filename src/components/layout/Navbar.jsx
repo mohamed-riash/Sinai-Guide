@@ -39,12 +39,12 @@ export const Navbar = () => {
       <Container className="h-20 flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo */}
         <Link to="/" className="flex min-w-0 items-center gap-2 group">
-          <div className="size-10 shrink-0 rounded-2xl bg-gradient-to-tr from-[#A85F48] via-[#874737] to-[#C99545] flex items-center justify-center text-white shadow-lg shadow-[#A85F48]/20 group-hover:scale-105 transition-transform duration-300">
+          <div className="size-10 shrink-0 rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] via-[var(--color-digital-blue-600)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-lg shadow-[var(--color-digital-blue-500)]/20 group-hover:scale-105 transition-transform duration-300">
             <Compass className="w-6 h-6 text-amber-100" />
           </div>
           <div className="flex flex-col">
-            <span className="whitespace-nowrap font-display font-black text-base sm:text-xl tracking-tight text-[#174A4D] dark:text-teal-300">
-              دليل<span className="text-[#A85F48]"> سيناء </span>
+            <span className="whitespace-nowrap font-display font-black text-base sm:text-xl tracking-tight text-[var(--color-digital-blue-700)] dark:text-digital-blue-300">
+              دليل<span className="text-[var(--color-digital-blue-500)]"> سيناء </span>
             </span>
             <span className="hidden sm:block text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 font-extrabold">سياحة شمال سيناء</span>
           </div>
@@ -61,13 +61,13 @@ export const Navbar = () => {
                 className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 ${
                   active
                     ? 'text-white'
-                    : 'text-[var(--color-text-primary)] hover:text-[#A85F48] dark:hover:text-amber-300'
+                    : 'text-[var(--color-text-primary)] hover:text-[var(--color-digital-blue-500)] dark:hover:text-amber-300'
                 }`}
               >
                 {active && (
                   <motion.div
                     layoutId="navbarActiveTab"
-                    className="absolute inset-0 bg-[#A85F48] rounded-xl shadow-md shadow-[#A85F48]/25"
+                    className="absolute inset-0 bg-[var(--color-digital-blue-500)] rounded-xl shadow-md shadow-[var(--color-digital-blue-500)]/25"
                     transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                   />
                 )}
@@ -81,7 +81,7 @@ export const Navbar = () => {
         <div className="hidden xl:flex items-center gap-3">
           {/* City Selector */}
           <div className="relative flex items-center">
-            <MapPin className="w-4 h-4 text-[#A85F48] absolute right-3 pointer-events-none" />
+            <MapPin className="w-4 h-4 text-[var(--color-digital-blue-500)] absolute right-3 pointer-events-none" />
             <select
               value={selectedCityId}
               onChange={(e) => setSelectedCityId(e.target.value)}
@@ -102,7 +102,7 @@ export const Navbar = () => {
             aria-label="تغيير المظهر"
             className="p-2.5 rounded-xl glass-input hover:bg-white/30 dark:hover:bg-white/15 transition text-slate-700 dark:text-slate-200 hover:scale-105 active:scale-95"
           >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#174A4D]" />}
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[var(--color-digital-blue-700)]" />}
           </button>
 
           {/* Favorites Button */}
@@ -120,9 +120,9 @@ export const Navbar = () => {
             aria-label="عرض السلة"
             className="p-2.5 rounded-xl glass-input hover:bg-white/30 dark:hover:bg-white/15 transition text-slate-700 dark:text-slate-200 relative hover:scale-105 active:scale-95"
           >
-            <ShoppingBag className="w-4 h-4 text-[#A85F48]" />
+            <ShoppingBag className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
             {totalItemCount > 0 && (
-              <span className="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-[#A85F48] text-white text-[10px] font-black flex items-center justify-center shadow-lg animate-pulse">
+              <span className="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-[var(--color-digital-blue-500)] text-white text-[10px] font-black flex items-center justify-center shadow-lg animate-pulse">
                 {totalItemCount}
               </span>
             )}
@@ -135,7 +135,7 @@ export const Navbar = () => {
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 className="flex items-center gap-2.5 p-1.5 pl-3 rounded-2xl glass-input hover:bg-white/30 dark:hover:bg-white/15 transition shadow-sm"
               >
-                <UserAvatar src={user.avatar} name={user.name} className="w-8 h-8 rounded-xl object-cover border-2 border-[#A85F48]" />
+                <UserAvatar src={user.avatar} name={user.name} className="w-8 h-8 rounded-xl object-cover border-2 border-[var(--color-digital-blue-500)]" />
                 <span className="text-xs font-bold max-w-[100px] truncate text-[var(--color-text-primary)]">{user.name.split(' ')[0]}</span>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
               </button>
@@ -159,7 +159,7 @@ export const Navbar = () => {
                       onClick={() => setUserDropdownOpen(false)}
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/20 dark:hover:bg-white/10 transition font-bold"
                     >
-                      <User className="w-4 h-4 text-teal-500" />
+                      <User className="w-4 h-4 text-digital-blue-500" />
                       <span>الملف الشخصي</span>
                     </Link>
 
@@ -167,7 +167,7 @@ export const Navbar = () => {
                       <Link
                         to="/business/dashboard"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#A85F48]/10 text-[#A85F48] transition font-bold"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[var(--color-digital-blue-500)]/10 text-[var(--color-digital-blue-500)] transition font-bold"
                       >
                         <LayoutDashboard className="w-4 h-4" />
                         <span>لوحة التحكم للأنشطة</span>
@@ -178,7 +178,7 @@ export const Navbar = () => {
                       <Link
                         to="/admin"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[#C99545]/10 text-[#C99545] transition font-bold"
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-[var(--color-digital-blue-500)]/10 text-[var(--color-digital-blue-500)] transition font-bold"
                       >
                         <LayoutDashboard className="w-4 h-4" />
                         <span>بوابة الإدارة</span>
@@ -228,9 +228,9 @@ export const Navbar = () => {
             onClick={() => setIsCartOpen(true)}
             className="!p-2 rounded-xl glass-input text-slate-700 dark:text-slate-200 relative"
           >
-            <ShoppingBag className="w-4 h-4 text-[#A85F48]" />
+            <ShoppingBag className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
             {totalItemCount > 0 && (
-              <span className="absolute -top-1 -left-1 w-4.5 h-4.5 rounded-full bg-[#A85F48] text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -left-1 w-4.5 h-4.5 rounded-full bg-[var(--color-digital-blue-500)] text-white text-[9px] font-bold flex items-center justify-center">
                 {totalItemCount}
               </span>
             )}
@@ -274,7 +274,7 @@ export const Navbar = () => {
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 rounded-xl text-sm font-bold transition ${
-                    isActive(link.path) ? 'bg-[#A85F48] text-white shadow-md' : 'hover:bg-white/10'
+                    isActive(link.path) ? 'bg-[var(--color-digital-blue-500)] text-white shadow-md' : 'hover:bg-white/10'
                   }`}
                 >
                   {link.label}
@@ -304,7 +304,7 @@ export const Navbar = () => {
                     <Link
                       to="/business/dashboard"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="w-full py-3 px-4 rounded-xl bg-[#A85F48] text-white text-center font-bold text-sm shadow-md"
+                      className="w-full py-3 px-4 rounded-xl bg-[var(--color-digital-blue-500)] text-white text-center font-bold text-sm shadow-md"
                     >
                       لوحة التحكم للأنشطة
                     </Link>
@@ -313,7 +313,7 @@ export const Navbar = () => {
                     <Link
                       to="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="w-full py-3 px-4 rounded-xl bg-[#174A4D] text-white text-center font-bold text-sm shadow-md"
+                      className="w-full py-3 px-4 rounded-xl bg-[var(--color-digital-blue-700)] text-white text-center font-bold text-sm shadow-md"
                     >
                       لوحة الإدارة
                     </Link>

@@ -16,7 +16,7 @@ export const RestaurantsPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mb-8"
         >
-          <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">مطاعم شمال سيناء</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">مطاعم شمال سيناء</span>
           <h1 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
             مطاعم الأسماك والمأكولات البدوية
           </h1>

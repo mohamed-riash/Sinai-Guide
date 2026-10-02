@@ -1,7 +1,7 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 
-export const RatingStars = ({ rating = 5, max = 5, size = 'sm', showNumber = true, interactive = false, onChange }) => {
+export const RatingStars = ({ rating = 0, max = 5, size = 'sm', showNumber = true, interactive = false, onChange }) => {
   const sizeClasses = {
     xs: 'w-3 h-3',
     sm: 'w-4 h-4',
@@ -28,9 +28,9 @@ export const RatingStars = ({ rating = 5, max = 5, size = 'sm', showNumber = tru
               <Star
                 className={`${sizeClasses[size]} ${
                   isFilled
-                    ? 'fill-[#C99545] text-[#C99545]'
+                    ? 'fill-[var(--color-digital-blue-500)] text-[var(--color-digital-blue-500)]'
                     : isHalf
-                    ? 'fill-[#C99545]/50 text-[#C99545]'
+                    ? 'fill-[var(--color-digital-blue-500)]/50 text-[var(--color-digital-blue-500)]'
                     : 'text-slate-300 dark:text-slate-600'
                 }`}
               />
@@ -39,7 +39,7 @@ export const RatingStars = ({ rating = 5, max = 5, size = 'sm', showNumber = tru
         })}
       </div>
       {showNumber && (
-        <span className="text-xs font-bold text-[#C99545] ml-1">
+        <span className="text-xs font-bold text-[var(--color-digital-blue-500)] ml-1">
           {Number(rating).toFixed(1)}
         </span>
       )}

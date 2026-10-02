@@ -23,22 +23,22 @@ export const BusinessProfilePage = () => {
   const [categoryId, setCategoryId] = useState(place?.categoryId || 'restaurant');
 
   // Real Price Range
-  const [minPrice, setMinPrice] = useState(place?.minPrice ?? 100);
-  const [maxPrice, setMaxPrice] = useState(place?.maxPrice ?? 350);
+  const [minPrice, setMinPrice] = useState(place?.minPrice ?? '');
+  const [maxPrice, setMaxPrice] = useState(place?.maxPrice ?? '');
 
   // Location Data Picker
   const [locationData, setLocationData] = useState({
-    address: place?.location?.address || place?.address || 'كورنيش العريش، شمال سيناء',
-    latitude: place?.location?.latitude || place?.coordinates?.lat || 31.1350,
-    longitude: place?.location?.longitude || place?.coordinates?.lng || 33.7990,
+    address: place?.location?.address || place?.address || '',
+    latitude: place?.location?.latitude ?? place?.coordinates?.lat ?? null,
+    longitude: place?.location?.longitude ?? place?.coordinates?.lng ?? null,
   });
 
   // Working Hours Time Range
-  const [openingTime, setOpeningTime] = useState(place?.openingTime || '10:00');
-  const [closingTime, setClosingTime] = useState(place?.closingTime || '23:00');
+  const [openingTime, setOpeningTime] = useState(place?.openingTime || '');
+  const [closingTime, setClosingTime] = useState(place?.closingTime || '');
 
-  const [phone, setPhone] = useState(place?.phone || '+20 10 1234 5678');
-  const [whatsapp, setWhatsapp] = useState(place?.whatsapp || '201012345678');
+  const [phone, setPhone] = useState(place?.phone || '');
+  const [whatsapp, setWhatsapp] = useState(place?.whatsapp || '');
   const [description, setDescription] = useState(place?.description || '');
   const [image, setImage] = useState(place?.image || '');
   const [loading, setLoading] = useState(false);
@@ -81,7 +81,9 @@ export const BusinessProfilePage = () => {
         priceRange: `${minPrice} – ${maxPrice} ج.م`,
         location: locationData,
         address: locationData.address,
-        coordinates: { lat: locationData.latitude, lng: locationData.longitude },
+        coordinates: locationData.latitude != null && locationData.longitude != null
+          ? { lat: locationData.latitude, lng: locationData.longitude }
+          : place.coordinates || null,
         openingTime,
         closingTime,
         openingHours: `${openingTime} — ${closingTime}`,
@@ -137,7 +139,7 @@ export const BusinessProfilePage = () => {
         {/* Real Price Range Inputs */}
         <div className="flex flex-col gap-3">
           <label className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-secondary)]">
-            نطاق الأسعار الحقيقي (بالجنيه المصري): <span className="text-[var(--color-gold)] font-extrabold">{minPrice} – {maxPrice} ج.م</span>
+            نطاق الأسعار الحقيقي (بالجنيه المصري): <span className="text-[var(--color-digital-blue-500)] font-extrabold">{minPrice} – {maxPrice} ج.م</span>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input label="الحد الأدنى للسعر (ج.م)" type="number" min="0" icon={DollarSign} value={minPrice} onChange={(e) => setMinPrice(e.target.value)} required />
@@ -181,7 +183,7 @@ export const BusinessProfilePage = () => {
             rows="4"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[#A85F48]"
+            className="w-full p-4 rounded-2xl text-sm glass-input text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-digital-blue-500)]"
             required
           />
         </div>

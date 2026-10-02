@@ -35,15 +35,15 @@ export const CityDetailsPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-slate-950/60 to-slate-950/80 rounded-3xl" />
 
         <Container className="relative z-10 text-center flex flex-col items-center gap-4 py-8">
-          <Link to="/cities" className="self-start text-xs font-bold text-teal-300 hover:underline flex items-center gap-1 mb-2">
+          <Link to="/cities" className="self-start text-xs font-bold text-digital-blue-300 hover:underline flex items-center gap-1 mb-2">
             <ArrowRight className="w-4 h-4" /> العودة لجميع المدن
           </Link>
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#A85F48] text-white shadow-md"
+            className="px-3.5 py-1 rounded-full text-xs font-extrabold bg-[var(--color-digital-blue-500)] text-white shadow-md"
           >
-            {city.population} نسمة
+            {cityPlaces.length} مكان مسجل
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -73,7 +73,7 @@ export const CityDetailsPage = () => {
           </p>
           <div className="flex flex-wrap gap-2 mt-2">
             {city.highlights.map((h, i) => (
-              <span key={i} className="px-3 py-1 rounded-xl text-xs font-bold bg-[#A85F48]/15 text-[#A85F48] border border-[#A85F48]/30">
+              <span key={i} className="px-3 py-1 rounded-xl text-xs font-bold bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)] border border-[var(--color-digital-blue-500)]/30">
                 ✦ {h}
               </span>
             ))}
@@ -100,4 +100,3 @@ export const CityDetailsPage = () => {
     </div>
   );
 };
-

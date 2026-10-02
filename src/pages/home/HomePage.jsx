@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
 import { Button } from '../../components/common/Button';
 import { PlaceCard } from '../../components/places/PlaceCard';
+import { EmptyState } from '../../components/common/EmptyState';
 import { placeService } from '../../services/placeService';
 import { blogService } from '../../services/blogService';
 import { CITIES } from '../../data/cities';
@@ -88,7 +89,7 @@ export const HomePage = () => {
           {[...Array(5)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2.5 h-2.5 rounded-full bg-[#C99545]/25"
+              className="absolute w-2.5 h-2.5 rounded-full bg-[var(--color-digital-blue-500)]/25"
               style={{ top: `${20 + i * 14}%`, right: `${12 + i * 15}%` }}
             />
           ))}
@@ -99,9 +100,9 @@ export const HomePage = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex items-center gap-2.5 px-6 py-2 rounded-full glass-l3 border-white/20 text-[#E0B66D] text-xs font-extrabold tracking-widest backdrop-blur-xl shadow-lg"
+            className="flex items-center gap-2.5 px-6 py-2 rounded-full glass-l3 border-white/20 text-[var(--color-digital-blue-300)] text-xs font-extrabold tracking-widest backdrop-blur-xl shadow-lg"
           >
-            <Sparkles className="w-4 h-4 text-[#C99545]" />
+            <Sparkles className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
             <span>اكتشف كنوز شمال سيناء الخفية</span>
           </motion.div>
 
@@ -113,7 +114,7 @@ export const HomePage = () => {
           >
             حيث يلتقي سحر البحر بأصالة الصحراء..
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#C98268] via-[#E0B66D] to-teal-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--color-digital-blue-400)] via-[var(--color-digital-blue-300)] to-digital-blue-200">
               اكتشف روح سيناء الحقيقية
             </span>
           </motion.h1>
@@ -143,7 +144,7 @@ export const HomePage = () => {
                   placeholder="ابحث عن مطاعم، كافيهات، شواطئ..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full py-3 pr-11 pl-4 rounded-xl text-sm glass-input focus:outline-none focus:border-[#A85F48]"
+                  className="w-full py-3 pr-11 pl-4 rounded-xl text-sm glass-input focus:outline-none focus:border-[var(--color-digital-blue-500)]"
                 />
               </div>
 
@@ -198,7 +199,7 @@ export const HomePage = () => {
           >
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">وجهات سيناء المميزة</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">وجهات سيناء المميزة</span>
                 <h2 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
                   استكشف مدن شمال سيناء
                 </h2>
@@ -233,10 +234,10 @@ export const HomePage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
                       <div className="relative z-10 p-6 flex flex-col gap-2">
-                        <span className="text-[10px] uppercase font-extrabold tracking-widest text-teal-300">
-                          {city.population} نسمة
+                        <span className="text-[10px] uppercase font-extrabold tracking-widest text-digital-blue-300">
+                          {placeService.getByCity(city.id).length} مكان مسجل
                         </span>
-                        <h3 className="text-2xl font-black font-display text-white group-hover:text-[#C98268] transition">
+                        <h3 className="text-2xl font-black font-display text-white group-hover:text-[var(--color-digital-blue-400)] transition">
                           {city.nameAr} <span className="text-sm font-normal opacity-80">({city.name})</span>
                         </h3>
                         <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
@@ -264,7 +265,7 @@ export const HomePage = () => {
             className="flex flex-col gap-10"
           >
             <motion.div variants={fadeInUp} className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">تصفح التصنيفات</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">تصفح التصنيفات</span>
               <h2 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
                 ابحث عن ما تريده بسهولة
               </h2>
@@ -287,7 +288,7 @@ export const HomePage = () => {
                       to={`/explore?category=${cat.id}`}
                       className="glass-card p-6 flex flex-col items-center text-center gap-3 group"
                     >
-                      <div className="p-4 rounded-2xl bg-[#A85F48]/15 text-[#A85F48] group-hover:bg-[#A85F48] group-hover:text-white transition duration-300">
+                      <div className="p-4 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)] group-hover:bg-[var(--color-digital-blue-500)] group-hover:text-white transition duration-300">
                         <IconComp className="w-7 h-7" />
                       </div>
                       <h4 className="font-bold font-display text-base text-[var(--color-text-primary)]">
@@ -316,7 +317,7 @@ export const HomePage = () => {
           >
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">أبرز الوجهات المختارة</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">أبرز الوجهات المختارة</span>
                 <h2 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
                   أماكن ومنتجعات مميزة
                 </h2>
@@ -331,13 +332,22 @@ export const HomePage = () => {
               </Link>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredPlaces.map((place, index) => (
-                <motion.div key={place.id} variants={fadeInUp} custom={index}>
-                  <PlaceCard place={place} />
-                </motion.div>
-              ))}
-            </motion.div>
+            {featuredPlaces.length > 0 ? (
+              <motion.div variants={fadeInUp} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredPlaces.map((place, index) => (
+                  <motion.div key={place.id} variants={fadeInUp} custom={index}>
+                    <PlaceCard place={place} />
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <EmptyState
+                icon={Compass}
+                title="لا توجد أماكن مميزة حاليا"
+                description="ستظهر هنا الأماكن التي يضيفها أصحاب الأنشطة ويعتمدها فريق الإدارة."
+                className="py-6"
+              />
+            )}
           </motion.div>
         </Container>
       </section>
@@ -353,7 +363,7 @@ export const HomePage = () => {
             className="flex flex-col gap-10"
           >
             <motion.div variants={fadeInUp} className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">لماذا شمال سيناء؟</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">لماذا شمال سيناء؟</span>
               <h2 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
                 تجربة سياحية فريدة من نوعها
               </h2>
@@ -365,19 +375,19 @@ export const HomePage = () => {
                   icon: Waves,
                   title: 'شواطئ نخيل البحر المتوسط',
                   desc: 'استمتع بشواطئ رملية نقية تحيط بها أشجار النخيل على ساحل البحر المتوسط الصافي في العريش.',
-                  gradient: 'from-teal-500/15 to-teal-900/5',
+                  gradient: 'from-digital-blue-500/15 to-digital-blue-900/5',
                 },
                 {
                   icon: Utensils,
                   title: 'مأكولات بحرية طازجة يومياً',
                   desc: 'تذوق أطباق السمك والجمبري الطازج المصطاد يومياً من البحر مباشرة — لا يُقارن بشيء.',
-                  gradient: 'from-[#A85F48]/15 to-[#874737]/5',
+                  gradient: 'from-[var(--color-digital-blue-500)]/15 to-[var(--color-digital-blue-600)]/5',
                 },
                 {
                   icon: Compass,
                   title: 'محمية الزرانيق العالمية',
                   desc: 'شاهد طيور الفلامنجو والطيور المهاجرة في واحدة من أهم محميات الطيور على مستوى العالم.',
-                  gradient: 'from-[#C99545]/15 to-[#C99545]/5',
+                  gradient: 'from-[var(--color-digital-blue-500)]/15 to-[var(--color-digital-blue-500)]/5',
                 },
               ].map((item, i) => (
                 <motion.div
@@ -387,8 +397,8 @@ export const HomePage = () => {
                   whileHover={{ y: -6 }}
                   className={`glass-card p-8 flex flex-col gap-4 bg-gradient-to-bl ${item.gradient}`}
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-[#A85F48]/15 flex items-center justify-center">
-                    <item.icon className="w-7 h-7 text-[#A85F48]" />
+                  <div className="w-14 h-14 rounded-2xl bg-[var(--color-digital-blue-500)]/15 flex items-center justify-center">
+                    <item.icon className="w-7 h-7 text-[var(--color-digital-blue-500)]" />
                   </div>
                   <h3 className="text-lg font-bold font-display text-[var(--color-text-primary)]">{item.title}</h3>
                   <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{item.desc}</p>
@@ -410,7 +420,7 @@ export const HomePage = () => {
             className="flex flex-col gap-10"
           >
             <motion.div variants={fadeInUp} className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#A85F48]">مدونة دليل سيناء والتراث</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-500)]">مدونة دليل سيناء والتراث</span>
               <h2 className="text-3xl sm:text-4xl font-black font-display text-[var(--color-text-primary)] mt-1">
                 إلهام سفر وقصص تراثية
               </h2>
@@ -428,8 +438,8 @@ export const HomePage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent" />
                     </div>
                     <div className="p-5 flex flex-col gap-2 flex-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#A85F48]">{post.category} • {post.readTime}</span>
-                      <h3 className="font-display font-bold text-lg text-[var(--color-text-primary)] group-hover:text-[#A85F48] transition line-clamp-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-digital-blue-500)]">{post.category} • {post.readTime}</span>
+                      <h3 className="font-display font-bold text-lg text-[var(--color-text-primary)] group-hover:text-[var(--color-digital-blue-500)] transition line-clamp-2">
                         {post.titleAr || post.title}
                       </h3>
                       <p className="text-xs text-[var(--color-text-secondary)] line-clamp-3 leading-relaxed mt-1">
@@ -452,18 +462,18 @@ export const HomePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="glass-panel p-8 sm:p-14 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/20 bg-gradient-to-l from-[#174A4D] to-[#103638]"
+            className="glass-panel p-8 sm:p-14 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-white/20 bg-gradient-to-l from-[var(--color-digital-blue-700)] to-[var(--color-digital-blue-800)]"
           >
             {/* Decorative orbs */}
-            <div className="absolute top-0 left-0 w-72 h-72 bg-teal-500/10 rounded-full filter blur-[80px] pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#C99545]/10 rounded-full filter blur-[60px] pointer-events-none" />
+            <div className="absolute top-0 left-0 w-72 h-72 bg-digital-blue-500/10 rounded-full filter blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-56 h-56 bg-[var(--color-digital-blue-500)]/10 rounded-full filter blur-[60px] pointer-events-none" />
 
             <div className="relative z-10 flex flex-col gap-4 text-white max-w-xl">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#E0B66D]">لأصحاب الأنشطة التجارية في شمال سيناء</span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold font-display leading-tight">
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-digital-blue-300)]">لأصحاب الأنشطة التجارية في شمال سيناء</span>
+              <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)] font-extrabold font-display leading-tight">
                 تمتلك مطعم، كافيه، شاليه أو فندق؟
               </h2>
-              <p className="text-sm text-slate-200 leading-relaxed">
+              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
                 سجّل نشاطك التجاري على دليل سيناء اليوم لإدارة قائمة الطعام، استلام طلبات عبر واتساب،
                 قبول حجوزات الطاولات، والوصول لآلاف السياح والسكان المحليين.
               </p>

@@ -26,7 +26,7 @@ export const BusinessReviewsPage = () => {
             <p className="text-xs text-[var(--color-text-secondary)] mt-1 font-medium">{reviews.length} تقييم وتعليق من زوار الدليل</p>
           </div>
           <div className="text-left">
-            <span className="text-3xl font-black font-display text-[var(--color-gold)]">★ {place?.rating || '5.0'}</span>
+            <span className="text-3xl font-black font-display text-[var(--color-digital-blue-500)]">{reviews.length ? `★ ${place?.rating ?? 0}` : '—'}</span>
             <span className="text-xs text-[var(--color-text-muted)] block font-bold mt-0.5">متوسط التقييم العام</span>
           </div>
         </GlassCard>
@@ -36,4 +36,3 @@ export const BusinessReviewsPage = () => {
     </DashboardLayout>
   );
 };
-

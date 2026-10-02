@@ -88,7 +88,7 @@ export const BookingModal = ({ place, isOpen, onClose }) => {
             </button>
 
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 rounded-2xl bg-[#A85F48]/20 text-[#A85F48]">
+              <div className="p-3 rounded-2xl bg-[var(--color-digital-blue-500)]/20 text-[var(--color-digital-blue-500)]">
                 <Calendar className="w-6 h-6" />
               </div>
               <div>
@@ -123,7 +123,7 @@ export const BookingModal = ({ place, isOpen, onClose }) => {
                   عدد الضيوف
                 </label>
                 <div className="relative flex items-center">
-                  <Users className="w-4 h-4 text-[#A85F48] absolute right-3.5 pointer-events-none" />
+                  <Users className="w-4 h-4 text-[var(--color-digital-blue-500)] absolute right-3.5 pointer-events-none" />
                   <select
                     value={guests}
                     onChange={(e) => setGuests(Number(e.target.value))}
@@ -163,10 +163,10 @@ export const BookingModal = ({ place, isOpen, onClose }) => {
                 <div className="relative">
                   <textarea
                     rows="3"
-                    placeholder="مثال: طاولة مطلة على البحر، مناسبة عيد ميلاد..."
+                    placeholder="مثال: مناسبة عيد ميلاد..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full py-2.5 px-3.5 rounded-xl text-sm glass-input focus:outline-none focus:border-[#A85F48]"
+                    className="w-full py-2.5 px-3.5 rounded-xl text-sm glass-input focus:outline-none focus:border-[var(--color-digital-blue-500)]"
                   />
                 </div>
               </div>

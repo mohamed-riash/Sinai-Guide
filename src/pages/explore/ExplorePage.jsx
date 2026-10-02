@@ -85,7 +85,7 @@ export const ExplorePage = () => {
             onClick={() => setFilterDrawerOpen(true)}
             className="md:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl glass-input text-sm font-semibold text-[var(--color-text-primary)]"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#A85F48]" />
+            <SlidersHorizontal className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
             <span>الفلاتر {activeFiltersCount > 0 && `(${activeFiltersCount})`}</span>
           </button>
         </motion.div>
@@ -106,7 +106,7 @@ export const ExplorePage = () => {
                 placeholder="ابحث بالاسم أو نوع الطعام..."
                 value={filters.searchQuery}
                 onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
-                className="w-full py-2.5 pr-10 pl-4 rounded-xl text-xs glass-input focus:outline-none focus:border-[#A85F48]"
+                className="w-full py-2.5 pr-10 pl-4 rounded-xl text-xs glass-input focus:outline-none focus:border-[var(--color-digital-blue-500)]"
               />
             </div>
 
@@ -154,7 +154,7 @@ export const ExplorePage = () => {
                   type="checkbox"
                   checked={filters.isOpenNow}
                   onChange={(e) => setFilters(prev => ({ ...prev, isOpenNow: e.target.checked }))}
-                  className="rounded text-[#A85F48]"
+                  className="rounded text-[var(--color-digital-blue-500)]"
                 />
                 <span className="font-semibold text-[var(--color-text-primary)]">مفتوح الآن فقط</span>
               </label>

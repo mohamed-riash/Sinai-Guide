@@ -36,7 +36,7 @@ export const Input = ({
           className={`w-full py-2.5 rounded-xl text-sm glass-input transition duration-200 ${
             Icon ? 'pr-10' : 'pr-3.5'
           } ${isPasswordType ? 'pl-10' : 'pl-3.5'} ${
-            error ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 dark:border-slate-700 focus:border-[#A85F48]'
+            error ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 dark:border-slate-700 focus:border-[var(--color-digital-blue-500)]'
           } ${className}`}
           {...props}
         />

@@ -23,7 +23,7 @@ export const Select = ({
       )}
       <div className="relative flex items-center">
         {Icon && (
-          <div className="absolute right-3.5 text-[#A85F48] pointer-events-none">
+          <div className="absolute right-3.5 text-[var(--color-digital-blue-500)] pointer-events-none">
             <Icon className="w-4 h-4" />
           </div>
         )}
@@ -34,7 +34,7 @@ export const Select = ({
           className={`w-full py-2.5 rounded-xl text-sm glass-input cursor-pointer appearance-none transition duration-200 ${
             Icon ? 'pr-10 pl-9' : 'pr-4 pl-9'
           } ${
-            error ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 dark:border-slate-700 focus:border-[#A85F48]'
+            error ? 'border-rose-500 focus:ring-rose-500' : 'border-slate-300 dark:border-slate-700 focus:border-[var(--color-digital-blue-500)]'
           } ${className}`}
           {...props}
         >

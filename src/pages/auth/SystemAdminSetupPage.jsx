@@ -43,7 +43,7 @@ export const SystemAdminSetupPage = () => {
       <Container className="max-w-md">
         <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass-l3 flex flex-col gap-6 rounded-3xl border border-white/20 p-8 shadow-2xl sm:p-10">
           <header className="flex flex-col items-center gap-2 text-center">
-            <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#A85F48] to-[#C99545] text-white shadow-lg">
+            <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] text-white shadow-lg">
               <ShieldCheck className="h-7 w-7" />
             </div>
             <h1 className="font-display text-2xl font-black text-[var(--color-text-primary)]">إعداد مدير النظام</h1>
@@ -58,7 +58,7 @@ export const SystemAdminSetupPage = () => {
             <Button type="submit" variant="primary" fullWidth isLoading={loading} icon={ShieldCheck}>إنشاء حساب مدير النظام</Button>
           </form>
 
-          <Link to="/login" className="text-center text-xs font-bold text-[#A85F48] hover:underline">العودة إلى تسجيل الدخول</Link>
+          <Link to="/login" className="text-center text-xs font-bold text-[var(--color-digital-blue-500)] hover:underline">العودة إلى تسجيل الدخول</Link>
         </motion.section>
       </Container>
     </div>

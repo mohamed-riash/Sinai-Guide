@@ -136,18 +136,18 @@ export const ImageUploader = ({
           onDragLeave={handleDragLeave}
           className={`w-full ${aspectRatio} rounded-2xl glass-input border-2 border-dashed flex flex-col items-center justify-center gap-3 p-6 text-center cursor-pointer transition-all ${
             isDragOver
-              ? 'border-[#A85F48] bg-[#A85F48]/10'
-              : 'border-[var(--color-border-light)] hover:border-[#A85F48]/50'
+              ? 'border-[var(--color-digital-blue-500)] bg-[var(--color-digital-blue-500)]/10'
+              : 'border-[var(--color-border-light)] hover:border-[var(--color-digital-blue-500)]/50'
           }`}
         >
           {isCompressing ? (
-            <div className="flex flex-col items-center gap-2 text-[#A85F48]">
+            <div className="flex flex-col items-center gap-2 text-[var(--color-digital-blue-500)]">
               <Loader2 className="w-8 h-8 animate-spin" />
               <span className="text-xs font-bold">جاري ضغط ومعالجة الصورة...</span>
             </div>
           ) : (
             <>
-              <div className="p-3 rounded-2xl bg-[#A85F48]/15 text-[#A85F48]">
+              <div className="p-3 rounded-2xl bg-[var(--color-digital-blue-500)]/15 text-[var(--color-digital-blue-500)]">
                 <UploadCloud className="w-7 h-7" />
               </div>
               <div>

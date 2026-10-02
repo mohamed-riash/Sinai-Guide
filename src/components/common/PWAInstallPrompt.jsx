@@ -68,14 +68,14 @@ export const PWAInstallPrompt = () => {
         >
           <button onClick={dismiss} aria-label="إغلاق" className="absolute left-3 top-3 rounded-full p-2 text-[var(--color-text-muted)] hover:bg-black/5 dark:hover:bg-white/10"><X size={18} /></button>
           <div className="flex items-start gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#A85F48] to-[#174A4D] text-white shadow-lg"><Compass size={25} /></div>
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-700)] text-white shadow-lg"><Compass size={25} /></div>
             <div className="pt-0.5">
               <h2 className="font-bold text-[var(--color-text-primary)]">ثبّت Sinai Guide</h2>
               <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">خلّي دليلك لسيناء معاك ووصل للأماكن والخدمات بسرعة.</p>
             </div>
           </div>
-          {ios && !installEvent && <p className="mt-3 flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"><Share size={17} className="mt-0.5 shrink-0 text-[#A85F48]" />من قائمة المشاركة في Safari اختر «إضافة إلى الشاشة الرئيسية».</p>}
-          {installEvent && <button onClick={install} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#A85F48] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[#A85F48]/20 transition hover:bg-[#874737]"><Download size={17} />تثبيت التطبيق</button>}
+          {ios && !installEvent && <p className="mt-3 flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"><Share size={17} className="mt-0.5 shrink-0 text-[var(--color-digital-blue-500)]" />من قائمة المشاركة في Safari اختر «إضافة إلى الشاشة الرئيسية».</p>}
+          {installEvent && <button onClick={install} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-digital-blue-500)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--color-digital-blue-500)]/20 transition hover:bg-[var(--color-digital-blue-600)]"><Download size={17} />تثبيت التطبيق</button>}
           <button onClick={dismiss} className="mt-2 w-full rounded-xl px-4 py-2 text-sm font-semibold text-[var(--color-text-muted)] hover:bg-black/5 dark:hover:bg-white/5">لاحقاً</button>
         </motion.aside>
       )}

@@ -62,7 +62,7 @@ ${itemsText}
 
 -----------------------------
 *Subtotal:* EGP ${order.subtotal}
-*Delivery Fee:* EGP ${order.deliveryFee}
+*Delivery Fee:* ${order.deliveryFee == null ? 'Not specified by the business' : `EGP ${order.deliveryFee}`}
 *Total:* EGP ${order.total}
 
 Thank you! Placed via Sinai Guide Platform.`;

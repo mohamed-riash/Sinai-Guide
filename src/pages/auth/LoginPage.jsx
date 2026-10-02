@@ -67,7 +67,7 @@ export const LoginPage = () => {
         >
           {/* Header */}
           <div className="flex flex-col items-center text-center gap-2">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#A85F48] to-[#C99545] flex items-center justify-center text-white shadow-lg mb-2">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-lg mb-2">
               <Compass className="w-7 h-7 animate-spin-slow" />
             </div>
             <h1 className="text-2xl font-black font-display text-[var(--color-text-primary)]">تسجيل الدخول لدليل سيناء</h1>
@@ -102,11 +102,11 @@ export const LoginPage = () => {
 
           <div className="pt-4 border-t border-slate-200/40 dark:border-white/10 text-center text-xs text-[var(--color-text-muted)] font-semibold">
             ليس لديك حساب؟{' '}
-            <Link to="/register" className="font-bold text-[#A85F48] hover:underline">
+            <Link to="/register" className="font-bold text-[var(--color-digital-blue-500)] hover:underline">
               إنشاء حساب جديد
             </Link>
           </div>
-          {setupAvailable && <Link to="/admin/setup" className="text-center text-xs font-bold text-[var(--color-text-muted)] hover:text-[#A85F48]">إعداد حساب مدير النظام</Link>}
+          {setupAvailable && <Link to="/admin/setup" className="text-center text-xs font-bold text-[var(--color-text-muted)] hover:text-[var(--color-digital-blue-500)]">إعداد حساب مدير النظام</Link>}
         </motion.div>
       </Container>
     </div>
