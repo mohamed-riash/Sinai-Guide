@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Compass, Download, Share, X } from 'lucide-react';
+import { Download, Share, X } from 'lucide-react';
+import { Logo } from './Logo';
 
 const DISMISSED_KEY = 'sinai_pwa_install_dismissed';
 
@@ -68,7 +69,7 @@ export const PWAInstallPrompt = () => {
         >
           <button onClick={dismiss} aria-label="إغلاق" className="absolute left-3 top-3 rounded-full p-2 text-[var(--color-text-muted)] hover:bg-black/5 dark:hover:bg-white/10"><X size={18} /></button>
           <div className="flex items-start gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-700)] text-white shadow-lg"><Compass size={25} /></div>
+            <Logo className="size-12 shrink-0" />
             <div className="pt-0.5">
               <h2 className="font-bold text-[var(--color-text-primary)]">ثبّت Sinai Guide</h2>
               <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">خلّي دليلك لسيناء معاك ووصل للأماكن والخدمات بسرعة.</p>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, MapPin, Mail, Heart } from 'lucide-react';
+import { MapPin, Mail, Heart } from 'lucide-react';
 import { Container } from '../common/Container';
+import { Logo } from '../common/Logo';
 
 export const Footer = () => {
   return (
@@ -11,9 +12,7 @@ export const Footer = () => {
           {/* Brand Col */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-md">
-                <Compass className="w-6 h-6" />
-              </div>
+              <Logo className="w-12 h-12 shrink-0" />
               <span className="font-display font-black text-xl tracking-tight text-digital-blue-400 dark:text-digital-blue-300">
                 دليل<span className="text-[var(--color-digital-blue-500)]"> سيناء </span>
               </span>
@@ -72,4 +71,3 @@ export const Footer = () => {
     </footer>
   );
 };
-

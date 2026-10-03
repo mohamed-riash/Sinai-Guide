@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { Mail, Lock, LogIn, Compass } from 'lucide-react';
+import { Mail, Lock, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
 import { Input } from '../../components/common/Input';
@@ -8,6 +8,7 @@ import { Button } from '../../components/common/Button';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../../hooks/useToast';
 import { authService } from '../../services/authService';
+import { Logo } from '../../components/common/Logo';
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -67,9 +68,7 @@ export const LoginPage = () => {
         >
           {/* Header */}
           <div className="flex flex-col items-center text-center gap-2">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-lg mb-2">
-              <Compass className="w-7 h-7 animate-spin-slow" />
-            </div>
+            <Logo className="w-20 h-20 mb-2 animate-spin-slow" />
             <h1 className="text-2xl font-black font-display text-[var(--color-text-primary)]">تسجيل الدخول لدليل سيناء</h1>
             <p className="text-xs text-[var(--color-text-muted)] font-medium">ادخل لحسابك للوصول للأماكن المحفوظة، الحجوزات، الطلبات ولوحة التحكم</p>
           </div>

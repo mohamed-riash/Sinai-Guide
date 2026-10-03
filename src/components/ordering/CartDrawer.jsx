@@ -117,7 +117,7 @@ export const CartDrawer = () => {
                   <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold font-display text-white">طلبك</h3>
+                  <h3 className="text-lg font-bold font-display text-[var(--color-text-primary)]">طلبك</h3>
                   <p className="text-xs text-slate-300 truncate max-w-[200px]">{cart.place?.name || 'لم يتم اختيار مطعم'}</p>
                 </div>
               </div>

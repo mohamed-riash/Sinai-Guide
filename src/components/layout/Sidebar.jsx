@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Store, Utensils, ShoppingBag, Calendar, Star, BarChart3, Settings, LogOut, Compass, ArrowRight } from 'lucide-react';
+import { LayoutDashboard, Store, Utensils, ShoppingBag, Calendar, Star, BarChart3, Settings, LogOut, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
 import { UserAvatar } from '../common/UserAvatar';
+import { Logo } from '../common/Logo';
 
 export const Sidebar = ({ onCloseMobile }) => {
   const location = useLocation();
@@ -35,9 +36,7 @@ export const Sidebar = ({ onCloseMobile }) => {
       <div className="flex flex-col gap-6">
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2.5 px-2">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-md">
-            <Compass className="w-5 h-5" />
-          </div>
+          <Logo className="w-10 h-10 shrink-0" />
           <div className="flex flex-col">
             <span className="font-display font-black text-base tracking-tight text-[var(--color-digital-blue-700)] dark:text-digital-blue-300">
               دليل<span className="text-[var(--color-digital-blue-500)]"> سيناء</span>

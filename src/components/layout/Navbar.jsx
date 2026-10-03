@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Compass, Sun, Moon, ShoppingBag, Heart, User, LogOut, Menu, X, MapPin, ChevronDown, LayoutDashboard } from 'lucide-react';
+import { Sun, Moon, ShoppingBag, Heart, User, LogOut, Menu, X, MapPin, ChevronDown, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
@@ -9,6 +9,7 @@ import { useCart } from '../../hooks/useCart';
 import { Container } from '../common/Container';
 import { Button } from '../common/Button';
 import { UserAvatar } from '../common/UserAvatar';
+import { Logo } from '../common/Logo';
 
 export const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -39,14 +40,12 @@ export const Navbar = () => {
       <Container className="h-20 flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo */}
         <Link to="/" className="flex min-w-0 items-center gap-2 group">
-          <div className="size-10 shrink-0 rounded-2xl bg-gradient-to-tr from-[var(--color-digital-blue-500)] via-[var(--color-digital-blue-600)] to-[var(--color-digital-blue-500)] flex items-center justify-center text-white shadow-lg shadow-[var(--color-digital-blue-500)]/20 group-hover:scale-105 transition-transform duration-300">
-            <Compass className="w-6 h-6 text-amber-100" />
-          </div>
+          <Logo className="size-10 shrink-0 group-hover:scale-105 transition-transform duration-300" />
           <div className="flex flex-col">
             <span className="whitespace-nowrap font-display font-black text-base sm:text-xl tracking-tight text-[var(--color-digital-blue-700)] dark:text-digital-blue-300">
               دليل<span className="text-[var(--color-digital-blue-500)]"> سيناء </span>
             </span>
-            <span className="hidden sm:block text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 font-extrabold">سياحة شمال سيناء</span>
+            <span className="hidden sm:block text-[10px] tracking-widest uppercase text-slate-500 dark:text-slate-400 font-extrabold">اكتشف شمال سيناء</span>
           </div>
         </Link>
 
@@ -81,8 +80,10 @@ export const Navbar = () => {
         <div className="hidden xl:flex items-center gap-3">
           {/* City Selector */}
           <div className="relative flex items-center">
-            <MapPin className="w-4 h-4 text-[var(--color-digital-blue-500)] absolute right-3 pointer-events-none" />
-            <select
+<MapPin
+  className="absolute right-1 top-1/2 -translate-y-1/2 w-4 h-4 text-digital-blue-500 pointer-events-none z-10 shrink-0"
+  strokeWidth={2}
+/>            <select
               value={selectedCityId}
               onChange={(e) => setSelectedCityId(e.target.value)}
               className="py-2.5 pr-9 pl-7 rounded-xl text-xs font-bold glass-input cursor-pointer shadow-sm"
