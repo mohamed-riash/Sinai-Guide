@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Search, RotateCcw, SlidersHorizontal } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -9,6 +9,7 @@ import { PlaceFilterDrawer } from '../../components/places/PlaceFilterDrawer';
 import { placeService } from '../../services/placeService';
 import { CITIES } from '../../data/cities';
 import { CATEGORIES } from '../../data/categories';
+import { useCity } from '../../hooks/useCity';
 
 const CATEGORY_NAMES_AR = {
   restaurant: 'مطاعم',
@@ -23,9 +24,11 @@ const CATEGORY_NAMES_AR = {
 
 export const ExplorePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { selectedCityId } = useCity();
+  const previousSelectedCityId = useRef(selectedCityId);
 
   const [filters, setFilters] = useState({
-    cityId: searchParams.get('city') || 'all',
+    cityId: searchParams.get('city') || selectedCityId,
     categoryId: searchParams.get('category') || 'all',
     searchQuery: searchParams.get('q') || '',
     priceRange: 'all',
@@ -35,6 +38,19 @@ export const ExplorePage = () => {
 
   const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
   const [places, setPlaces] = useState([]);
+
+  useEffect(() => {
+    if (previousSelectedCityId.current === selectedCityId) return;
+    previousSelectedCityId.current = selectedCityId;
+
+    setFilters(prev => ({ ...prev, cityId: selectedCityId }));
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      if (selectedCityId === 'all') next.delete('city');
+      else next.set('city', selectedCityId);
+      return next;
+    }, { replace: true });
+  }, [selectedCityId, setSearchParams]);
 
   useEffect(() => {
     const filtered = placeService.filterPlaces(filters);
@@ -199,4 +215,3 @@ export const ExplorePage = () => {
     </div>
   );
 };
-

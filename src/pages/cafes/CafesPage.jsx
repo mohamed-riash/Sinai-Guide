@@ -3,9 +3,13 @@ import { motion } from 'framer-motion';
 import { Container } from '../../components/common/Container';
 import { PlaceGrid } from '../../components/places/PlaceGrid';
 import { placeService } from '../../services/placeService';
+import { useCity } from '../../hooks/useCity';
 
 export const CafesPage = () => {
-  const cafes = placeService.getByCategory('cafe');
+  const { selectedCityId } = useCity();
+  const cafes = placeService.getByCategory('cafe').filter(
+    place => selectedCityId === 'all' || place.cityId === selectedCityId,
+  );
 
   return (
     <div className="py-8 flex flex-col gap-8">
@@ -30,4 +34,3 @@ export const CafesPage = () => {
     </div>
   );
 };
-
