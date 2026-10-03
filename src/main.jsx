@@ -5,7 +5,9 @@ import App from './App.jsx'
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch((error) => {
+      console.error('[PWA] Service worker registration failed:', error);
+    });
   }, { once: true });
 }
 

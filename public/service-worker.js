@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sinai-guide-shell-v1';
+const CACHE_NAME = 'sinai-guide-shell-v2';
 const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -21,17 +21,25 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).then((response) => {
-      if (response.ok) caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', response.clone()));
-      return response;
-    }).catch(async () => (await caches.match('/index.html')) || (await caches.match('/'))));
+    const networkResponse = fetch(request);
+    event.waitUntil(networkResponse.then((response) => {
+      if (!response.ok) return undefined;
+      return caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', response.clone()));
+    }).catch(() => undefined));
+    event.respondWith(networkResponse.catch(async () => (
+      (await caches.match('/index.html')) || (await caches.match('/'))
+    )));
     return;
   }
 
-  if (/\.(?:js|css|png|jpg|jpeg|webp|svg|woff2?)$/i.test(url.pathname)) {
-    event.respondWith(caches.match(request).then((cached) => cached || fetch(request).then((response) => {
-      if (response.ok) caches.open(CACHE_NAME).then((cache) => cache.put(request, response.clone()));
+  if (url.pathname.startsWith('/assets/') && request.destination) {
+    event.respondWith(caches.open(CACHE_NAME).then(async (cache) => {
+      const cached = await cache.match(request);
+      if (cached) return cached;
+
+      const response = await fetch(request);
+      if (response.ok) await cache.put(request, response.clone());
       return response;
-    })));
+    }));
   }
 });

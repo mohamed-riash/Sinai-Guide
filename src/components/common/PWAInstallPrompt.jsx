@@ -1,83 +1,154 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Download, Share, X } from 'lucide-react';
+import { usePWAInstall } from '../../hooks/usePWAInstall';
+import { useToast } from '../../hooks/useToast';
 import { Logo } from './Logo';
 
 const DISMISSED_KEY = 'sinai_pwa_install_dismissed';
+const DISMISS_COOLDOWN = 7 * 24 * 60 * 60 * 1000;
 
-const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-const isIOS = () => /iphone|ipad|ipod/i.test(window.navigator.userAgent) || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+const wasRecentlyDismissed = () => {
+  try {
+    const dismissedAt = Number(localStorage.getItem(DISMISSED_KEY));
+    return Number.isFinite(dismissedAt) && Date.now() - dismissedAt < DISMISS_COOLDOWN;
+  } catch {
+    return false;
+  }
+};
+
+const rememberDismissal = () => {
+  try {
+    localStorage.setItem(DISMISSED_KEY, String(Date.now()));
+  } catch {
+    // Installation remains available for this session when storage is blocked.
+  }
+};
+
+const clearDismissal = () => {
+  try {
+    localStorage.removeItem(DISMISSED_KEY);
+  } catch {
+    // A newly available browser prompt is still shown when storage is blocked.
+  }
+};
 
 export const PWAInstallPrompt = () => {
-  const [installEvent, setInstallEvent] = useState(null);
+  const { canInstall, install, isInstalled, isIOS } = usePWAInstall();
+  const { toastError } = useToast();
   const [visible, setVisible] = useState(false);
-  const [ios] = useState(() => !isStandalone() && isIOS());
+  const [iosRequested, setIosRequested] = useState(false);
+  const hadInstallOpportunity = useRef(canInstall);
 
   useEffect(() => {
-    if (isStandalone() || localStorage.getItem(DISMISSED_KEY)) return undefined;
-    let interacted = false;
-    const showAfterInteraction = () => {
-      if (interacted) return;
-      interacted = true;
-      window.setTimeout(() => setVisible(true), 1800);
+    const newlyAvailable = canInstall && !hadInstallOpportunity.current;
+    hadInstallOpportunity.current = canInstall;
+
+    if (isInstalled || (!canInstall && !isIOS)) return undefined;
+
+    if (canInstall) {
+      if (newlyAvailable) clearDismissal();
+      else if (wasRecentlyDismissed()) return undefined;
+      const frame = window.requestAnimationFrame(() => setVisible(true));
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    if (wasRecentlyDismissed()) return undefined;
+
+    if (!isIOS) return undefined;
+
+    let requested = false;
+    const revealInstructions = () => {
+      if (requested) return;
+      requested = true;
+      window.removeEventListener('pointerdown', revealInstructions);
+      window.removeEventListener('keydown', revealInstructions);
+      setIosRequested(true);
+      window.setTimeout(() => setVisible(true), 900);
     };
-    const onBeforeInstall = (event) => {
-      event.preventDefault();
-      setInstallEvent(event);
-    };
-    const onInstalled = () => {
-      setVisible(false);
-      localStorage.setItem(DISMISSED_KEY, 'installed');
-    };
-    window.addEventListener('pointerdown', showAfterInteraction, { once: true, passive: true });
-    window.addEventListener('keydown', showAfterInteraction, { once: true });
-    window.addEventListener('beforeinstallprompt', onBeforeInstall);
-    window.addEventListener('appinstalled', onInstalled);
+    window.addEventListener('pointerdown', revealInstructions, { once: true, passive: true });
+    window.addEventListener('keydown', revealInstructions, { once: true });
     return () => {
-      window.removeEventListener('pointerdown', showAfterInteraction);
-      window.removeEventListener('keydown', showAfterInteraction);
-      window.removeEventListener('beforeinstallprompt', onBeforeInstall);
-      window.removeEventListener('appinstalled', onInstalled);
+      window.removeEventListener('pointerdown', revealInstructions);
+      window.removeEventListener('keydown', revealInstructions);
     };
+  }, [canInstall, isIOS, isInstalled]);
+
+  const dismiss = useCallback(() => {
+    rememberDismissal();
+    setVisible(false);
   }, []);
 
-  const dismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, 'dismissed');
+  const handleInstall = useCallback(async () => {
+    const result = await install();
+    if (result.outcome === 'error') {
+      toastError('تعذّر فتح نافذة التثبيت. حاول مرة أخرى من المتصفح.');
+    }
     setVisible(false);
-  };
+  }, [install, toastError]);
 
-  const install = async () => {
-    if (!installEvent) return;
-    await installEvent.prompt();
-    const choice = await installEvent.userChoice;
-    if (choice.outcome === 'accepted') setVisible(false);
-    setInstallEvent(null);
-  };
+  const canShow = visible && !isInstalled && (canInstall || (isIOS && iosRequested));
 
-  const canShow = visible && (installEvent || ios);
   return (
     <AnimatePresence>
       {canShow && (
         <motion.aside
           dir="rtl"
-          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          role="region"
+          aria-live="polite"
+          aria-label="تثبيت Sinai Guide"
+          initial={{ opacity: 0, y: -12, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 18, scale: 0.98 }}
-          transition={{ duration: 0.25 }}
-          className="fixed z-[45] bottom-[calc(env(safe-area-inset-bottom)+6.5rem)] lg:bottom-6 inset-x-4 sm:inset-x-auto sm:left-6 sm:w-[min(24rem,calc(100vw-2rem))] rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-l3)] p-5 shadow-2xl backdrop-blur-2xl"
-          aria-label="تثبيت التطبيق"
+          exit={{ opacity: 0, y: -8, scale: 0.98 }}
+          transition={{ duration: 0.2 }}
+          className="fixed left-1/2 top-[calc(env(safe-area-inset-top)+1rem)] z-[60] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-l3)] p-4 shadow-xl backdrop-blur-lg sm:p-5"
         >
-          <button onClick={dismiss} aria-label="إغلاق" className="absolute left-3 top-3 rounded-full p-2 text-[var(--color-text-muted)] hover:bg-black/5 dark:hover:bg-white/10"><X size={18} /></button>
-          <div className="flex items-start gap-4">
-            <Logo className="size-12 shrink-0" />
-            <div className="pt-0.5">
-              <h2 className="font-bold text-[var(--color-text-primary)]">ثبّت Sinai Guide</h2>
-              <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">خلّي دليلك لسيناء معاك ووصل للأماكن والخدمات بسرعة.</p>
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="ليس الآن"
+            className="absolute left-2 top-2 rounded-full p-2 text-[var(--color-text-muted)] transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-digital-blue-500)] dark:hover:bg-white/10"
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+
+          <div className="flex items-start gap-3 pl-7">
+            <Logo className="size-11 shrink-0" />
+            <div className="min-w-0 pt-0.5">
+              <h2 className="font-bold text-[var(--color-text-primary)]">ثبّت Sinai Guide على جهازك</h2>
+              <p className="mt-1 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                ثبّت التطبيق للوصول إليه بسرعة من جهازك.
+              </p>
             </div>
           </div>
-          {ios && !installEvent && <p className="mt-3 flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"><Share size={17} className="mt-0.5 shrink-0 text-[var(--color-digital-blue-500)]" />من قائمة المشاركة في Safari اختر «إضافة إلى الشاشة الرئيسية».</p>}
-          {installEvent && <button onClick={install} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-digital-blue-500)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--color-digital-blue-500)]/20 transition hover:bg-[var(--color-digital-blue-600)]"><Download size={17} />تثبيت التطبيق</button>}
-          <button onClick={dismiss} className="mt-2 w-full rounded-xl px-4 py-2 text-sm font-semibold text-[var(--color-text-muted)] hover:bg-black/5 dark:hover:bg-white/5">لاحقاً</button>
+
+          {canInstall ? (
+            <button
+              type="button"
+              onClick={handleInstall}
+              className="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-digital-blue-500)] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[var(--color-digital-blue-600)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-digital-blue-400)] focus-visible:ring-offset-2"
+            >
+              <Download size={17} aria-hidden="true" />
+              تثبيت التطبيق
+            </button>
+          ) : (
+            <div className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              <Share size={18} className="mt-0.5 shrink-0 text-[var(--color-digital-blue-500)]" aria-hidden="true" />
+              <ol className="list-decimal space-y-1 pr-4">
+                <li>افتح قائمة المشاركة في Safari.</li>
+                <li>اختر «إضافة إلى الشاشة الرئيسية».</li>
+                <li>اضغط «إضافة».</li>
+              </ol>
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={dismiss}
+            className="mt-2 min-h-10 w-full rounded-xl px-4 py-2 text-sm font-semibold text-[var(--color-text-muted)] transition hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-digital-blue-500)] dark:hover:bg-white/5"
+          >
+            ليس الآن
+          </button>
         </motion.aside>
       )}
     </AnimatePresence>
