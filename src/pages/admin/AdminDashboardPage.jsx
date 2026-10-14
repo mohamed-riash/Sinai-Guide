@@ -334,7 +334,7 @@ export const AdminDashboardPage = () => {
       {reviewingPlace && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setReviewingPlace(null)} />
-          <div className="relative z-10 w-full max-w-2xl glass-panel p-6 text-[var(--color-text-primary)] shadow-2xl border border-white/20 max-h-[90vh] overflow-y-auto rounded-3xl">
+          <div className="relative z-10 w-full max-w-2xl glass-panel p-6 text-[var(--color-text-primary)] shadow-2xl border border-white/20 max-h-[90vh] overflow-y-auto rounded-3xl scrollbar-none">
             <button onClick={() => setReviewingPlace(null)} className="absolute top-4 left-4 p-2 text-slate-400 hover:text-white rounded-xl">
               <X className="w-5 h-5" />
             </button>
