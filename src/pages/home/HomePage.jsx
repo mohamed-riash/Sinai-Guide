@@ -102,7 +102,7 @@ export const HomePage = () => {
             transition={{ duration: 0.7 }}
             className="flex items-center gap-2.5 px-6 py-2 rounded-full glass-l3 border-white/20 text-[var(--color-digital-blue-300)] text-xs font-extrabold tracking-widest backdrop-blur-xl shadow-lg"
           >
-            <span className="text-xs font-medium tracking-wide font-sans">
+            <span className="text-lg font-medium tracking-wide font-sans">
               سيناء أقرب ليك
             </span>          </motion.div>
 
