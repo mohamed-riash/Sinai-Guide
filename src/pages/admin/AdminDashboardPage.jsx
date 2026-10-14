@@ -12,14 +12,14 @@ import { useToast } from '../../hooks/useToast';
 import { useConfirm } from '../../hooks/useConfirm';
 
 const userRoleLabels = {
-  customer: '\u0645\u0633\u062a\u062e\u062f\u0645',
-  business_owner: '\u0635\u0627\u062d\u0628 \u0645\u0643\u0627\u0646',
-  admin: '\u0645\u0634\u0631\u0641',
+  customer: 'مستخدم',
+  business_owner: 'صاحب مكان',
+  admin: 'مشرف',
 };
 const userRoleEmptyStates = {
-  customer: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646.',
-  business_owner: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0623\u0635\u062d\u0627\u0628 \u0623\u0645\u0627\u0643\u0646 \u0645\u0633\u062c\u0644\u0648\u0646 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646.',
-  admin: '\u0644\u0627 \u064a\u0648\u062c\u062f \u0645\u0634\u0631\u0641\u0648\u0646 \u0625\u0636\u0627\u0641\u064a\u0648\u0646.',
+  customer: 'لا يوجد مستخدمون حتى الآن.',
+  business_owner: 'لا يوجد أصحاب أماكن مسجلون حتى الآن.',
+  admin: 'لا يوجد مشرفون إضافيون.',
 };
 
 export const AdminDashboardPage = () => {
@@ -123,9 +123,9 @@ export const AdminDashboardPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <MetricCard title="\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646" value={users.filter((user) => user.role === 'customer').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u064a\u0646" icon={Users} />
-          <MetricCard title="\u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646" value={users.filter((user) => user.role === 'business_owner').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646" icon={Store} />
-          <MetricCard title="\u0627\u0644\u0645\u0634\u0631\u0641\u0648\u0646" value={users.filter((user) => user.role === 'admin').length} change="\u062d\u0633\u0627\u0628\u0627\u062a \u0627\u0644\u0645\u0634\u0631\u0641\u064a\u0646" icon={ShieldCheck} />
+          <MetricCard title="المستخدمون" value={users.filter((user) => user.role === 'customer').length} change="حسابات المستخدمين" icon={Users} />
+          <MetricCard title="أصحاب الأماكن" value={users.filter((user) => user.role === 'business_owner').length} change="حسابات أصحاب الأماكن" icon={Store} />
+          <MetricCard title="المشرفون" value={users.filter((user) => user.role === 'admin').length} change="حسابات المشرفين" icon={ShieldCheck} />
         </div>
 
         {/* Navigation Tabs */}
@@ -299,7 +299,7 @@ export const AdminDashboardPage = () => {
                     </div>
                   </div>
                 );
-              }) : <EmptyState title="\u0644\u0627 \u062a\u0648\u062c\u062f \u0623\u0645\u0627\u0643\u0646 \u0645\u0636\u0627\u0641\u0629 \u062d\u062a\u0649 \u0627\u0644\u0622\u0646." description="\u0633\u062a\u0638\u0647\u0631 \u0627\u0644\u0623\u0645\u0627\u0643\u0646 \u0647\u0646\u0627 \u0628\u0639\u062f \u0625\u0646\u0634\u0627\u0626\u0647\u0627." />}
+              }) : <EmptyState title="لا توجد أماكن مضافة حتى الآن." description="ستظهر الأماكن هنا بعد إنشائها." />}
             </div>
           </GlassCard>
         )}
@@ -309,9 +309,9 @@ export const AdminDashboardPage = () => {
           <GlassCard hover={false} className="p-6 flex flex-col gap-4 border border-white/20 dark:border-white/10 shadow-xl">
             <div className="flex flex-wrap gap-2">
               {[
-                ['customer', '\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0648\u0646'],
-                ['business_owner', '\u0623\u0635\u062d\u0627\u0628 \u0627\u0644\u0623\u0645\u0627\u0643\u0646'],
-                ['admin', '\u0627\u0644\u0645\u0634\u0631\u0641\u0648\u0646']
+                ['customer', 'المستخدمون'],
+                ['business_owner', 'أصحاب الأماكن'],
+                ['admin', 'المشرفون']
               ].map(([role, label]) => <button key={role} onClick={() => setUserRoleTab(role)} className={`px-4 py-2 rounded-xl text-sm font-bold ${userRoleTab === role ? 'bg-[var(--color-digital-blue-500)] text-white' : 'bg-black/5 dark:bg-white/5 text-[var(--color-text-secondary)]'}`}>{label} ({users.filter((user) => user.role === role).length})</button>)}
             </div>
             <input value={userSearch} onChange={(event) => setUserSearch(event.target.value)} placeholder="البحث بالاسم أو البريد الإلكتروني" className="w-full rounded-xl border border-[var(--color-border-subtle)] bg-transparent px-4 py-3 text-sm" />
@@ -321,11 +321,11 @@ export const AdminDashboardPage = () => {
                 <div key={u.id} className="p-3.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-[var(--color-border-subtle)] flex items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-3">
                     {u.avatar ? <img src={u.avatar} alt={u.name} width="36" height="36" loading="lazy" className="w-9 h-9 rounded-xl object-cover border border-[var(--color-digital-blue-500)]" /> : <div className="w-9 h-9 rounded-xl bg-black/10 dark:bg-white/10 flex items-center justify-center"><Users className="w-4 h-4" /></div>}
-                    <div className="min-w-0"><h4 className="font-bold text-[var(--color-text-primary)]">{u.name} {u.id === SYSTEM_ADMIN_ID && <span className="text-digital-blue-600"> · {'\u0645\u062f\u064a\u0631 \u0627\u0644\u0646\u0638\u0627\u0645'}</span>}</h4><p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} · {u.phone || '—'} · {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</p>{u.role === 'business_owner' && <p className="mt-1 truncate text-[11px] text-[var(--color-text-secondary)]">{placeService.getByOwnerId(u.id, u.businessId)?.nameAr || placeService.getByOwnerId(u.id, u.businessId)?.name || '\u0644\u0645 \u064a\u0636\u0641 \u0645\u0643\u0627\u0646\u064b\u0627 \u0628\u0639\u062f'}</p>}</div>
+                    <div className="min-w-0"><h4 className="font-bold text-[var(--color-text-primary)]">{u.name} {u.id === SYSTEM_ADMIN_ID && <span className="text-digital-blue-600"> · مدير النظام</span>}</h4><p className="text-[11px] text-[var(--color-text-secondary)]">{u.email} · {u.phone || '—'} · {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}</p>{u.role === 'business_owner' && <p className="mt-1 truncate text-[11px] text-[var(--color-text-secondary)]">{placeService.getByOwnerId(u.id, u.businessId)?.nameAr || placeService.getByOwnerId(u.id, u.businessId)?.name || 'لم يضف مكانًا بعد'}</p>}</div>
                   </div>
-                  <div className="flex shrink-0 items-center gap-3"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-digital-blue-500/20 text-digital-blue-700 dark:text-digital-blue-300">{userRoleLabels[u.role]}{u.role === 'business_owner' && placeService.getByOwnerId(u.id, u.businessId)?.status === 'pending' ? ` · ${'\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629'}` : ''}</span>{u.id !== SYSTEM_ADMIN_ID && !u.protected && <button onClick={() => handleDeleteUser(u.id)} aria-label={`حذف ${u.name}`} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors"><Trash2 className="w-4 h-4" /></button>}</div>
+                  <div className="flex shrink-0 items-center gap-3"><span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-digital-blue-500/20 text-digital-blue-700 dark:text-digital-blue-300">{userRoleLabels[u.role]}{u.role === 'business_owner' && placeService.getByOwnerId(u.id, u.businessId)?.status === 'pending' ? ' · قيد المراجعة' : ''}</span>{u.id !== SYSTEM_ADMIN_ID && !u.protected && <button onClick={() => handleDeleteUser(u.id)} aria-label={`حذف ${u.name}`} className="p-1.5 rounded-lg text-rose-500 hover:bg-rose-500/20 transition-colors"><Trash2 className="w-4 h-4" /></button>}</div>
                 </div>
-              )) : <EmptyState title={userRoleEmptyStates[userRoleTab]} description={userSearch ? '\u0644\u0627 \u062a\u0648\u062c\u062f \u0646\u062a\u0627\u0626\u062c \u062a\u0637\u0627\u0628\u0642 \u0627\u0644\u0628\u062d\u062b.' : ''} />;
+              )) : <EmptyState title={userRoleEmptyStates[userRoleTab]} description={userSearch ? 'لا توجد نتائج تطابق البحث.' : ''} />;
             })()}
           </GlassCard>
         )}      </div>

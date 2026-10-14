@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -15,25 +15,88 @@ export const LoginPage = () => {
   const { toastSuccess, toastError } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const formRef = useRef(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [submitted, setSubmitted] = useState(false);
   const [setupAvailable] = useState(() => !authService.hasSystemAdmin());
 
-  const validate = () => {
+  // ── Field validation ──
+  const validateField = useCallback((field, values) => {
+    const v = values || { email, password };
+    switch (field) {
+      case 'email':
+        if (!v.email.trim()) return 'البريد الإلكتروني مطلوب.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim())) return 'صيغة البريد الإلكتروني غير صحيحة.';
+        return '';
+      case 'password':
+        if (!v.password) return 'كلمة المرور مطلوبة.';
+        return '';
+      default:
+        return '';
+    }
+  }, [email, password]);
+
+  // ── All fields ──
+  const validateAll = useCallback(() => {
+    const fields = ['email', 'password'];
+    const values = { email, password };
     const errs = {};
-    if (!email.trim()) errs.email = 'البريد الإلكتروني مطلوب.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) errs.email = 'صيغة البريد الإلكتروني غير صحيحة.';
-    if (!password) errs.password = 'كلمة المرور مطلوبة.';
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
+    fields.forEach((f) => {
+      const msg = validateField(f, values);
+      if (msg) errs[f] = msg;
+    });
+    return errs;
+  }, [email, password, validateField]);
+
+  // ── Blur ──
+  const handleBlur = useCallback((field) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const msg = validateField(field);
+    setErrors((prev) => {
+      if (msg) return { ...prev, [field]: msg };
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }, [validateField]);
+
+  // ── Change with revalidation ──
+  const handleFieldChange = useCallback((field, setter) => (e) => {
+    const val = e.target.value;
+    setter(val);
+
+    if (touched[field] || submitted) {
+      const values = { email, password, [field]: val };
+      const msg = validateField(field, values);
+      setErrors((prev) => {
+        const next = { ...prev };
+        if (msg) { next[field] = msg; } else { delete next[field]; }
+        return next;
+      });
+    }
+  }, [email, password, touched, submitted, validateField]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate()) return;
+    setSubmitted(true);
+
+    const errs = validateAll();
+    setErrors(errs);
+    setTouched({ email: true, password: true });
+
+    if (Object.keys(errs).length > 0) {
+      const firstErrorField = ['email', 'password'].find((f) => errs[f]);
+      if (firstErrorField && formRef.current) {
+        const el = formRef.current.querySelector(`[name="${firstErrorField}"]`);
+        if (el) el.focus();
+      }
+      return;
+    }
 
     setLoading(true);
     try {
@@ -48,7 +111,7 @@ export const LoginPage = () => {
       } else if (user.role === 'admin') {
         navigate('/admin');
       } else {
-        navigate('/profile');
+        navigate('/');
       }
     } catch (err) {
       toastError(err.message || 'فشل تسجيل الدخول. تحقق من بياناتك.');
@@ -73,25 +136,29 @@ export const LoginPage = () => {
             <p className="text-xs text-[var(--color-text-muted)] font-medium">ادخل لحسابك للوصول للأماكن المحفوظة، الحجوزات، الطلبات ولوحة التحكم</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form ref={formRef} onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
             <Input
+              name="email"
               label="البريد الإلكتروني"
               type="email"
               icon={Mail}
               placeholder="name@domain.com"
               value={email}
-              error={errors.email}
-              onChange={(e) => setEmail(e.target.value)}
+              error={(touched.email || submitted) ? errors.email : undefined}
+              onChange={handleFieldChange('email', setEmail)}
+              onBlur={() => handleBlur('email')}
             />
 
             <Input
+              name="password"
               label="كلمة المرور"
               type="password"
               icon={Lock}
               placeholder="••••••••"
               value={password}
-              error={errors.password}
-              onChange={(e) => setPassword(e.target.value)}
+              error={(touched.password || submitted) ? errors.password : undefined}
+              onChange={handleFieldChange('password', setPassword)}
+              onBlur={() => handleBlur('password')}
             />
 
             <Button type="submit" variant="primary" fullWidth isLoading={loading} icon={LogIn} className="py-3.5 mt-2 font-bold text-sm">

@@ -38,36 +38,54 @@ export const orderService = {
     return orders[index];
   },
 
-  // Generates formatted WhatsApp Order Message (Section 18 requirement)
+  // Generates a formatted WhatsApp order message
   generateWhatsAppOrderUrl: (order, businessWhatsapp) => {
     if (!businessWhatsapp) return null;
 
-    // Clean phone number
     const cleanPhone = businessWhatsapp.replace(/[^0-9]/g, '');
 
-    const itemsText = order.items.map((item, i) => (
-      `${i + 1}. ${item.name}\n   Quantity: ${item.quantity}\n   Price: EGP ${item.price * item.quantity}`
-    )).join('\n\n');
+    const itemsText = order.items
+      .map((item, index) => (
+        `${index + 1}. ${item.name}\n` +
+        `   الكمية: ${item.quantity}\n` +
+        `   السعر: ${Number(item.price * item.quantity).toFixed(2)} جنيه`
+      ))
+      .join('\n\n');
 
-    const message =
-      ` *New Order - Sinai Guide* 
+    const formatPrice = (price) =>
+      `${Number(price).toFixed(2)} جنيه`;
 
-*Customer Details:*
-• Name: ${order.customerName}
-• Phone: ${order.customerPhone}
-• Delivery Address: ${order.address}
-${order.notes ? `• Notes: ${order.notes}\n` : ''}
-*Order Summary:*
+    const message = `
+ *طلب جديد من دليل سيناء*
+━━━━━━━━━━━━━━━━━━
+
+ *بيانات العميل*
+• الاسم: ${order.customerName}
+• رقم الهاتف: ${order.customerPhone}
+• عنوان التوصيل: ${order.address}
+${order.notes?.trim() ? `• ملاحظات: ${order.notes.trim()}\n` : ''}
+━━━━━━━━━━━━━━━━━━
+
+ *تفاصيل الطلب*
 ${itemsText}
 
------------------------------
-*Subtotal:* EGP ${order.subtotal}
-*Delivery Fee:* ${order.deliveryFee == null ? 'Not specified by the business' : `EGP ${order.deliveryFee}`}
-*Total:* EGP ${order.total}
+━━━━━━━━━━━━━━━━━━
+ *ملخص الحساب*
+• قيمة المنتجات: ${formatPrice(order.subtotal)}
+• رسوم التوصيل: ${order.deliveryFee == null
+        ? 'غير محددة'
+        : formatPrice(order.deliveryFee)
+      }
+• *الإجمالي النهائي: ${formatPrice(order.total)}*
 
-Thank you! Placed via Sinai Guide Platform.`;
+━━━━━━━━━━━━━━━━━━
+ يرجى تأكيد استلام الطلب وتحديد الوقت المتوقع للتوصيل.
+
+ عبر منصة *دليل سيناء*
+  `.trim();
 
     const encodedMessage = encodeURIComponent(message);
+
     return `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
   }
 };
