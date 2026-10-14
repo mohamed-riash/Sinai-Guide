@@ -102,9 +102,9 @@ export const HomePage = () => {
             transition={{ duration: 0.7 }}
             className="flex items-center gap-2.5 px-6 py-2 rounded-full glass-l3 border-white/20 text-[var(--color-digital-blue-300)] text-xs font-extrabold tracking-widest backdrop-blur-xl shadow-lg"
           >
-            <Sparkles className="w-4 h-4 text-[var(--color-digital-blue-500)]" />
-            <span>اكتشف كنوز شمال سيناء الخفية</span>
-          </motion.div>
+            <span className="text-xs font-medium tracking-wide font-sans">
+              سيناء أقرب ليك
+            </span>          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
